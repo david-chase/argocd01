@@ -8,6 +8,8 @@ spec:
   source:
     repoURL: 'https://github.com/david-chase/argocd01'
     path: apps
+    directory:
+      recurse: true 
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
