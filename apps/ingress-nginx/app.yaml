@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # Use the ingress-nginx Git repo at the controller-v1.9.0 tag
+    repoURL: https://github.com/kubernetes/ingress-nginx.git
+    targetRevision: controller-v1.9.0
+    # Path to the cloud‑provider static manifests
+    path: deploy/static/provider/cloud
+  destination:
+    server: https://kubernetes.default.svc
+    # Deploy into its own namespace
+    namespace: ingress-nginx
+  syncPolicy:
+    automated:
+      prune: true      # Remove resources no longer tracked
+      selfHeal: true   # Reconcile drift automatically
