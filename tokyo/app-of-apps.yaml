@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/david-chase/argocd01'
-    path: apps
+    path: tokyo
     directory:
       recurse: true 
     targetRevision: HEAD
