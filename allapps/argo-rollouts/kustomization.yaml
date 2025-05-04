@@ -1,6 +1,5 @@
 resources:
-  - namespace.yaml
-  - https://argoproj.github.io/argo-helm/argo-rollouts-2.32.1.tgz
+  - namespace.yaml  # this creates the namespace
 
 helmCharts:
   - name: argo-rollouts

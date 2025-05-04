@@ -8,9 +8,7 @@ spec:
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: argo-rollouts     # deploys this folder
-    kustomize:
-      enable: true
+    path: allapps/argo-rollouts  # this must match your folder name
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
