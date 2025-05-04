@@ -1,0 +1,11 @@
+resources:
+  - namespace.yaml
+  - https://argoproj.github.io/argo-helm/argo-rollouts-2.32.1.tgz
+
+helmCharts:
+  - name: argo-rollouts
+    repo: https://argoproj.github.io/argo-helm
+    version: 2.32.1
+    releaseName: argo-rollouts
+    namespace: argo-rollouts
+    valuesFile: values.yaml
