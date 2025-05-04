@@ -8,9 +8,10 @@ spec:
   source:
     repoURL: https://argoproj.github.io/argo-helm
     chart: argo-rollouts
-    targetRevision: 2.32.1   # Or latest chart version
+    targetRevision: 2.32.1     # or latest version
     helm:
       values: |
+        installCRDs: true
         dashboard:
           enabled: true
   destination:
@@ -18,5 +19,11 @@ spec:
     namespace: argo-rollouts
   syncPolicy:
     automated:
-      selfHeal: true
       prune: true
+      selfHeal: true
+  ignoreDifferences:
+    - group: rbac.authorization.k8s.io
+      kind: Role
+      namespace: argo-rollouts
+      jsonPointers:
+        - /rules
