@@ -6,9 +6,13 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/argoproj/argo-rollouts
-    targetRevision: main        # <- use main, not v1.7.5
-    path: manifests/cluster-install
+    repoURL: https://argoproj.github.io/argo-helm
+    chart: argo-rollouts
+    targetRevision: 2.32.1   # Or latest chart version
+    helm:
+      values: |
+        dashboard:
+          enabled: true
   destination:
     server: https://kubernetes.default.svc
     namespace: argo-rollouts
