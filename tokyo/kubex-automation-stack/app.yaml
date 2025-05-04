@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubex
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/david-chase/tokyo
+    targetRevision: HEAD
+    path: tokyo/kubex-automation-stack
+    helm:
+      valueFiles:
+        - values-edit.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: densify
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
