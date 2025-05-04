@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/argoproj/argo-rollouts
-    targetRevision: v1.7.5   # Latest stable at time of writing
+    targetRevision: main        # <- use main, not v1.7.5
     path: manifests/cluster-install
   destination:
     server: https://kubernetes.default.svc
