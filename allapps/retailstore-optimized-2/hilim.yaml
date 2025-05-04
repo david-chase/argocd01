@@ -89,6 +89,196 @@ metadata:
   labels:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/component: service
+    app.kubernetes.io/instance: assets
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: assets
+    helm.sh/chart: assets-0.8.4
+  name: assets
+  namespace: retailstore-hilim
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kuberneres.io/owner: retail-store-sample
+      app.kubernetes.io/component: service
+      app.kubernetes.io/instance: assets
+      app.kubernetes.io/name: assets
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kuberneres.io/owner: retail-store-sample
+        app.kubernetes.io/component: service
+        app.kubernetes.io/instance: assets
+        app.kubernetes.io/name: assets
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: assets
+        image: public.ecr.aws/aws-containers/retail-store-sample-assets:0.8.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /health.html
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 3
+        name: assets
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            memory: 60Mi
+          requests:
+            cpu: 60m
+            memory: 10Mi
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: false
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+      securityContext: {}
+      serviceAccountName: assets
+      volumes:
+      - emptyDir:
+          medium: Memory
+        name: tmp-volume
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/component: service
+    app.kubernetes.io/instance: carts
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: carts
+    helm.sh/chart: carts-0.8.4
+  name: carts
+  namespace: retailstore-hilim
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kuberneres.io/owner: retail-store-sample
+      app.kubernetes.io/component: service
+      app.kubernetes.io/instance: carts
+      app.kubernetes.io/name: carts
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: '8080'
+        prometheus.io/scrape: 'true'
+      labels:
+        app.kuberneres.io/owner: retail-store-sample
+        app.kubernetes.io/component: service
+        app.kubernetes.io/instance: carts
+        app.kubernetes.io/name: carts
+    spec:
+      containers:
+      - env:
+        - name: JAVA_OPTS
+          value: -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom
+        envFrom:
+        - configMapRef:
+            name: carts
+        image: public.ecr.aws/aws-containers/retail-store-sample-cart:0.8.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 45
+          periodSeconds: 3
+        name: carts
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            memory: 560Mi
+          requests:
+            cpu: 60m
+            memory: 360Mi
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+      securityContext:
+        fsGroup: 1000
+      serviceAccountName: carts
+      volumes:
+      - emptyDir:
+          medium: Memory
+        name: tmp-volume
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: dynamodb
+    app.kubernetes.io/instance: carts
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: carts
+    helm.sh/chart: carts-0.8.4
+  name: carts-dynamodb
+  namespace: retailstore-hilim
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: dynamodb
+      app.kubernetes.io/instance: carts
+      app.kubernetes.io/name: carts
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: dynamodb
+        app.kubernetes.io/instance: carts
+        app.kubernetes.io/name: carts
+    spec:
+      containers:
+      - image: amazon/dynamodb-local:1.20.0
+        imagePullPolicy: IfNotPresent
+        name: dynamodb
+        ports:
+        - containerPort: 8000
+          name: dynamodb
+          protocol: TCP
+        resources:
+          limits:
+            memory: 460Mi
+          requests:
+            cpu: 60m
+            memory: 210Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/component: service
     app.kubernetes.io/instance: catalog
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: catalog
@@ -96,7 +286,7 @@ metadata:
   name: catalog
   namespace: retailstore-hilim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -149,10 +339,10 @@ spec:
           protocol: TCP
         resources:
           limits:
-            memory: 2000Mi
+            memory: 60Mi
           requests:
-            cpu: 300m
-            memory: 800Mi
+            cpu: 60m
+            memory: 60Mi
         securityContext:
           capabilities:
             drop:
@@ -183,7 +373,7 @@ metadata:
   name: catalog-mysql
   namespace: retailstore-hilim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: mysql
@@ -222,10 +412,10 @@ spec:
           protocol: TCP
         resources:
           limits:
-            memory: 2000Mi
+            memory: 710Mi
           requests:
-            cpu: 300m
-            memory: 800Mi
+            cpu: 60m
+            memory: 4600Mi
         volumeMounts:
         - mountPath: /var/lib/mysql
           name: data
@@ -306,126 +496,6 @@ spec:
     app.kubernetes.io/instance: carts
     app.kubernetes.io/name: carts
   type: ClusterIP
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app.kuberneres.io/owner: retail-store-sample
-    app.kubernetes.io/component: service
-    app.kubernetes.io/instance: carts
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: carts
-    helm.sh/chart: carts-0.8.4
-  name: carts
-  namespace: retailstore-hilim
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app.kuberneres.io/owner: retail-store-sample
-      app.kubernetes.io/component: service
-      app.kubernetes.io/instance: carts
-      app.kubernetes.io/name: carts
-  strategy:
-    rollingUpdate:
-      maxUnavailable: 1
-    type: RollingUpdate
-  template:
-    metadata:
-      annotations:
-        prometheus.io/path: /actuator/prometheus
-        prometheus.io/port: '8080'
-        prometheus.io/scrape: 'true'
-      labels:
-        app.kuberneres.io/owner: retail-store-sample
-        app.kubernetes.io/component: service
-        app.kubernetes.io/instance: carts
-        app.kubernetes.io/name: carts
-    spec:
-      containers:
-      - env:
-        - name: JAVA_OPTS
-          value: -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom
-        envFrom:
-        - configMapRef:
-            name: carts
-        image: public.ecr.aws/aws-containers/retail-store-sample-cart:0.8.4
-        imagePullPolicy: IfNotPresent
-        livenessProbe:
-          httpGet:
-            path: /actuator/health/liveness
-            port: 8080
-          initialDelaySeconds: 45
-          periodSeconds: 3
-        name: carts
-        ports:
-        - containerPort: 8080
-          name: http
-          protocol: TCP
-        resources:
-          limits:
-            memory: 3400Mi
-          requests:
-            cpu: 380m
-            memory: 1500Mi
-        securityContext:
-          capabilities:
-            drop:
-            - ALL
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          runAsUser: 1000
-        volumeMounts:
-        - mountPath: /tmp
-          name: tmp-volume
-      securityContext:
-        fsGroup: 1000
-      serviceAccountName: carts
-      volumes:
-      - emptyDir:
-          medium: Memory
-        name: tmp-volume
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app.kubernetes.io/component: dynamodb
-    app.kubernetes.io/instance: carts
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: carts
-    helm.sh/chart: carts-0.8.4
-  name: carts-dynamodb
-  namespace: retailstore-hilim
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app.kubernetes.io/component: dynamodb
-      app.kubernetes.io/instance: carts
-      app.kubernetes.io/name: carts
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/component: dynamodb
-        app.kubernetes.io/instance: carts
-        app.kubernetes.io/name: carts
-    spec:
-      containers:
-      - image: amazon/dynamodb-local:1.20.0
-        imagePullPolicy: IfNotPresent
-        name: dynamodb
-        ports:
-        - containerPort: 8000
-          name: dynamodb
-          protocol: TCP
-        resources:
-          limits:
-            memory: 3200Mi
-          requests:
-            cpu: 380m
-            memory: 1500Mi
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -547,6 +617,123 @@ metadata:
   labels:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/component: service
+    app.kubernetes.io/instance: checkout
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: checkout
+    helm.sh/chart: checkout-0.8.4
+  name: checkout
+  namespace: retailstore-hilim
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kuberneres.io/owner: retail-store-sample
+      app.kubernetes.io/component: service
+      app.kubernetes.io/instance: checkout
+      app.kubernetes.io/name: checkout
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: '8080'
+        prometheus.io/scrape: 'true'
+      labels:
+        app.kuberneres.io/owner: retail-store-sample
+        app.kubernetes.io/component: service
+        app.kubernetes.io/instance: checkout
+        app.kubernetes.io/name: checkout
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: checkout
+        image: public.ecr.aws/aws-containers/retail-store-sample-checkout:0.8.4
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 3
+        name: checkout
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            memory: 210Mi
+          requests:
+            cpu: 60m
+            memory: 110Mi
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp-volume
+      securityContext:
+        fsGroup: 1000
+      serviceAccountName: checkout
+      volumes:
+      - emptyDir:
+          medium: Memory
+        name: tmp-volume
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/instance: checkout
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: checkout
+    helm.sh/chart: checkout-0.8.4
+  name: checkout-redis
+  namespace: retailstore-hilim
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: redis
+      app.kubernetes.io/instance: checkout
+      app.kubernetes.io/name: checkout
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: redis
+        app.kubernetes.io/instance: checkout
+        app.kubernetes.io/name: checkout
+    spec:
+      containers:
+      - image: redis:6.0-alpine
+        imagePullPolicy: IfNotPresent
+        name: redis
+        ports:
+        - containerPort: 6379
+          name: redis
+          protocol: TCP
+        resources:
+          limits:
+            memory: 10Mi
+          requests:
+            cpu: 60m
+            memory: 10Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/component: service
     app.kubernetes.io/instance: orders
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: orders
@@ -554,7 +741,7 @@ metadata:
   name: orders
   namespace: retailstore-hilim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -611,10 +798,10 @@ spec:
           protocol: TCP
         resources:
           limits:
-            memory: 3200Mi
+            memory: 510Mi
           requests:
-            cpu: 384m
-            memory: 1500Mi
+            cpu: 60m
+            memory: 310Mi
         securityContext:
           capabilities:
             drop:
@@ -645,7 +832,7 @@ metadata:
   name: orders-postgresql
   namespace: retailstore-hilim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: postgresql
@@ -684,10 +871,10 @@ spec:
           protocol: TCP
         resources:
           limits:
-            memory: 2000Mi
+            memory: 160Mi
           requests:
-            cpu: 300m
-            memory: 800Mi
+            cpu: 60m
+            memory: 110Mi
         volumeMounts:
         - mountPath: /data
           name: data
@@ -707,7 +894,7 @@ metadata:
   name: orders-rabbitmq
   namespace: retailstore-hilim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: rabbitmq
@@ -734,10 +921,10 @@ spec:
           protocol: TCP
         resources:
           limits:
-            memory: 2000Mi
+            memory: 310Mi
           requests:
-            cpu: 300m
-            memory: 800Mi
+            cpu: 60m
+            memory: 210Mi
         volumeMounts:
         - mountPath: /var/lib/rabbitmq/mnesia
           name: data
@@ -815,123 +1002,6 @@ spec:
     app.kubernetes.io/name: checkout
   type: ClusterIP
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app.kuberneres.io/owner: retail-store-sample
-    app.kubernetes.io/component: service
-    app.kubernetes.io/instance: checkout
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: checkout
-    helm.sh/chart: checkout-0.8.4
-  name: checkout
-  namespace: retailstore-hilim
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app.kuberneres.io/owner: retail-store-sample
-      app.kubernetes.io/component: service
-      app.kubernetes.io/instance: checkout
-      app.kubernetes.io/name: checkout
-  strategy:
-    rollingUpdate:
-      maxUnavailable: 1
-    type: RollingUpdate
-  template:
-    metadata:
-      annotations:
-        prometheus.io/path: /metrics
-        prometheus.io/port: '8080'
-        prometheus.io/scrape: 'true'
-      labels:
-        app.kuberneres.io/owner: retail-store-sample
-        app.kubernetes.io/component: service
-        app.kubernetes.io/instance: checkout
-        app.kubernetes.io/name: checkout
-    spec:
-      containers:
-      - envFrom:
-        - configMapRef:
-            name: checkout
-        image: public.ecr.aws/aws-containers/retail-store-sample-checkout:0.8.4
-        imagePullPolicy: IfNotPresent
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 3
-        name: checkout
-        ports:
-        - containerPort: 8080
-          name: http
-          protocol: TCP
-        resources:
-          limits:
-            memory: 1800Mi
-          requests:
-            cpu: 384m
-            memory: 768Mi
-        securityContext:
-          capabilities:
-            drop:
-            - ALL
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          runAsUser: 1000
-        volumeMounts:
-        - mountPath: /tmp
-          name: tmp-volume
-      securityContext:
-        fsGroup: 1000
-      serviceAccountName: checkout
-      volumes:
-      - emptyDir:
-          medium: Memory
-        name: tmp-volume
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app.kubernetes.io/component: redis
-    app.kubernetes.io/instance: checkout
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: checkout
-    helm.sh/chart: checkout-0.8.4
-  name: checkout-redis
-  namespace: retailstore-hilim
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app.kubernetes.io/component: redis
-      app.kubernetes.io/instance: checkout
-      app.kubernetes.io/name: checkout
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/component: redis
-        app.kubernetes.io/instance: checkout
-        app.kubernetes.io/name: checkout
-    spec:
-      containers:
-      - image: redis:6.0-alpine
-        imagePullPolicy: IfNotPresent
-        name: redis
-        ports:
-        - containerPort: 6379
-          name: redis
-          protocol: TCP
-        resources:
-          limits:
-            memory: 1900Mi
-          requests:
-            cpu: 384m
-            memory: 768Mi
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -977,76 +1047,6 @@ spec:
     app.kubernetes.io/instance: assets
     app.kubernetes.io/name: assets
   type: ClusterIP
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  labels:
-    app.kuberneres.io/owner: retail-store-sample
-    app.kubernetes.io/component: service
-    app.kubernetes.io/instance: assets
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: assets
-    helm.sh/chart: assets-0.8.4
-  name: assets
-  namespace: retailstore-hilim
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app.kuberneres.io/owner: retail-store-sample
-      app.kubernetes.io/component: service
-      app.kubernetes.io/instance: assets
-      app.kubernetes.io/name: assets
-  strategy:
-    rollingUpdate:
-      maxUnavailable: 1
-    type: RollingUpdate
-  template:
-    metadata:
-      labels:
-        app.kuberneres.io/owner: retail-store-sample
-        app.kubernetes.io/component: service
-        app.kubernetes.io/instance: assets
-        app.kubernetes.io/name: assets
-    spec:
-      containers:
-      - envFrom:
-        - configMapRef:
-            name: assets
-        image: public.ecr.aws/aws-containers/retail-store-sample-assets:0.8.4
-        imagePullPolicy: IfNotPresent
-        livenessProbe:
-          httpGet:
-            path: /health.html
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 3
-        name: assets
-        ports:
-        - containerPort: 8080
-          name: http
-          protocol: TCP
-        resources:
-          limits:
-            memory: 1200Mi
-          requests:
-            cpu: 384m
-            memory: 384Mi
-        securityContext:
-          capabilities:
-            drop:
-            - ALL
-          readOnlyRootFilesystem: false
-        volumeMounts:
-        - mountPath: /tmp
-          name: tmp-volume
-      securityContext: {}
-      serviceAccountName: assets
-      volumes:
-      - emptyDir:
-          medium: Memory
-        name: tmp-volume
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -1111,7 +1111,7 @@ metadata:
   name: ui
   namespace: retailstore-hilim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -1156,10 +1156,10 @@ spec:
           protocol: TCP
         resources:
           limits:
-            memory: 3400Mi
+            memory: 560Mi
           requests:
-            cpu: 384m
-            memory: 1500Mi
+            cpu: 60m
+            memory: 310Mi
         securityContext:
           capabilities:
             add:

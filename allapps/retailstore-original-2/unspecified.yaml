@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: retailstore-loreq
+  name: retailstore-unspecified
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,7 +14,7 @@ metadata:
     app.kubernetes.io/name: catalog
     helm.sh/chart: catalog-0.8.4
   name: catalog
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 data:
@@ -23,7 +23,7 @@ data:
 kind: Secret
 metadata:
   name: catalog-db
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 data:
@@ -33,7 +33,7 @@ data:
 kind: ConfigMap
 metadata:
   name: catalog
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 kind: Service
@@ -45,7 +45,7 @@ metadata:
     app.kubernetes.io/name: catalog
     helm.sh/chart: catalog-0.8.4
   name: catalog-mysql
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
   ports:
   - name: mysql
@@ -69,7 +69,7 @@ metadata:
     app.kubernetes.io/name: catalog
     helm.sh/chart: catalog-0.8.4
   name: catalog
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
   ports:
   - name: http
@@ -94,9 +94,9 @@ metadata:
     app.kubernetes.io/name: catalog
     helm.sh/chart: catalog-0.8.4
   name: catalog
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -147,12 +147,6 @@ spec:
         - containerPort: 8080
           name: http
           protocol: TCP
-        resources:
-          limits:
-            memory: 320Mi
-          requests:
-            cpu: 20m
-            memory: 64Mi
         securityContext:
           capabilities:
             drop:
@@ -181,9 +175,9 @@ metadata:
     app.kubernetes.io/name: catalog
     helm.sh/chart: catalog-0.8.4
   name: catalog-mysql
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: mysql
@@ -220,15 +214,9 @@ spec:
         - containerPort: 3306
           name: mysql
           protocol: TCP
-        resources:
-          limits:
-            memory: 1000Mi
-          requests:
-            cpu: 10m
-            memory: 90Mi
         volumeMounts:
-        - mountPath: /tmp
-          name: tmp-volume
+        - mountPath: /var/lib/mysql
+          name: data
       volumes:
       - emptyDir: {}
         name: data
@@ -244,7 +232,7 @@ metadata:
     app.kubernetes.io/name: carts
     helm.sh/chart: carts-0.8.4
   name: carts
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 data:
@@ -257,7 +245,7 @@ data:
 kind: ConfigMap
 metadata:
   name: carts
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 kind: Service
@@ -269,7 +257,7 @@ metadata:
     app.kubernetes.io/name: carts
     helm.sh/chart: carts-0.8.4
   name: carts-dynamodb
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
   ports:
   - name: dynamodb
@@ -293,7 +281,7 @@ metadata:
     app.kubernetes.io/name: carts
     helm.sh/chart: carts-0.8.4
   name: carts
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
   ports:
   - name: http
@@ -318,9 +306,9 @@ metadata:
     app.kubernetes.io/name: carts
     helm.sh/chart: carts-0.8.4
   name: carts
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -363,12 +351,6 @@ spec:
         - containerPort: 8080
           name: http
           protocol: TCP
-        resources:
-          limits:
-            memory: 512Mi
-          requests:
-            cpu: 5m
-            memory: 128Mi
         securityContext:
           capabilities:
             drop:
@@ -397,9 +379,9 @@ metadata:
     app.kubernetes.io/name: carts
     helm.sh/chart: carts-0.8.4
   name: carts-dynamodb
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: dynamodb
@@ -420,12 +402,6 @@ spec:
         - containerPort: 8000
           name: dynamodb
           protocol: TCP
-        resources:
-          limits:
-            memory: 512Mi
-          requests:
-            cpu: 5m
-            memory: 128Mi
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -438,7 +414,7 @@ metadata:
     app.kubernetes.io/name: orders
     helm.sh/chart: orders-0.8.4
   name: orders
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 data:
@@ -447,14 +423,14 @@ data:
 kind: Secret
 metadata:
   name: orders-db
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 data: null
 kind: Secret
 metadata:
   name: orders-rabbitmq
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 data:
@@ -464,7 +440,7 @@ data:
 kind: ConfigMap
 metadata:
   name: orders
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 kind: Service
@@ -476,7 +452,7 @@ metadata:
     app.kubernetes.io/name: orders
     helm.sh/chart: orders-0.8.4
   name: orders-postgresql
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
   ports:
   - name: postgresql
@@ -499,7 +475,7 @@ metadata:
     app.kubernetes.io/name: orders
     helm.sh/chart: orders-0.8.4
   name: orders-rabbitmq
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
   ports:
   - name: amqp
@@ -527,7 +503,7 @@ metadata:
     app.kubernetes.io/name: orders
     helm.sh/chart: orders-0.8.4
   name: orders
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
   ports:
   - name: http
@@ -552,9 +528,9 @@ metadata:
     app.kubernetes.io/name: orders
     helm.sh/chart: orders-0.8.4
   name: orders
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -609,12 +585,6 @@ spec:
         - containerPort: 8080
           name: http
           protocol: TCP
-        resources:
-          limits:
-            memory: 1100Mi
-          requests:
-            cpu: 35m
-            memory: 40Mi
         securityContext:
           capabilities:
             drop:
@@ -643,9 +613,9 @@ metadata:
     app.kubernetes.io/name: orders
     helm.sh/chart: orders-0.8.4
   name: orders-postgresql
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: postgresql
@@ -682,15 +652,9 @@ spec:
         - containerPort: 5432
           name: postgresql
           protocol: TCP
-        resources:
-          limits:
-            memory: 1000Mi
-          requests:
-            cpu: 10m
-            memory: 60Mi
         volumeMounts:
-        - mountPath: /tmp
-          name: tmp-volume
+        - mountPath: /data
+          name: data
       volumes:
       - emptyDir: {}
         name: data
@@ -705,9 +669,9 @@ metadata:
     app.kubernetes.io/name: orders
     helm.sh/chart: orders-0.8.4
   name: orders-rabbitmq
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: rabbitmq
@@ -732,15 +696,9 @@ spec:
         - containerPort: 15672
           name: http
           protocol: TCP
-        resources:
-          limits:
-            memory: 1000Mi
-          requests:
-            cpu: 15m
-            memory: 30Mi
         volumeMounts:
-        - mountPath: /tmp
-          name: tmp-volume
+        - mountPath: /var/lib/rabbitmq/mnesia
+          name: data
       volumes:
       - emptyDir: {}
         name: data
@@ -756,7 +714,7 @@ metadata:
     app.kubernetes.io/name: checkout
     helm.sh/chart: checkout-0.8.4
   name: checkout
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 data:
@@ -765,7 +723,7 @@ data:
 kind: ConfigMap
 metadata:
   name: checkout
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 kind: Service
@@ -777,7 +735,7 @@ metadata:
     app.kubernetes.io/name: checkout
     helm.sh/chart: checkout-0.8.4
   name: checkout-redis
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
   ports:
   - name: redis
@@ -801,7 +759,7 @@ metadata:
     app.kubernetes.io/name: checkout
     helm.sh/chart: checkout-0.8.4
   name: checkout
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
   ports:
   - name: http
@@ -826,9 +784,9 @@ metadata:
     app.kubernetes.io/name: checkout
     helm.sh/chart: checkout-0.8.4
   name: checkout
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -868,12 +826,6 @@ spec:
         - containerPort: 8080
           name: http
           protocol: TCP
-        resources:
-          limits:
-            memory: 256Mi
-          requests:
-            cpu: 15m
-            memory: 50Mi
         securityContext:
           capabilities:
             drop:
@@ -902,9 +854,9 @@ metadata:
     app.kubernetes.io/name: checkout
     helm.sh/chart: checkout-0.8.4
   name: checkout-redis
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: redis
@@ -925,12 +877,6 @@ spec:
         - containerPort: 6379
           name: redis
           protocol: TCP
-        resources:
-          limits:
-            memory: 512Mi
-          requests:
-            cpu: 10m
-            memory: 80Mi
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -943,7 +889,7 @@ metadata:
     app.kubernetes.io/name: assets
     helm.sh/chart: assets-0.8.4
   name: assets
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 data:
@@ -951,7 +897,7 @@ data:
 kind: ConfigMap
 metadata:
   name: assets
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 kind: Service
@@ -964,7 +910,7 @@ metadata:
     app.kubernetes.io/name: assets
     helm.sh/chart: assets-0.8.4
   name: assets
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
   ports:
   - name: http
@@ -989,9 +935,9 @@ metadata:
     app.kubernetes.io/name: assets
     helm.sh/chart: assets-0.8.4
   name: assets
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -1027,12 +973,6 @@ spec:
         - containerPort: 8080
           name: http
           protocol: TCP
-        resources:
-          limits:
-            memory: 128Mi
-          requests:
-            cpu: 12m
-            memory: 30Mi
         securityContext:
           capabilities:
             drop:
@@ -1059,7 +999,7 @@ metadata:
     app.kubernetes.io/name: ui
     helm.sh/chart: ui-0.8.4
   name: ui
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 data:
@@ -1071,7 +1011,7 @@ data:
 kind: ConfigMap
 metadata:
   name: ui
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 ---
 apiVersion: v1
 kind: Service
@@ -1084,7 +1024,7 @@ metadata:
     app.kubernetes.io/name: ui
     helm.sh/chart: ui-0.8.4
   name: ui
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
   ports:
   - name: http
@@ -1109,9 +1049,9 @@ metadata:
     app.kubernetes.io/name: ui
     helm.sh/chart: ui-0.8.4
   name: ui
-  namespace: retailstore-loreq
+  namespace: retailstore-unspecified
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -1154,12 +1094,6 @@ spec:
         - containerPort: 8080
           name: http
           protocol: TCP
-        resources:
-          limits:
-            memory: 512Mi
-          requests:
-            cpu: 5m
-            memory: 20Mi
         securityContext:
           capabilities:
             add:

@@ -96,7 +96,7 @@ metadata:
   name: catalog
   namespace: retailstore-lolim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -183,7 +183,7 @@ metadata:
   name: catalog-mysql
   namespace: retailstore-lolim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: mysql
@@ -320,7 +320,7 @@ metadata:
   name: carts
   namespace: retailstore-lolim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -399,7 +399,7 @@ metadata:
   name: carts-dynamodb
   namespace: retailstore-lolim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: dynamodb
@@ -554,7 +554,7 @@ metadata:
   name: orders
   namespace: retailstore-lolim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -645,7 +645,7 @@ metadata:
   name: orders-postgresql
   namespace: retailstore-lolim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: postgresql
@@ -707,7 +707,7 @@ metadata:
   name: orders-rabbitmq
   namespace: retailstore-lolim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: rabbitmq
@@ -828,7 +828,7 @@ metadata:
   name: checkout
   namespace: retailstore-lolim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -904,7 +904,7 @@ metadata:
   name: checkout-redis
   namespace: retailstore-lolim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/component: redis
@@ -991,7 +991,7 @@ metadata:
   name: assets
   namespace: retailstore-lolim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
@@ -1111,7 +1111,7 @@ metadata:
   name: ui
   namespace: retailstore-lolim
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kuberneres.io/owner: retail-store-sample
