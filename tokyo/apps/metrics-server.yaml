@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/david-chase/argocd01.git
     targetRevision: HEAD
-    path: allaps/metrics-server
+    path: tokyo/apps/metrics-server
 
   destination:
     server: https://kubernetes.default.svc
