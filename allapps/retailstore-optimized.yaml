@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: retailstore-optimized
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - env: hilim
+            namespace: retailstore-hilim
+            valueFile: values-optimized.yaml
+          - env: hireq
+            namespace: retailstore-hireq
+            valueFile: values-optimized.yaml
+          - env: loreq
+            namespace: retailstore-loreq
+            valueFile: values-optimized.yaml
+          - env: lolim
+            namespace: retailstore-lolim
+            valueFile: values-optimized.yaml
+          - env: unspecified
+            namespace: retailstore-unspecified
+            valueFile: values-optimized.yaml
+  template:
+    metadata:
+      name: retailstore-{{ env }}
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/david-chase/argocd01
+        targetRevision: HEAD
+        path: tokyo/apps/retailstore
+        helm:
+          valueFiles:
+            - '{{ valueFile }}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ namespace }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
