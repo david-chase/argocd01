@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: local-path-storage
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/david-chase/argocd01.git
+    targetRevision: HEAD
+    path: tokyo/apps/local-path-storage
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: local-path-storage
+
+  syncPolicy:
+    automated: {}
