@@ -1,0 +1,5 @@
+# Create a namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argo-events     # Enter namespace

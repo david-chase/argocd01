@@ -1,31 +1,20 @@
-# This application requires installing a Helm chart, then applying a manifest
-# I downloaded the Helm chart locally, then moved the manifest (eventbus.yaml)
-# into the Helm chart templates\ folder so it applies as part of the Helm chart
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: argo-events               # App name
   namespace: argocd
   labels:
-    appversion: "1.9.6"     # Version of the app 
+    appversion: "1.8.6"     # Version of the app 
 spec:
   project: default
   source:
-    repoURL: https://github.com/david-chase/argocd01
+    repoURL: https://github.com/david-chase/argocd01.git
     targetRevision: HEAD
-    path: tokyo/apps/argo-events   # This folder should hold the Helm chart
-    helm:
-      valueFiles:
-        - values.yaml               # This must exist in the chart folder in the Git repo
+    path: tokyo/apps/argo-events   # Location where the manifests are stored
   destination:
     server: https://kubernetes.default.svc
-    namespace: argo-events          # Namespace to deploy to
+    namespace: argo-events         # Namespace to deploy to
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true        # Auto-sync?
-    syncOptions:
-      - CreateNamespace=true
-  ignoreDifferences:
-    - group: cilium.io
-      kind: CiliumIdentity
+      selfHeal: true                # Auto-sync?
