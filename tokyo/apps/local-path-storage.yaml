@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: local-path-storage
   namespace: argocd
+  labels:
+    appversion: "0.0.31"
 spec:
   project: default
 

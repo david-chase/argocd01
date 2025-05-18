@@ -1,21 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: metrics-server
+  name: argo-workflows               # App name
   namespace: argocd
   labels:
-    appversion: "0.7.2"
+    appversion: "3.6.7"     # Version of the app 
 spec:
   project: default
 
   source:
     repoURL: https://github.com/david-chase/argocd01.git
     targetRevision: HEAD
-    path: tokyo/apps/metrics-server
+    path: tokyo/apps/argo-workflows   # Location where the manifests are stored
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: kube-system
+    namespace: argo          # Namespace to deploy to
 
   syncPolicy:
-    automated: {}
+    automated: true         # Auto-sync?

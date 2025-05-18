@@ -1,29 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: <name of app>               # App name
   namespace: argocd
   labels:
-    appversion: "1.17.2"
+    appversion: "<app version>"     # Version of the app 
 spec:
   project: default
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: tokyo/apps/cert-manager
+    path: tokyo/apps/<app folder>   # This folder should hold the Helm chart
     helm:
-       parameters:
-        - name: crds.enabled
-          value: "true"
- #     valueFiles:
- #       - values.yaml  # This must exist in the chart folder in the Git repo
+      valueFiles:
+        - values.yaml               # This must exist in the chart folder in the Git repo
   destination:
     server: https://kubernetes.default.svc
-    namespace: cert-manager
+    namespace: <namespace>          # Namespace to deploy to
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
+      selfHeal: <true|false>        # Auto-sync?
     syncOptions:
       - CreateNamespace=true
   ignoreDifferences:
