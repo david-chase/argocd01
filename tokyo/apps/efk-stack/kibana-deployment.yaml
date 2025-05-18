@@ -26,6 +26,6 @@ spec:
         - name: ELASTICSEARCH_SSL_VERIFICATIONMODE
           value: "none"
         - name: XPACK_SECURITY_ENCRYPTIONKEY
-          value: "a_secure_32_characters_key_here"
+          value: "qysl5yhl927dbchr62kl08xtehsyav3l"
         ports:
         - containerPort: 5601
