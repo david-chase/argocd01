@@ -2,18 +2,28 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: cert-manager
-  namespace: cert-manager
+  namespace: argocd
 spec:
   project: default
-
   source:
-    repoURL: https://github.com/david-chase/argocd01.git
+    repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
     path: tokyo/apps/cert-manager
-
+    helm:
+       parameters:
+        - name: crds.enabled
+          value: "true"
+ #     valueFiles:
+ #       - values.yaml  # This must exist in the chart folder in the Git repo
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager
-
   syncPolicy:
-    automated: {}
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  ignoreDifferences:
+    - group: cilium.io
+      kind: CiliumIdentity
