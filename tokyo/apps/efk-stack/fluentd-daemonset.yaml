@@ -17,7 +17,7 @@ spec:
       serviceAccountName: default
       containers:
         - name: fluentd
-          image: fluent/fluentd-kubernetes-daemonset:v1.16.5-debian-elasticsearch7-1.0
+          image: fluent/fluentd-kubernetes-daemonset:v1-debian-elasticsearch
           env:
             - name: FLUENT_ELASTICSEARCH_HOST
               value: "elasticsearch"
