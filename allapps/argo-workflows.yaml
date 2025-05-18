@@ -18,4 +18,6 @@ spec:
     namespace: argo          # Namespace to deploy to
 
   syncPolicy:
-    automated: true         # Auto-sync?
+    automated:
+      prune: true
+      selfHeal: true
