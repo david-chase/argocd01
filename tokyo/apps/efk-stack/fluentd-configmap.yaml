@@ -13,9 +13,15 @@ data:
       format json
     </source>
 
-    <match kube.**>
+    <match **>
       @type elasticsearch
       host elasticsearch
       port 9200
+      scheme https
+      ssl_verify false
+      user elastic
+      password bRe4GdnY35g49xUHE6dz
       logstash_format true
+      logstash_prefix fluentd
+      include_tag_key true
     </match>
