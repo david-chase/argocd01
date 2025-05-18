@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: fluentd
-        image: fluent/fluentd:latest
+        image: fluent/fluentd-kubernetes-daemonset:v1-debian-elasticsearch
         volumeMounts:
         - name: config-volume
           mountPath: /fluentd/etc
