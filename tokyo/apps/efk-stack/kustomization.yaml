@@ -8,4 +8,5 @@ resources:                  # These are examples
   - kibana-deployment.yaml
   - kibana-service.yaml
   - fluentd-configmap.yaml
+  - fluentd-rbac.yaml
   - fluentd-daemonset.yaml
