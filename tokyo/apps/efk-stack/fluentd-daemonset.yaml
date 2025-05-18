@@ -14,7 +14,7 @@ spec:
       labels:
         app: fluentd
     spec:
-      serviceAccountName: fluentd
+      serviceAccountName: default
       containers:
         - name: fluentd
           image: fluent/fluentd-kubernetes-daemonset:v1-debian-elasticsearch
