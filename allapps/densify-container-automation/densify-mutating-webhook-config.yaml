@@ -1,0 +1,38 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: densify-resource-optimization-webhook
+  # Uncomment the below annotation 'cert-manager.io/inject-ca-from' if using cert-manager
+  #annotations:
+  cert-manager.io/inject-ca-from: densify-automation/densify-automation-cert
+webhooks:
+  - name: resource-optimizer.densify.com
+    clientConfig:
+      service:
+        name: densify-webhook-service
+        namespace: densify-automation
+        path: "/mutate" # To specify a specific policy for this webhook use /mutate/<policyName>
+      # Replace <YOUR_CA_BUNDLE_BASE64> with your base64-encoded CA certificate
+      caBundle: "TUlJREJUQ0NBZTJnQXdJQkFnSUlYRHdKc2ZJbzRLRXdEUVlKS29aSWh2Y05BUUVMQlFBd0ZURVRNQkVHQTFVRQ0KQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TlRBME1qRXhPVE00TVRaYUZ3MHpOVEEwTVRreE9UUXpNVFphTUJVeA0KRXpBUkJnTlZCQU1UQ210MVltVnlibVYwWlhNd2dnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFSw0KQW9JQkFRRFdaZkd4ak9BZ1d3Qi9ObFBkVXpTWWowWTVOd0Q0YWhqaFBoc3EzamdPcVZLbHN5RVlOQ1YwUEUyUg0KWXdvTEpVOW1GWkFtSTlVOUJDdDFkWHA5WXpPNlR5VmpiNGpZYXliV0ZITGtqb3JWVW5UKytwSmd4ZmhML3BoOA0KSE5IdUV0eUthWnZsQ2RpY3dEK2ViZnJVb3JERkZ1Z2t2MVhsVlFnc1BZazF6YkYvSWE5TUhldHJBc1NUME8zKw0KU2xpV3UwN2g5dnlieXZZSUNVdVRtRXQ4aUpQQkpKTSs2WlpaQjZzSzhNTzV4UlEvd1daOXZub3NLWS96aWQ5Tw0KRkxSbXJ5bERxeWVWd1dJUWVuNlZZQ3ZMUkZ1V09HWHZDaEdUZGd3d0laeFE5ZkNOTUF5YUlMZjJxa2dXNTZOTA0KRWNjbXRaUVVFSEhYbTR3NzZTRmtpTVFsQWwrL0FnTUJBQUdqV1RCWE1BNEdBMVVkRHdFQi93UUVBd0lDcERBUA0KQmdOVkhSTUJBZjhFQlRBREFRSC9NQjBHQTFVZERnUVdCQlFQcVpkaUxKc3pIVDZmUFFEU1BIUTdCOHJiR3pBVg0KQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQmEyWCttTlZnVg0KQTNGOWxCbktpQVRBZlBUWmxtMzNYR3N1NGZMYjlCeUZJeldRVmdOTG9kWU5BbXpsbXkzMll1NWpGa2JzS01udA0KbGE4dzlQc2FUK29pUmorQll2ZmU0cEk2RU14OEJ6T0V4ejlteTA0ZWFMa3AzMEM1akpUaTlOaDRDRGptUDEwWA0KMENFcnRVN1FXTkNXQXhGazhKWnJPNzVucUkzdnQrS0xNMm5iMUwrenFjeWRMVWhxR3FrWFFXSEdiYURBbHRUWQ0KckFWTExjVmJHS01PRFN3dERlWWhBMDZZU1l6VjB4TGhWemhmc0N0cVJPTy9sQlRtZ2ZlSVJXNTdKY2gxbjk3TA0KS0lTNkpISC9wZGRLY2wxamFaNWpKODVsOWRyOWlEbVNYMytldUZIKzc1eVZYTFE1dndXeFVaMU1mdlRjVGx0dQ0KSTJXczhkUzByYk5u"
+    failurePolicy: Ignore
+    reinvocationPolicy: IfNeeded
+    rules:
+      - operations: ["CREATE", "UPDATE"]
+        apiGroups: [""]
+        apiVersions: ["v1"]
+        resources: ["pods"]
+        scope: "Namespaced"
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            - densify
+            - densify-automation
+            - kube-system
+    objectSelector:
+      matchLabels:
+        densify-automation: "true"
+    admissionReviewVersions: ["v1"]
+    sideEffects: "None"
+    timeoutSeconds: 10

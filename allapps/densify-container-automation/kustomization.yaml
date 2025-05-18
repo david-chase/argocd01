@@ -1,0 +1,11 @@
+resources:
+  - namespace.yaml
+  - densify-api-secret.yaml
+  - densify-automation-policy.yaml
+  - densify-configmap.yaml
+  - densify-recommendations-pv.yaml
+  - densify-recommendations-job.yaml
+  - densify-recommendations-cronjob.yaml
+  - densify-mutating-webhook-config.yaml
+  - densify-webhook-deployment.yaml
+  - densify-webhook-service.yaml
