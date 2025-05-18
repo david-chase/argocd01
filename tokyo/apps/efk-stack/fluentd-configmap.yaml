@@ -18,7 +18,12 @@ data:
 
     <filter kubernetes.**>
       @type kubernetes_metadata
-      verify_ssl false
+      kubernetes_url https://kubernetes.default.svc
+      ca_file /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      bearer_token_file /var/run/secrets/kubernetes.io/serviceaccount/token
+      verify_ssl true
+      cache_size 1000
+      watch true
     </filter>
 
     <match **>
