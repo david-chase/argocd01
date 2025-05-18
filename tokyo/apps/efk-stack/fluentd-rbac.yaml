@@ -15,7 +15,7 @@ metadata:
   namespace: efk-stack
 subjects:
   - kind: ServiceAccount
-    name: default
+    name: fluentd
     namespace: efk-stack
 roleRef:
   kind: Role
