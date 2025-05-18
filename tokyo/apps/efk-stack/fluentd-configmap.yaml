@@ -16,16 +16,6 @@ data:
       </parse>
     </source>
 
-    <filter kubernetes.**>
-      @type kubernetes_metadata
-      kubernetes_url 'https://kubernetes.default.svc'
-      verify_ssl false
-      ca_file /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-      bearer_token_file /var/run/secrets/kubernetes.io/serviceaccount/token
-      cache_size 1000
-      watch true
-    </filter>
-
     <match **>
       @type elasticsearch
       host elasticsearch
