@@ -9,8 +9,11 @@ data:
       @type tail
       path /var/log/containers/*.log
       pos_file /var/log/fluentd-containers.log.pos
-      tag kube.*
-      format json
+      tag kubernetes.*
+      read_from_head true
+      <parse>
+        @type cri
+      </parse>
     </source>
 
     <match **>
