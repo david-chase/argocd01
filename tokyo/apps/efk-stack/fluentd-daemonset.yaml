@@ -33,9 +33,6 @@ spec:
               mountPath: /var/log/containers
             - name: config-volume
               mountPath: /fluentd/etc
-            - name: kubernetes-cert
-              mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-              readOnly: true
       volumes:
         - name: varlog
           hostPath:
@@ -49,15 +46,3 @@ spec:
         - name: config-volume
           configMap:
             name: fluentd-config
-        - name: kubernetes-cert
-          projected:
-            sources:
-              - serviceAccountToken:
-                  path: token
-                  expirationSeconds: 3600
-                  audience: api
-              - configMap:
-                  name: kube-root-ca.crt
-                  items:
-                    - key: ca.crt
-                      path: ca.crt
