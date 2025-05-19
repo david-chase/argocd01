@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: external-secrets-installation
+spec:
+  generators:
+    - list:
+        elements:
+          - name: helm-install
+            folder: charts/external-secrets
+          - name: yaml-install
+            folder: manifests/external-secrets
+  template:
+    metadata:
+      name: '{{name}}'
+    spec:
+      project: default
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: external-secrets
+      source:
+        repoURL: https://github.com/your-org/your-repo.git
+        targetRevision: HEAD
+        path: '{{folder}}'
+        helm:
+          releaseName: external-secrets
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
