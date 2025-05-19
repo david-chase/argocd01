@@ -9,13 +9,32 @@ data:
       @type tail
       path /var/log/containers/*.log
       pos_file /var/log/fluentd-containers.log.pos
-      tag kube.*
-      format json
+      tag kubernetes.*
+      read_from_head true
+      <parse>
+        @type cri
+      </parse>
     </source>
 
-    <match kube.**>
+    <filter kubernetes.**>
+      @type kubernetes_metadata
+      kubernetes_url https://kubernetes.default.svc
+      ca_file /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+      bearer_token_file /var/run/secrets/kubernetes.io/serviceaccount/token
+      verify_ssl true
+      cache_size 1000
+      watch true
+    </filter>
+
+    <match **>
       @type elasticsearch
       host elasticsearch
       port 9200
+      scheme https
+      ssl_verify false
+      user elastic
+      password bRe4GdnY35g49xUHE6dz
       logstash_format true
+      logstash_prefix fluentd
+      include_tag_key true
     </match>

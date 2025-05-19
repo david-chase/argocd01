@@ -18,6 +18,14 @@ spec:
         image: docker.elastic.co/kibana/kibana:8.10.2
         env:
         - name: ELASTICSEARCH_HOSTS
-          value: http://elasticsearch:9200
+          value: "https://elasticsearch:9200"
+        - name: ELASTICSEARCH_USERNAME
+          value: "kibana_system"
+        - name: ELASTICSEARCH_PASSWORD
+          value: "pi_923oQEfSKZ0Mg2Q+H"
+        - name: ELASTICSEARCH_SSL_VERIFICATIONMODE
+          value: "none"
+        - name: XPACK_SECURITY_ENCRYPTIONKEY
+          value: "qysl5yhl927dbchr62kl08xtehsyav3l"
         ports:
         - containerPort: 5601
