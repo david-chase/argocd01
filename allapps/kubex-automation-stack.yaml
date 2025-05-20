@@ -1,41 +1,27 @@
-# This template will install an ApplicationSet that first installs a Helm chart, 
-# then installs some manifests on top of it
+# Files I've injected into the Helm chart templates folder:
+#  densify-api-secret.yaml
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Application
 metadata:
-  name: kubex-automation-stack-appset                               # Appset name
+  name: kubex-automation-stack
   namespace: argocd
+  labels:
+    appversion: "4.2.0"
 spec:
-  generators:
-    - list:
-        elements:
-          - name: helm
-            path: tokyo/apps/kubex-automation-stack/kubex-automation-stack      # Helm chart location
-            wave: "0"
-          - name: manifests
-            path: tokyo/apps/kubex-automation-stack/manifests       # Manifests location
-            wave: "1"
-  template:
-    metadata:
-      name: kubex-automation-stack-{{name}}                         # App name
-      annotations:
-        argocd.argoproj.io/sync-wave: "{{wave}}"
-    spec:
-      project: default
-      source:
-        repoURL: https://github.com/david-chase/argocd01.git
-        targetRevision: HEAD
-        path: '{{path}}'
-        {{- if eq .type "helm" }}
-        helm:
-          releaseName: kubex-automation-stack
-        {{- end }}
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: densify                           # Target namespace
-      syncPolicy:
-        automated:
-          selfHeal: true
-          prune: true
-        syncOptions:
-          - CreateNamespace=true
+  project: default
+  source:
+    repoURL: https://github.com/david-chase/argocd01
+    targetRevision: HEAD
+    path: tokyo/apps/kubex-automation-stack
+    helm:
+      valueFiles:
+        - values-edit.yaml  # This must exist in the chart folder in the Git repo
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: densify
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

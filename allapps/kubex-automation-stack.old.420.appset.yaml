@@ -1,0 +1,41 @@
+# This template will install an ApplicationSet that first installs a Helm chart, 
+# then installs some manifests on top of it
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kubex-automation-stack-appset                               # Appset name
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: helm
+            path: tokyo/apps/kubex-automation-stack/kubex-automation-stack      # Helm chart location
+            wave: "0"
+          - name: manifests
+            path: tokyo/apps/kubex-automation-stack/manifests       # Manifests location
+            wave: "1"
+  template:
+    metadata:
+      name: kubex-automation-stack-{{name}}                         # App name
+      annotations:
+        argocd.argoproj.io/sync-wave: "{{wave}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/david-chase/argocd01.git
+        targetRevision: HEAD
+        path: '{{path}}'
+        {{- if eq .type "helm" }}
+        helm:
+          releaseName: kubex-automation-stack
+        {{- end }}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: densify                           # Target namespace
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
