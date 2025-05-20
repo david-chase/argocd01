@@ -20,7 +20,7 @@ spec:
   syncPolicy:
     automated:
       prune: true
-      selfHeal: <true|false>        # Auto-sync?
+      selfHeal: true                # Auto-sync?
     syncOptions:
       - CreateNamespace=true
   ignoreDifferences:

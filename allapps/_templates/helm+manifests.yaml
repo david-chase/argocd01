@@ -1,32 +1,39 @@
+# This template will install an ApplicationSet that first installs a Helm chart, 
+# then installs some manifests on top of it
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: external-secrets-installation
+  name: sample-app-appset                               # Appset name
+  namespace: argocd
 spec:
   generators:
     - list:
         elements:
-          - name: helm-install
-            folder: charts/external-secrets
-          - name: yaml-install
-            folder: manifests/external-secrets
+          - name: helm
+            path: tokyo/apps/sample-app/sample-app      # Helm chart location
+            wave: "0"
+          - name: manifests
+            path: tokyo/apps/sample-app/manifests       # Manifests location
+            wave: "1"
   template:
     metadata:
-      name: '{{name}}'
+      name: sample-app-{{name}}                         # App name
+      annotations:
+        argocd.argoproj.io/sync-wave: "{{wave}}"
     spec:
       project: default
+      source:
+        repoURL: https://github.com/david-chase/argocd01.git
+        targetRevision: HEAD
+        path: '{{path}}'
+        helm:
+#          releaseName: sample-app
       destination:
         server: https://kubernetes.default.svc
-        namespace: external-secrets
-      source:
-        repoURL: https://github.com/your-org/your-repo.git
-        targetRevision: HEAD
-        path: '{{folder}}'
-        helm:
-          releaseName: external-secrets
+        namespace: sample-app                           # Target namespace
       syncPolicy:
         automated:
-          prune: true
           selfHeal: true
+          prune: true
         syncOptions:
           - CreateNamespace=true
