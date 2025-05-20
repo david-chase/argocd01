@@ -26,8 +26,10 @@ spec:
         repoURL: https://github.com/david-chase/argocd01.git
         targetRevision: HEAD
         path: '{{path}}'
+        {{- if eq .type "helm" }}
         helm:
-#          releaseName: sample-app
+          releaseName: kubex-automation-stack
+        {{- end }}
       destination:
         server: https://kubernetes.default.svc
         namespace: densify                           # Target namespace
