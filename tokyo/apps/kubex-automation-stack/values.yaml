@@ -223,4 +223,5 @@ prometheus:
               regex: .*-node-feature-discovery-master
             - source_labels: [__meta_kubernetes_pod_node_name]
               action: replace
-              target_label: kubernetes_node              
+              target_label: kubernetes_node
+            # ================================          
