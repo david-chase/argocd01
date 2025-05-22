@@ -167,20 +167,7 @@ prometheus:
           scrape_interval: 5m
           scrape_timeout: 30s
           kubernetes_sd_configs:
-            - role: endpoints
-        # ================================
-        # Adding for Nvidia support
-        # ================================            
-        - job_name: gpu-metrics
-          scrape_interval: 1s
-          metrics_path: /metrics
-          scheme: http
-          kubernetes_sd_configs:
-          - role: endpoints
-            namespaces:
-              names:
-              - gpu-operator
-        # ================================                   
+            - role: endpoints                
           relabel_configs:
             - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape_slow]
               action: keep
@@ -215,9 +202,19 @@ prometheus:
             - source_labels: [__meta_kubernetes_pod_node_name]
               action: replace
               target_label: node
-            # ================================
-            # Adding for Nvidia support
-            # ================================
+        # ================================
+        # Adding for Nvidia support
+        # ================================            
+        - job_name: gpu-metrics
+          scrape_interval: 1s
+          metrics_path: /metrics
+          scheme: http
+          kubernetes_sd_configs:
+          - role: endpoints
+            namespaces:
+              names:
+              - gpu-operator
+          relabel_configs:
             - source_labels: [__meta_kubernetes_endpoints_name]
               action: drop
               regex: .*-node-feature-discovery-master
@@ -226,5 +223,4 @@ prometheus:
               target_label: kubernetes_node
             - source_labels: [__meta_kubernetes_service_name]
               action: keep
-              regex: nvidia-dcgm-exporter|gpu-operator
-            # ================================          
+              regex: nvidia-dcgm-exporter|gpu-operator        
