@@ -206,7 +206,7 @@ prometheus:
         # Adding for Nvidia support
         # ================================            
         - job_name: gpu-metrics
-          scrape_interval: 1s
+          scrape_interval: 10s
           metrics_path: /metrics
           scheme: http
           kubernetes_sd_configs:
@@ -221,6 +221,6 @@ prometheus:
             - source_labels: [__meta_kubernetes_pod_node_name]
               action: replace
               target_label: kubernetes_node
-            - source_labels: [__meta_kubernetes_service_name]
-              action: keep
-              regex: nvidia-dcgm-exporter|gpu-operator        
+#            - source_labels: [__meta_kubernetes_service_name]
+#              action: keep
+#              regex: nvidia-dcgm-exporter|gpu-operator        
