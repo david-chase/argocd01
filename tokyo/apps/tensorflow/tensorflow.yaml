@@ -10,7 +10,6 @@ metadata:
   name: tf-cronjob-miami
   namespace: tensorflow
 spec:
-  # Every ten minutes
   schedule: schedule: "*/10 * * * *"  
   jobTemplate:
     spec:
@@ -41,7 +40,6 @@ metadata:
   name: tf-cronjob-obdisian
   namespace: tensorflow
 spec:
-  # Every ten minutes
   schedule: schedule: "*/10 * * * *"  
   jobTemplate:
     spec:
