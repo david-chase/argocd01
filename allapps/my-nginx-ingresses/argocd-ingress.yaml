@@ -9,15 +9,25 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - 192.168.1.100
-        - havana
         - localhost
+        - havana
       secretName: argocd-tls
   rules:
-    - http:
+    - host: havana
+      http:
         paths:
           - path: /argocd(/|$)(.*)
-            pathType: Prefix
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 443
+    - host: localhost
+      http:
+        paths:
+          - path: /argocd(/|$)(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: argocd-server
