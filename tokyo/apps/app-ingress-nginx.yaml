@@ -14,7 +14,13 @@ spec:
     helm:
       parameters:
       - name: controller.publishService.enabled
-        value: "true"
+        value: "false"
+      - name: controller.service.type
+        value: NodePort 
+      - name: controller.service.nodePorts.http
+        value: 30080
+      - name: controller.service.nodePorts.https
+        value: 30443
 #      valueFiles:
 #        - values.yaml               # This must exist in the chart folder in the Git repo
   destination:
