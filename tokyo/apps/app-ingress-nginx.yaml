@@ -15,12 +15,16 @@ spec:
       parameters:
       - name: controller.publishService.enabled
         value: "false"
+      - name: hostPort.enabled
+        value: "true"
+      - name: hostPort.http
+        value: "80"
+      - name: controller.hostPort.https
+        value: "443"
+      - name: controller.kind
+        value: "DaemonSet"
       - name: controller.service.type
-        value: NodePort 
-      - name: controller.service.nodePorts.http
-        value: 30080
-      - name: controller.service.nodePorts.https
-        value: 30443
+        value: "ClusterIP"
 #      valueFiles:
 #        - values.yaml               # This must exist in the chart folder in the Git repo
   destination:
