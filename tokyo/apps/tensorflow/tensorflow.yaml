@@ -27,11 +27,8 @@ spec:
             command:
             - python
             - -c
-            - |
-              import tensorflow as tf
-              print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
-              tf.constant([[1.0]]) @ tf.constant([[1.0]])
-              print("Computation done.")
+            - >
+              import tensorflow as tf; print("Num GPUs Available:", len(tf.config.list_physical_devices('GPU'))); tf.constant([[1.0]]) @ tf.constant([[1.0]]); print("Computation done.")
             resources:
               limits:
                 nvidia.com/gpu: 1
@@ -58,11 +55,8 @@ spec:
             command:
             - python
             - -c
-            - |
-              import tensorflow as tf
-              print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
-              tf.constant([[1.0]]) @ tf.constant([[1.0]])
-              print("Computation done.")
+            - >
+              import tensorflow as tf; print("Num GPUs Available:", len(tf.config.list_physical_devices('GPU'))); tf.constant([[1.0]]) @ tf.constant([[1.0]]); print("Computation done.")
             resources:
               limits:
                 nvidia.com/gpu: 1
