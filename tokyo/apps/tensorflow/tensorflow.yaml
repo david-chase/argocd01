@@ -1,0 +1,33 @@
+# Create a namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tensorflow     # Enter namespace
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tf-gpu-cronjob
+spec:
+  schedule: "0 * * * *"  # Every hour at minute 0
+  # schedule: "@never"
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: tensorflow
+            image: tensorflow/tensorflow:2.12.0-gpu
+            command:
+            - python
+            - -c
+            - |
+              import tensorflow as tf
+              print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
+              tf.constant([[1.0]]) @ tf.constant([[1.0]])
+              print("Computation done.")
+            resources:
+              limits:
+                nvidia.com/gpu: 1
