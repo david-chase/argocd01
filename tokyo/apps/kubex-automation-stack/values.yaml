@@ -196,7 +196,20 @@ prometheus:
             - source_labels: [__meta_kubernetes_pod_node_name]
               action: replace
               target_label: node
-            # Add scraping for DCGM
-            - source_labels: [__meta_kubernetes_endpoints_name]
-              action: keep
-              regex: '(kubex|densify)-(kube-state-metrics|prometheus-node-exporter)|.*dcgm.*'
+            # Adding for NVIDIA support          
+            - job_name: gpu-metrics
+              scrape_interval: 10s
+              metrics_path: /metrics
+              scheme: http
+              kubernetes_sd_configs:
+              - role: endpoints
+                namespaces:
+                  names:
+                  - gpu-operator
+              relabel_configs:
+                - source_labels: [__meta_kubernetes_endpoints_name]
+                  action: drop
+                  regex: .*-node-feature-discovery-master
+                - source_labels: [__meta_kubernetes_pod_node_name]
+                  action: replace
+                  target_label: kubernetes_node 
