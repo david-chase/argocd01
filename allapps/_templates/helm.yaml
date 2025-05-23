@@ -12,8 +12,11 @@ spec:
     targetRevision: HEAD
     path: tokyo/apps/<app folder>   # This folder should hold the Helm chart
     helm:
-      valueFiles:
-        - values.yaml               # This must exist in the chart folder in the Git repo
+#      parameters:
+#      - name: crds.enabled
+#        value: "true"
+#      valueFiles:
+#        - values.yaml               # This must exist in the chart folder in the Git repo
   destination:
     server: https://kubernetes.default.svc
     namespace: <namespace>          # Namespace to deploy to
