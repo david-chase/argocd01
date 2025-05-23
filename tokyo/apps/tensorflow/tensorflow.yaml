@@ -8,6 +8,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: tf-gpu-cronjob
+  namespace: tensorflow
 spec:
   schedule: "0 * * * *"  # Every hour at minute 0
   # schedule: "@never"
@@ -16,6 +17,39 @@ spec:
       backoffLimit: 1
       template:
         spec:
+          nodeSelector:
+            kubernetes.io/hostname: miami
+          restartPolicy: OnFailure
+          containers:
+          - name: tensorflow
+            image: tensorflow/tensorflow:2.12.0-gpu
+            command:
+            - python
+            - -c
+            - |
+              import tensorflow as tf
+              print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
+              tf.constant([[1.0]]) @ tf.constant([[1.0]])
+              print("Computation done.")
+            resources:
+              limits:
+                nvidia.com/gpu: 1
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tf-gpu-cronjob
+  namespace: tensorflow
+spec:
+  schedule: schedule: "30 * * * *"  # Every hour at minute 30
+  # schedule: "@never"
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          nodeSelector:
+            kubernetes.io/hostname: obsidian
           restartPolicy: OnFailure
           containers:
           - name: tensorflow
