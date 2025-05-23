@@ -9,6 +9,7 @@ spec:
   dnsNames:
     - 192.168.1.100
     - havana
+    - localhost
   issuerRef:
     name: selfsigned-cluster-issuer
     kind: ClusterIssuer
