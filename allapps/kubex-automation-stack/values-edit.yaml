@@ -1,7 +1,7 @@
 stack:
   densify:
-    username: 'forwarder' # mandatory
-    encrypted_password: 'v117e99fe4f74c299f9275106fcb890cb9ab0af38336a46c7e0372081525a76640d2a9d71b245c0b140155cfd4ffeba57c7a3a1f01d44f1ce84c8a54241efc2be9' # mandatory
+    # username: 'forwarder' # mandatory
+    # encrypted_password: 'v117e99fe4f74c299f9275106fcb890cb9ab0af38336a46c7e0372081525a76640d2a9d71b245c0b140155cfd4ffeba57c7a3a1f01d44f1ce84c8a54241efc2be9' # mandatory
 container-optimization-data-forwarder:
   config:
     forwarder:
