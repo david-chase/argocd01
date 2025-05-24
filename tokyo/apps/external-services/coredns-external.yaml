@@ -14,7 +14,7 @@ spec:
     k8s-app: coredns
   ports:
     - name: dns
-      protocol: UDP
+      protocol: UDPT
       port: 53
       targetPort: dns
     - name: dns-tcp
