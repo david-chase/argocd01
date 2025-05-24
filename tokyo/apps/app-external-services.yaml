@@ -13,7 +13,7 @@ spec:
     path: tokyo/apps/external-services   # Location where the manifests are stored
   destination:
     server: https://kubernetes.default.svc
-    namespace: default                  # Namespace to deploy to
+    namespace: ""                 # Blank namespace scopes app as cluster-wide
   syncPolicy:
     automated:
       prune: true
