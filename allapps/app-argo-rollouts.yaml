@@ -26,3 +26,5 @@ spec:
   ignoreDifferences:
     - group: cilium.io
       kind: CiliumIdentity
+    - group: cilium.io/v2
+      kind: CiliumIdentity
