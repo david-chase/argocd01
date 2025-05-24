@@ -10,6 +10,7 @@ data:
           192.168.1.3	    miami
           192.168.1.4     obsidian
           192.168.1.100   havana
+          192.168.1.5     dchaselt24
           192.168.1.230   dns.havana
           192.168.1.231   argocd.havana
           192.168.1.232   prometheus.havana
