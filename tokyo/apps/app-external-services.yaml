@@ -4,7 +4,7 @@ metadata:
   name: external-services               # App name
   namespace: argocd
   labels:
-    appversion: "0.1.0"     # Version of the app 
+    appversion: "0.1.0"                 # Version of the app 
 spec:
   project: default
   source:
@@ -13,8 +13,8 @@ spec:
     path: tokyo/apps/external-services   # Location where the manifests are stored
   destination:
     server: https://kubernetes.default.svc
-    namespace: default          # Namespace to deploy to
+    namespace: default                  # Namespace to deploy to
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true                # Auto-sync?
+      selfHeal: true                    # Auto-sync?
