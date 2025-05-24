@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana-external           # Name for the service
+  namespace: efk-stack
+  annotations:
+    description: "External service for MetalLB for Kibana"
+  labels:
+    app.kubernetes.io/instance: efk-stack
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.1.234   # Must be in MetalLB IP pool
+  selector:
+    app: kibana
+  ports:
+    - protocol: TCP
+      port: 5601
+      targetPort: 5601
+  sessionAffinity: None
