@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: <name>-external           # Name for the service
+  namespace: <namespace>
+  annotations:
+    description: "External service for MetalLB for <blank>"
+  labels:
+    # Copy this section from internal service
+spec:
+  type: LoadBalancer
+  loadBalancerIP: <external ip>   # Must be in MetalLB IP pool
+  selector:
+    # Copy this section from internal service
+  ports:
+    # Copy this section from internal service
+  sessionAffinity: None
