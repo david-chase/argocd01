@@ -1,3 +1,6 @@
+# Files I've injected into the Helm chart templates folder:
+#  address-pool.yaml
+#  advertisement.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
