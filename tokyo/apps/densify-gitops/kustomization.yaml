@@ -1,0 +1,12 @@
+resources: []
+
+# 1 folder (Git repo?) per cluster
+# 1 line in kustomization.yaml per unique manifest
+# 1 patch file per unique manifest
+patches:
+  - path: patch-kubescape.yaml
+  - path: kubex-automation-stack-kube-state-metrics.yaml
+  - path: kubex-automation-stack-prometheus-node-exporter.yaml
+  - path: kubex-prometheus-server.yaml
+  - path: argocd-server.yaml
+# etc, etc.

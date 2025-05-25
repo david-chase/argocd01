@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kubex-automation-stack-kube-state-metrics
+  namespace: densify
+spec:
+  template:
+    spec:
+      containers:
+        - name: kube-state-metrics
+          resources:
+            limits:
+              memory: "160Mi"
+            requests:
+              cpu: "10m"
+              memory: "60Mi"

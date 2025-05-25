@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubex-automation-stack-prometheus-node-exporter
+  namespace: densify
+spec:
+  template:
+    spec:
+      containers:
+        - name: node-exporter
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "60Mi"          
+            limits:
+              memory: "60Mi"

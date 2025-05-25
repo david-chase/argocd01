@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: densify-gitops                # App name
+  namespace: argocd
+  labels:
+    appversion: "0.1.0"               # Version of the app 
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/david-chase/argocd01.git
+    targetRevision: HEAD
+    path: tokyo/apps/densify-gitops   # Location where the manifests are stored
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ""                     # Namespace must be "" to it can operate across many namespaces
+  syncPolicy:
+    automated:
+      prune: false                    # Don't delete any resources if I delete this app
+      selfHeal: true                  # Over-write manual changes

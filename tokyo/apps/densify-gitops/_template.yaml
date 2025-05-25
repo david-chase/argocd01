@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: <pod owner kind>
+metadata:
+  name: <pod-name>
+  namespace: <pod-namespace>
+spec:
+  template:
+    spec:
+      containers:
+        - name: <container-name>
+          resources:
+            requests:
+              cpu: "xxxm"
+              memory: "xxxMi"          
+            limits:
+              memory: "xxxMi"
