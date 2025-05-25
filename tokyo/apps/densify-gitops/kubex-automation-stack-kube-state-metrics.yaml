@@ -9,8 +9,9 @@ spec:
       containers:
         - name: kube-state-metrics
           resources:
-            limits:
-              memory: "160Mi"
             requests:
               cpu: "10m"
               memory: "60Mi"
+            limits:
+              cpu: null
+              memory: "160Mi"

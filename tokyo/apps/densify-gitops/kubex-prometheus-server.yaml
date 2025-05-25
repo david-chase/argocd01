@@ -13,4 +13,5 @@ spec:
               cpu: "60m"
               memory: "2110Mi"          
             limits:
+              cpu: null
               memory: "4960Mi"

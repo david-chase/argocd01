@@ -13,4 +13,6 @@ spec:
               cpu: "10m"
               memory: "60Mi"          
             limits:
+            requests:
+              cpu: null           
               memory: "60Mi"
