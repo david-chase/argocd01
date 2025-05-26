@@ -72,10 +72,10 @@ deployments:
       replicas: 1
     resources:
       requests:
-        cpu: 60m
-        memory: 310Mi
+        cpu: 200m
+        memory: 500Mi
       limits:
-        memory: 560Mi 
+        memory: 1000Mi 
 statefulsets:
   catalogmysql:
     spec: 
