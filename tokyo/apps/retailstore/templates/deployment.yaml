@@ -42,6 +42,7 @@ spec:
         app.kubernetes.io/instance: assets
         app.kubernetes.io/component: service
         app.kuberneres.io/owner: retail-store-sample
+        densify-automation: "true" # Enable automation
     spec:
       serviceAccountName: assets
       securityContext:
@@ -118,6 +119,7 @@ spec:
         app.kubernetes.io/instance: carts
         app.kubernetes.io/component: service
         app.kuberneres.io/owner: retail-store-sample
+        densify-automation: "true" # Enable automation
     spec:
       serviceAccountName: carts
       securityContext:
@@ -188,6 +190,7 @@ spec:
         app.kubernetes.io/name: carts
         app.kubernetes.io/instance: carts
         app.kubernetes.io/component: dynamodb
+        densify-automation: "true" # Enable automation
     spec:
       containers:
         - name: dynamodb
@@ -240,6 +243,7 @@ spec:
         app.kubernetes.io/instance: catalog
         app.kubernetes.io/component: service
         app.kuberneres.io/owner: retail-store-sample
+        densify-automation: "true" # Enable automation
     spec:
       serviceAccountName: catalog
       securityContext:
@@ -329,6 +333,7 @@ spec:
         app.kubernetes.io/instance: checkout
         app.kubernetes.io/component: service
         app.kuberneres.io/owner: retail-store-sample
+        densify-automation: "true" # Enable automation
     spec:
       serviceAccountName: checkout
       securityContext:
@@ -396,6 +401,7 @@ spec:
         app.kubernetes.io/name: checkout
         app.kubernetes.io/instance: checkout
         app.kubernetes.io/component: redis
+        densify-automation: "true" # Enable automation
     spec:
       containers:
         - name: redis
@@ -448,6 +454,7 @@ spec:
         app.kubernetes.io/instance: orders
         app.kubernetes.io/component: service
         app.kuberneres.io/owner: retail-store-sample
+        densify-automation: "true" # Enable automation
     spec:
       serviceAccountName: orders
       securityContext:
@@ -541,6 +548,7 @@ spec:
         app.kubernetes.io/instance: ui
         app.kubernetes.io/component: service
         app.kuberneres.io/owner: retail-store-sample
+        densify-automation: "true" # Enable automation
     spec:
       serviceAccountName: ui
       securityContext:
