@@ -20,7 +20,7 @@ webhooks:
       - operations: ["CREATE", "UPDATE"]
         apiGroups: [""]
         apiVersions: ["v1"]
-        resources: ["pods"]
+        resources: ["pods","statefulsets","daemonsets","deployments","rollouts"]
         scope: "Namespaced"
     namespaceSelector:
       matchExpressions:
