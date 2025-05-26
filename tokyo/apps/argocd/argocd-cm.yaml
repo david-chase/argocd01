@@ -7,12 +7,26 @@ metadata:
   name: argocd-cm
   namespace: argocd
 data:
-  resource.customizations: |-
+  resource.customizations: |
+    cilium.io/v1/CiliumIdentity:
+      ignoreDifferences: |
+        jsonPointers:
+          - /metadata/annotations
+          - /metadata/labels
+          - /metadata/managedFields
+          - /metadata/resourceVersion
+          - /metadata/uid
+          - /metadata/creationTimestamp
+          - /metadata/generation
+          - /metadata/selfLink
     cilium.io/v2/CiliumIdentity:
       ignoreDifferences: |
         jsonPointers:
-        - /
-    cilium.io/CiliumIdentity:
-      ignoreDifferences: |
-        jsonPointers:
-        - /
+          - /metadata/annotations
+          - /metadata/labels
+          - /metadata/managedFields
+          - /metadata/resourceVersion
+          - /metadata/uid
+          - /metadata/creationTimestamp
+          - /metadata/generation
+          - /metadata/selfLink
