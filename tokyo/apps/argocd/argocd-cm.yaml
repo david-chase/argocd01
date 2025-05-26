@@ -10,27 +10,9 @@ data:
   resource.customizations: |-
     cilium.io/v2/CiliumIdentity:
       ignoreDifferences: |
-        - group: cilium.io
-          kind: CiliumIdentity
-          jsonPointers:
-            - /metadata/creationTimestamp
-            - /metadata/generation
-            - /metadata/resourceVersion
-            - /metadata/selfLink
-            - /metadata/uid
-            - /metadata/managedFields
-            - /metadata/annotations
-            - /metadata/labels
+        jsonPointers:
+        - /
     cilium.io/CiliumIdentity:
       ignoreDifferences: |
-        - group: cilium.io
-          kind: CiliumIdentity
-          jsonPointers:
-            - /metadata/creationTimestamp
-            - /metadata/generation
-            - /metadata/resourceVersion
-            - /metadata/selfLink
-            - /metadata/uid
-            - /metadata/managedFields
-            - /metadata/annotations
-            - /metadata/labels
+        jsonPointers:
+        - /
