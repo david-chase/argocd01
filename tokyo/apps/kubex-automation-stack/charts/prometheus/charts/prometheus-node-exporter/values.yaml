@@ -427,11 +427,11 @@ podAnnotations:
 
 # Extra labels to add to node exporter pods (can be templated)
 podLabels: 
-  densify-automation: true
+  densify-automation: "true"
 
 ## Extra labels to attach to all resources (can be templated)
 commonLabels:
-  densify-automation: true
+  densify-automation: "true"
 
 # Annotations to be added to node exporter daemonset
 daemonsetAnnotations: {}
