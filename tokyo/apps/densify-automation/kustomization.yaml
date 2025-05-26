@@ -7,6 +7,7 @@ resources:
   - densify-api-secret.yaml
   - densify-automation-policy.yaml
   - certificate-creation.yaml
+  - densify-recommendations-pvc.yaml
   - densify-recommendations-job.yaml
   - densify-recommendations-cronjob.yaml
   - densify-mutating-webhook-config.yaml
