@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: densify-config
+  namespace: densify-automation
+data:
+  DENSIFY_BASE_URL: "https://densifytest.densify.com:443"
+  CLUSTER_NAME: "tokyo" # Replace with your Kubernetes Cluster name
+  RECOMMENDATION_AGE: "5" # Disqualifies automation if recommendation is older than x days
