@@ -12,6 +12,8 @@ spec:
       ttlSecondsAfterFinished: 1800
       template:
         spec:
+          nodeSelector:
+            kubernetes.io/hostname: miami
           containers:
             - name: recommendations-fetcher
               image: densify/container-recommendation-fetcher:1.1
