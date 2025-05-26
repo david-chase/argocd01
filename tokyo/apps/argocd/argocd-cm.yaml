@@ -14,3 +14,19 @@ data:
         - CiliumIdentity
       clusters:
         - "*"
+  resource.customizations: |
+    apps/Deployment:
+      ignoreDifferences: |
+        jqPathExpressions:
+          - .spec.template.spec.containers[].resources.requests
+          - .spec.template.spec.containers[].resources.limits
+    apps/StatefulSet:
+      ignoreDifferences: |
+        jqPathExpressions:
+          - .spec.template.spec.containers[].resources.requests
+          - .spec.template.spec.containers[].resources.limits
+    apps/DaemonSet:
+      ignoreDifferences: |
+        jqPathExpressions:
+          - .spec.template.spec.containers[].resources.requests
+          - .spec.template.spec.containers[].resources.limits
