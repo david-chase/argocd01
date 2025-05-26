@@ -426,10 +426,12 @@ podAnnotations:
   cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
 
 # Extra labels to add to node exporter pods (can be templated)
-podLabels: {}
+podLabels: 
+  densify-automation: true
 
 ## Extra labels to attach to all resources (can be templated)
-commonLabels: {}
+commonLabels:
+  densify-automation: true
 
 # Annotations to be added to node exporter daemonset
 daemonsetAnnotations: {}
