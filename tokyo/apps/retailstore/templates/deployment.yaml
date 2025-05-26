@@ -22,7 +22,7 @@ metadata:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: true # Enable automation
+    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.assets.spec.replicas }}
   strategy:
@@ -94,7 +94,7 @@ metadata:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: true # Enable automation
+    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.carts.spec.replicas }}
   strategy:
@@ -174,7 +174,7 @@ metadata:
     app.kubernetes.io/component: dynamodb
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: true # Enable automation
+    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.cartsdynamodb.spec.replicas }}
   selector:
@@ -216,7 +216,7 @@ metadata:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: true # Enable automation
+    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.catalog.spec.replicas }}
   strategy:
@@ -305,7 +305,7 @@ metadata:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: true # Enable automation
+    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.checkout.spec.replicas }}
   strategy:
@@ -382,7 +382,7 @@ metadata:
     app.kubernetes.io/component: redis
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: true # Enable automation
+    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.checkoutredis.spec.replicas }}
   selector:
@@ -424,7 +424,7 @@ metadata:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: true # Enable automation
+    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.orders.spec.replicas }}
   strategy:
@@ -517,7 +517,7 @@ metadata:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: true # Enable automation
+    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.ui.spec.replicas }}
   strategy:
