@@ -60,12 +60,12 @@ spec:
             - name: mysql
               containerPort: 3306
               protocol: TCP
-          resources:
-            requests:
-              cpu: {{ .Values.statefulsets.catalogmysql.resources.requests.cpu }}
-              memory: {{ .Values.statefulsets.catalogmysql.resources.requests.memory }}
-            limits:
-              memory: {{ .Values.statefulsets.catalogmysql.resources.limits.memory }}
+          # resources:
+          #   requests:
+          #     cpu: {{ .Values.statefulsets.catalogmysql.resources.requests.cpu }}
+          #     memory: {{ .Values.statefulsets.catalogmysql.resources.requests.memory }}
+          #   limits:
+          #     memory: {{ .Values.statefulsets.catalogmysql.resources.limits.memory }}
       volumes:
       - name: data
         emptyDir: {}
@@ -125,12 +125,12 @@ spec:
             - name: postgresql
               containerPort: 5432
               protocol: TCP
-          resources:
-            requests:
-              cpu: {{ .Values.statefulsets.orderspostgresql.resources.requests.cpu }}
-              memory: {{ .Values.statefulsets.orderspostgresql.resources.requests.memory }}
-            limits:
-              memory: {{ .Values.statefulsets.orderspostgresql.resources.limits.memory }}             
+          # resources:
+          #   requests:
+          #     cpu: {{ .Values.statefulsets.orderspostgresql.resources.requests.cpu }}
+          #     memory: {{ .Values.statefulsets.orderspostgresql.resources.requests.memory }}
+          #   limits:
+          #     memory: {{ .Values.statefulsets.orderspostgresql.resources.limits.memory }}             
       volumes:
       - name: data
         emptyDir: {}
@@ -178,12 +178,12 @@ spec:
           volumeMounts:
           - name: data
             mountPath: "/var/lib/rabbitmq/mnesia"
-          resources:
-            requests:
-              cpu: {{ .Values.statefulsets.ordersrabbitmq.resources.requests.cpu }}
-              memory: {{ .Values.statefulsets.ordersrabbitmq.resources.requests.memory }}
-            limits:
-              memory: {{ .Values.statefulsets.ordersrabbitmq.resources.limits.memory }}            
+          # resources:
+          #   requests:
+          #     cpu: {{ .Values.statefulsets.ordersrabbitmq.resources.requests.cpu }}
+          #     memory: {{ .Values.statefulsets.ordersrabbitmq.resources.requests.memory }}
+          #   limits:
+          #     memory: {{ .Values.statefulsets.ordersrabbitmq.resources.limits.memory }}            
       volumes:
       - name: data
         emptyDir: {}
