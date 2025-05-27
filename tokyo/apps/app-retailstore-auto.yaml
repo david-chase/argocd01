@@ -9,19 +9,19 @@ spec:
         elements:
           - env: hilim
             namespace: retailstore-hilim
-            valueFile: values-optimized.yaml
+            valueFile: values-auto.yaml
           - env: hireq
             namespace: retailstore-hireq
-            valueFile: values-optimized.yaml
+            valueFile: values-auto.yaml
           - env: loreq
             namespace: retailstore-loreq
-            valueFile: values-optimized.yaml
+            valueFile: values-auto.yaml
           - env: lolim
             namespace: retailstore-lolim
-            valueFile: values-optimized.yaml
+            valueFile: values-auto.yaml
           - env: unspecified
             namespace: retailstore-unspecified
-            valueFile: values-optimized.yaml
+            valueFile: values-auto.yaml
   template:
     metadata:
       name: retailstore-{{ env }}
@@ -30,7 +30,7 @@ spec:
       source:
         repoURL: https://github.com/david-chase/argocd01
         targetRevision: HEAD
-        path: tokyo/apps/retailstore
+        path: tokyo/apps/retailstore-auto
         helm:
           valueFiles:
             - '{{ valueFile }}'
