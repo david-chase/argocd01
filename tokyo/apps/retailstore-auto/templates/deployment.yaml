@@ -70,12 +70,6 @@ spec:
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 3
-          # resources:
-          #   requests:
-          #     cpu: {{ .Values.deployments.assets.resources.requests.cpu }}
-          #     memory: {{ .Values.deployments.assets.resources.requests.memory }}
-          #   limits:
-          #     memory: {{ .Values.deployments.assets.resources.limits.memory }}            
           volumeMounts:
             - mountPath: /tmp
               name: tmp-volume
@@ -153,12 +147,6 @@ spec:
               port: 8080
             initialDelaySeconds: 45
             periodSeconds: 3
-          # resources:
-          #   requests:
-          #     cpu: {{ .Values.deployments.carts.resources.requests.cpu }}
-          #     memory: {{ .Values.deployments.carts.resources.requests.memory }}
-          #   limits:
-          #     memory: {{ .Values.deployments.carts.resources.limits.memory }}
           volumeMounts:
             - mountPath: /tmp
               name: tmp-volume
@@ -203,12 +191,6 @@ spec:
             - name: dynamodb
               containerPort: 8000
               protocol: TCP
-          # resources:
-          #   requests:
-          #     cpu: {{ .Values.deployments.cartsdynamodb.resources.requests.cpu }}
-          #     memory: {{ .Values.deployments.cartsdynamodb.resources.requests.memory }}
-          #   limits:
-          #     memory: {{ .Values.deployments.cartsdynamodb.resources.limits.memory }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -287,12 +269,6 @@ spec:
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 3
-          # resources:
-          #   requests:
-          #     cpu: {{ .Values.deployments.catalog.resources.requests.cpu }}
-          #     memory: {{ .Values.deployments.catalog.resources.requests.memory }}
-          #   limits:
-          #     memory: {{ .Values.deployments.catalog.resources.limits.memory }}
           volumeMounts:
             - mountPath: /tmp
               name: tmp-volume
@@ -367,12 +343,6 @@ spec:
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 3
-          # resources:
-          #   requests:
-          #     cpu: {{ .Values.deployments.checkout.resources.requests.cpu }}
-          #     memory: {{ .Values.deployments.checkout.resources.requests.memory }}
-          #   limits:
-          #     memory: {{ .Values.deployments.checkout.resources.limits.memory }}             
           volumeMounts:
             - mountPath: /tmp
               name: tmp-volume
@@ -417,12 +387,6 @@ spec:
             - name: redis
               containerPort: 6379
               protocol: TCP
-          # resources:
-          #   requests:
-          #     cpu: {{ .Values.deployments.checkoutredis.resources.requests.cpu }}
-          #     memory: {{ .Values.deployments.checkoutredis.resources.requests.memory }}
-          #   limits:
-          #     memory: {{ .Values.deployments.checkoutredis.resources.limits.memory }}      
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -505,12 +469,6 @@ spec:
               port: 8080
             initialDelaySeconds: 45
             periodSeconds: 3
-          # resources:
-          #   requests:
-          #     cpu: {{ .Values.deployments.orders.resources.requests.cpu }}
-          #     memory: {{ .Values.deployments.orders.resources.requests.memory }}
-          #   limits:
-          #     memory: {{ .Values.deployments.orders.resources.limits.memory }}
           volumeMounts:
             - mountPath: /tmp
               name: tmp-volume
@@ -590,12 +548,6 @@ spec:
               port: 8080
             initialDelaySeconds: 45
             periodSeconds: 3
-          # resources:
-          #   requests:
-          #     cpu: {{ .Values.deployments.ui.resources.requests.cpu }}
-          #     memory: {{ .Values.deployments.ui.resources.requests.memory }}
-          #   limits:
-          #     memory: {{ .Values.deployments.ui.resources.limits.memory }}             
           volumeMounts:
             - mountPath: /tmp
               name: tmp-volume
