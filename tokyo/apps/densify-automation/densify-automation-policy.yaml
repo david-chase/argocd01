@@ -6,7 +6,7 @@ metadata:
 data:
   densify-automation-policy: |-
     automationenabled: yes       # Global Switch to enable/disable automation for the cluster
-    defaultpolicy: full-optimization    # Default policy if no specific policy has been defined in the webhook definition
+    defaultpolicy: all-but-cpu-limits    # Default policy if no specific policy has been defined in the webhook definition
     remoteenablement: false       # false: Enable automation within webhook definition only   
                                   # true:  Enable automation within webhook definition and Densify UI                                                                   
     policiesbyname:
@@ -93,7 +93,7 @@ data:
       # Automate all request and limit values
       # Note: confirm sufficient quota before enabling
       # 
-      full-optimization:
+      all-but-cpu-limits:
         enablement:
           cpu:
             request:
@@ -101,9 +101,9 @@ data:
               downsize: true
               set-uninitialized-values: true
             limit:
-              upsize: true
-              downsize: true
-              set-uninitialized-values: true
+              upsize: false
+              downsize: false
+              set-uninitialized-values: false
           memory:
             request:
               upsize: true
