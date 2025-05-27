@@ -11,3 +11,5 @@ resources:
   - densify-recommendations-job.yaml
   - densify-recommendations-cronjob.yaml
   - densify-mutating-webhook-config.yaml
+  - densify-webhook-deployment.yaml
+  - densify-webhook-service.yaml
