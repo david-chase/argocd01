@@ -22,7 +22,6 @@ metadata:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.assets.spec.replicas }}
   strategy:
@@ -43,7 +42,6 @@ spec:
         app.kubernetes.io/component: service
         app.kuberneres.io/owner: retail-store-sample
         whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-        densify-automation: "true" # Enable automation
     spec:
       serviceAccountName: assets
       securityContext:
@@ -96,7 +94,6 @@ metadata:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.carts.spec.replicas }}
   strategy:
@@ -121,7 +118,6 @@ spec:
         app.kubernetes.io/component: service
         app.kuberneres.io/owner: retail-store-sample
         whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-        densify-automation: "true" # Enable automation
     spec:
       serviceAccountName: carts
       securityContext:
@@ -178,7 +174,6 @@ metadata:
     app.kubernetes.io/component: dynamodb
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.cartsdynamodb.spec.replicas }}
   selector:
@@ -193,7 +188,6 @@ spec:
         app.kubernetes.io/instance: carts
         app.kubernetes.io/component: dynamodb
         whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-        densify-automation: "true" # Enable automation
     spec:
       containers:
         - name: dynamodb
@@ -222,7 +216,6 @@ metadata:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.catalog.spec.replicas }}
   strategy:
@@ -247,7 +240,6 @@ spec:
         app.kubernetes.io/component: service
         app.kuberneres.io/owner: retail-store-sample
         whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-        densify-automation: "true" # Enable automation
     spec:
       serviceAccountName: catalog
       securityContext:
@@ -313,7 +305,6 @@ metadata:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.checkout.spec.replicas }}
   strategy:
@@ -338,7 +329,6 @@ spec:
         app.kubernetes.io/component: service
         app.kuberneres.io/owner: retail-store-sample
         whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-        densify-automation: "true" # Enable automation
     spec:
       serviceAccountName: checkout
       securityContext:
@@ -392,7 +382,6 @@ metadata:
     app.kubernetes.io/component: redis
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.checkoutredis.spec.replicas }}
   selector:
@@ -407,7 +396,6 @@ spec:
         app.kubernetes.io/instance: checkout
         app.kubernetes.io/component: redis
         whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-        densify-automation: "true" # Enable automation
     spec:
       containers:
         - name: redis
@@ -436,7 +424,6 @@ metadata:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.orders.spec.replicas }}
   strategy:
@@ -461,7 +448,6 @@ spec:
         app.kubernetes.io/component: service
         app.kuberneres.io/owner: retail-store-sample
         whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-        densify-automation: "true" # Enable automation
     spec:
       serviceAccountName: orders
       securityContext:
@@ -531,7 +517,6 @@ metadata:
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.deployments.ui.spec.replicas }}
   strategy:
@@ -556,7 +541,6 @@ spec:
         app.kubernetes.io/component: service
         app.kuberneres.io/owner: retail-store-sample
         whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-        densify-automation: "true" # Enable automation
     spec:
       serviceAccountName: ui
       securityContext:

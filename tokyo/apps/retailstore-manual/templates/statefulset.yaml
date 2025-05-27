@@ -16,7 +16,6 @@ metadata:
     app.kubernetes.io/component: mysql
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.statefulsets.catalogmysql.spec.replicas }}
   serviceName: catalog-mysql
@@ -32,7 +31,6 @@ spec:
         app.kubernetes.io/instance: catalog
         app.kubernetes.io/component: mysql
         whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-        densify-automation: "true" # Enable automation
     spec:
       containers:
         - name: mysql
@@ -81,7 +79,6 @@ metadata:
     app.kubernetes.io/component: postgresql
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.statefulsets.orderspostgresql.spec.replicas }}
   serviceName: orders-postgresql
@@ -97,7 +94,6 @@ spec:
         app.kubernetes.io/instance: orders
         app.kubernetes.io/component: postgresql
         whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-        densify-automation: "true" # Enable automation
     spec:
       containers:
         - name: postgresql
@@ -146,7 +142,6 @@ metadata:
     app.kubernetes.io/component: rabbitmq
     app.kubernetes.io/managed-by: Helm
     whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-    densify-automation: "true" # Enable automation
 spec:
   replicas: {{ .Values.statefulsets.ordersrabbitmq.spec.replicas }}
   serviceName: orders-rabbitmq
@@ -162,7 +157,6 @@ spec:
         app.kubernetes.io/instance: orders
         app.kubernetes.io/component: rabbitmq
         whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
-        densify-automation: "true" # Enable automation
     spec:
       containers:
         - name: rabbitmq

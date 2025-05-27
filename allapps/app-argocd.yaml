@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd               # App name
+  namespace: argocd
+  labels:
+    appversion: "2.14.6"     # Version of the app 
+  annotations:
+    description: "Argo CD"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/david-chase/argocd01.git
+    targetRevision: HEAD
+    path: tokyo/apps/argocd   # Location where the manifests are stored
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd          # Namespace to deploy to
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true                # Auto-sync?

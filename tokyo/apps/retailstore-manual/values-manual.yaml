@@ -1,0 +1,106 @@
+# Values.yaml for retailstore app
+# This is manual, 1 replica
+metadata:
+  labels:
+    tag: manual
+deployments:
+  assets:
+    spec: 
+      replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        memory: 128Mi
+  carts:
+    spec: 
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 360Mi
+      limits:
+        memory: 560Mi
+  cartsdynamodb:
+    spec: 
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 210Mi
+      limits:
+        memory: 560Mi      
+  catalog:
+    spec: 
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 60Mi
+      limits:
+        memory: 60Mi  
+  checkout:
+    spec: 
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 110Mi
+      limits:
+        memory: 210Mi  
+  checkoutredis:
+    spec: 
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 10Mi
+      limits:
+        memory: 10Mi 
+  orders:
+    spec: 
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 310Mi
+      limits:
+        memory: 510Mi 
+  ui:
+    spec: 
+      replicas: 1
+    resources:
+      requests:
+        cpu: 200m
+        memory: 500Mi
+      limits:
+        memory: 1000Mi 
+statefulsets:
+  catalogmysql:
+    spec: 
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 460Mi
+      limits:
+        memory: 710Mi 
+  orderspostgresql:
+    spec: 
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 110Mi
+      limits:
+        memory: 160Mi 
+  ordersrabbitmq:
+    spec: 
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 210Mi
+      limits:
+        memory: 310Mi 

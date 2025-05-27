@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-cm
+  namespace: argocd
+data:
+  resource.exclusions: |
+    - apiGroups:
+        - cilium.io
+      kinds:
+        - CiliumIdentity
+      clusters:
+        - "*"
+  resource.customizations: |
+    apps/Deployment:
+      ignoreDifferences: |
+        jqPathExpressions:
+          - .spec.template.spec.containers[].resources.requests
+          - .spec.template.spec.containers[].resources.limits
+    apps/StatefulSet:
+      ignoreDifferences: |
+        jqPathExpressions:
+          - .spec.template.spec.containers[].resources.requests
+          - .spec.template.spec.containers[].resources.limits
+    apps/DaemonSet:
+      ignoreDifferences: |
+        jqPathExpressions:
+          - .spec.template.spec.containers[].resources.requests
+          - .spec.template.spec.containers[].resources.limits
