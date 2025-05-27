@@ -71,7 +71,7 @@ service:
   annotations: {}
 
 ## Additional labels to add to all resources
-customLabels: {}
+customLabels: 
   densify-automation: "true"
   # app: kube-state-metrics
 
