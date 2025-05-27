@@ -38,3 +38,12 @@ data:
       logstash_prefix fluentd
       include_tag_key true
     </match>
+
+    <buffer>
+      @type memory
+      chunk_limit_size 4MB
+      total_limit_size 128MB
+      flush_interval 5s
+      flush_thread_count 2
+      overflow_action block
+    </buffer>
