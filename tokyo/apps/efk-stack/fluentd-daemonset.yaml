@@ -91,7 +91,7 @@ spec:
             value: "bRe4GdnY35g49xUHE6dz"
         resources:
           limits:
-            memory: 256Mi
+            memory: 1000Mi
           requests:
             cpu: 100m
             memory: 200Mi
