@@ -30,3 +30,15 @@ data:
         jqPathExpressions:
           - .spec.template.spec.containers[].resources.requests
           - .spec.template.spec.containers[].resources.limits
+    admissionregistration.k8s.io/MutatingWebhookConfiguration:
+      ignoreDifferences: |
+        jsonPointers:
+        - /webhooks/0/clientConfig/caBundle
+    admissionregistration.k8s.io/ValidatingWebhookConfiguration:
+      ignoreDifferences: |
+        jsonPointers:
+        - /webhooks/0/clientConfig/caBundle
+    apiextensions.k8s.io/CustomResourceDefinition:
+      ignoreDifferences: |
+        jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle
