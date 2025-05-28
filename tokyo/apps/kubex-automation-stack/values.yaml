@@ -155,4 +155,4 @@ prometheus:
               target_label: service
             - source_labels: [__meta_kubernetes_pod_node_name]
               action: replace
-              target_label: node    
+              target_label: node
