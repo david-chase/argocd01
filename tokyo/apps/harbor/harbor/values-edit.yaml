@@ -1,5 +1,6 @@
 expose:
   type: loadBalancer
+  name: harbor-external
   tls:
     enabled: true
     certSource: secret
