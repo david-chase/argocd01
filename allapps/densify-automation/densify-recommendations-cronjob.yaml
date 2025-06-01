@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: densify-recommendations-fetcher
+  namespace: densify-automation
+spec:
+  schedule: "*/30 * * * *" # Runs Every 30 min
+  concurrencyPolicy: Replace
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      ttlSecondsAfterFinished: 1800
+      template:
+        spec:
+          nodeSelector:
+            kubernetes.io/hostname: miami
+          containers:
+            - name: recommendations-fetcher
+              image: densify/container-recommendation-fetcher:1.1
+              imagePullPolicy: Always
+              env:
+                - name: DENSIFY_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: densify-api-secret
+                      key: DENSIFY_USERNAME
+                - name: DENSIFY_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: densify-api-secret
+                      key: DENSIFY_PASSWORD
+                - name: DENSIFY_BASE_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: densify-config
+                      key: DENSIFY_BASE_URL
+                - name: CLUSTER_NAME
+                  valueFrom:
+                    configMapKeyRef:
+                      name: densify-config
+                      key: CLUSTER_NAME
+              volumeMounts:
+                - name: recommendations-volume
+                  mountPath: /densify/data
+          restartPolicy: Never
+          volumes:
+            - name: recommendations-volume
+              persistentVolumeClaim:
+                claimName: densify-recommendations-pvc

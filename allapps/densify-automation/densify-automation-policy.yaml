@@ -1,0 +1,115 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: densify-automation-policy
+  namespace: densify-automation
+data:
+  densify-automation-policy: |-
+    automationenabled: yes       # Global Switch to enable/disable automation for the cluster
+    defaultpolicy: all-but-cpu-limits    # Default policy if no specific policy has been defined in the webhook definition
+    remoteenablement: false       # false: Enable automation within webhook definition only   
+                                  # true:  Enable automation within webhook definition and Densify UI                                                                   
+    policiesbyname:
+      # ----------------------------------------------------------------------  
+      # Starting Policy Candidate
+      #     - Reclaims CPU request only
+      #     - Doesn't change mem config
+      #     - Doesn't upsize so no quota, limit range or node size concerns
+      #
+      cpu-reclaim:
+        enablement:
+          cpu:
+            request:
+              downsize: true
+      # ----------------------------------------------------------------------  
+      # Starting Policy Candidate
+      #	    - Reclaims CPU and Memory (requests only)
+      #     - Doesn't upsize so no quota, limit range or node size concerns
+      #
+      cpu-mem-reclaim:
+        enablement:
+          cpu:
+            request:
+              downsize: true
+          memory:
+            request:
+              downsize: true
+      # ----------------------------------------------------------------------  
+      # Optimizes all request values
+      # Note: confirm sufficient quota before enabling
+      #
+      full-request-management:
+        enablement:
+          cpu:
+            request:
+              upsize: true
+              downsize: true
+              set-uninitialized-values: true
+            limit:
+              upsize: true
+          memory:
+            request:
+              upsize: true
+              downsize: true
+              set-uninitialized-values: true
+            limit:
+              upsize: true
+      # ----------------------------------------------------------------------  
+      # Bump up memory limits to stops OOM kills
+      # Note: confirm sufficient quota before enabling
+      #
+      limit-oom-prevention:
+        enablement:
+          memory:
+            limit:
+              upsize: true
+      # ----------------------------------------------------------------------  
+      # Bump up CPU & Memory limits to relieve pressure
+      # Note: confirm sufficient quota before enabling
+      #
+      limit-oom-throttling-prevention:
+        enablement:
+          cpu:
+            limit:
+              upsize: true
+          memory:
+            limit:
+              upsize: true
+      # ----------------------------------------------------------------------  
+      # Ensure all limits have values and are not too low
+      # Note: confirm sufficient quota before enabling
+      #
+      full-limit-management:
+        enablement:
+          cpu:
+            limit:
+              upsize: true
+              set-uninitialized-values: true
+          memory:
+            limit:
+              upsize: true
+              set-uninitialized-values: true
+      # ----------------------------------------------------------------------  
+      # Automate all request and limit values
+      # Note: confirm sufficient quota before enabling
+      # 
+      all-but-cpu-limits:
+        enablement:
+          cpu:
+            request:
+              upsize: true
+              downsize: true
+              set-uninitialized-values: true
+            limit:
+              upsize: false
+              downsize: false
+              set-uninitialized-values: false
+          memory:
+            request:
+              upsize: true
+              downsize: true
+              set-uninitialized-values: true
+            limit:
+              upsize: true
+              downsize: true
+              set-uninitialized-values: true

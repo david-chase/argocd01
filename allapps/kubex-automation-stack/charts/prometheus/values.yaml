@@ -558,7 +558,8 @@ server:
 
   ## Labels to be added to Prometheus server pods
   ##
-  podLabels: {}
+  podLabels: 
+    densify-automation: "true"
 
   ## Prometheus AlertManager configuration
   ##

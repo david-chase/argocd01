@@ -1,0 +1,557 @@
+# ==========================================================================
+# Services:
+#   assets
+#   carts
+#   carts-dynamodb
+#   catalog
+#   checkout
+#   checkout-redis
+#   orders
+#   ui
+# (8)
+# ==========================================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: assets
+  labels:
+    helm.sh/chart: assets-0.8.4
+    app.kubernetes.io/name: assets
+    app.kubernetes.io/instance: assets
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm
+    whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+    densify-automation: "true" # Enable automation
+spec:
+  replicas: {{ .Values.deployments.assets.spec.replicas }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: assets
+      app.kubernetes.io/instance: assets
+      app.kubernetes.io/component: service
+      app.kuberneres.io/owner: retail-store-sample
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: assets
+        app.kubernetes.io/instance: assets
+        app.kubernetes.io/component: service
+        app.kuberneres.io/owner: retail-store-sample
+        whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+        densify-automation: "true" # Enable automation
+    spec:
+      serviceAccountName: assets
+      securityContext:
+        {}
+      containers:
+        - name: assets
+          envFrom:
+            - configMapRef:
+                name: assets
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: false
+          image: "public.ecr.aws/aws-containers/retail-store-sample-assets:0.8.4"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health.html
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 3
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carts
+  labels:
+    helm.sh/chart: carts-0.8.4
+    app.kubernetes.io/name: carts
+    app.kubernetes.io/instance: carts
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm
+    whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+    densify-automation: "true" # Enable automation
+spec:
+  replicas: {{ .Values.deployments.carts.spec.replicas }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: carts
+      app.kubernetes.io/instance: carts
+      app.kubernetes.io/component: service
+      app.kuberneres.io/owner: retail-store-sample
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/name: carts
+        app.kubernetes.io/instance: carts
+        app.kubernetes.io/component: service
+        app.kuberneres.io/owner: retail-store-sample
+        whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+        densify-automation: "true" # Enable automation
+    spec:
+      serviceAccountName: carts
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: carts
+          env:
+            - name: JAVA_OPTS
+              value: -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom
+          envFrom:
+            - configMapRef:
+                name: carts
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: "public.ecr.aws/aws-containers/retail-store-sample-cart:0.8.4"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 45
+            periodSeconds: 3
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carts-dynamodb
+  labels:
+    helm.sh/chart: carts-0.8.4
+    app.kubernetes.io/name: carts
+    app.kubernetes.io/instance: carts
+    app.kubernetes.io/component: dynamodb
+    app.kubernetes.io/managed-by: Helm
+    whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+    densify-automation: "true" # Enable automation
+spec:
+  replicas: {{ .Values.deployments.cartsdynamodb.spec.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: carts
+      app.kubernetes.io/instance: carts
+      app.kubernetes.io/component: dynamodb
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: carts
+        app.kubernetes.io/instance: carts
+        app.kubernetes.io/component: dynamodb
+        whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+        densify-automation: "true" # Enable automation
+    spec:
+      containers:
+        - name: dynamodb
+          image: "amazon/dynamodb-local:1.20.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: dynamodb
+              containerPort: 8000
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog
+  labels:
+    helm.sh/chart: catalog-0.8.4
+    app.kubernetes.io/name: catalog
+    app.kubernetes.io/instance: catalog
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm
+    whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+    densify-automation: "true" # Enable automation
+spec:
+  replicas: {{ .Values.deployments.catalog.spec.replicas }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: catalog
+      app.kubernetes.io/instance: catalog
+      app.kubernetes.io/component: service
+      app.kuberneres.io/owner: retail-store-sample
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/name: catalog
+        app.kubernetes.io/instance: catalog
+        app.kubernetes.io/component: service
+        app.kuberneres.io/owner: retail-store-sample
+        whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+        densify-automation: "true" # Enable automation
+    spec:
+      serviceAccountName: catalog
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: catalog
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: catalog-db
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: catalog-db
+                  key: password
+          envFrom:
+            - configMapRef:
+                name: catalog
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: "public.ecr.aws/aws-containers/retail-store-sample-catalog:0.8.4"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 3
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+  labels:
+    helm.sh/chart: checkout-0.8.4
+    app.kubernetes.io/name: checkout
+    app.kubernetes.io/instance: checkout
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm
+    whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+    densify-automation: "true" # Enable automation
+spec:
+  replicas: {{ .Values.deployments.checkout.spec.replicas }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: checkout
+      app.kubernetes.io/instance: checkout
+      app.kubernetes.io/component: service
+      app.kuberneres.io/owner: retail-store-sample
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/name: checkout
+        app.kubernetes.io/instance: checkout
+        app.kubernetes.io/component: service
+        app.kuberneres.io/owner: retail-store-sample
+        whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+        densify-automation: "true" # Enable automation
+    spec:
+      serviceAccountName: checkout
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: checkout
+          envFrom:
+            - configMapRef:
+                name: checkout
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: "public.ecr.aws/aws-containers/retail-store-sample-checkout:0.8.4"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 3
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout-redis
+  labels:
+    helm.sh/chart: checkout-0.8.4
+    app.kubernetes.io/name: checkout
+    app.kubernetes.io/instance: checkout
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/managed-by: Helm
+    whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+    densify-automation: "true" # Enable automation
+spec:
+  replicas: {{ .Values.deployments.checkoutredis.spec.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: checkout
+      app.kubernetes.io/instance: checkout
+      app.kubernetes.io/component: redis
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: checkout
+        app.kubernetes.io/instance: checkout
+        app.kubernetes.io/component: redis
+        whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+        densify-automation: "true" # Enable automation
+    spec:
+      containers:
+        - name: redis
+          image: "redis:6.0-alpine"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders
+  labels:
+    helm.sh/chart: orders-0.8.4
+    app.kubernetes.io/name: orders
+    app.kubernetes.io/instance: orders
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm
+    whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+    densify-automation: "true" # Enable automation
+spec:
+  replicas: {{ .Values.deployments.orders.spec.replicas }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: orders
+      app.kubernetes.io/instance: orders
+      app.kubernetes.io/component: service
+      app.kuberneres.io/owner: retail-store-sample
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/name: orders
+        app.kubernetes.io/instance: orders
+        app.kubernetes.io/component: service
+        app.kuberneres.io/owner: retail-store-sample
+        whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+        densify-automation: "true" # Enable automation
+    spec:
+      serviceAccountName: orders
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: orders
+          env:
+            - name: JAVA_OPTS
+              value: -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: orders-db
+                  key: username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: orders-db
+                  key: password
+          envFrom:
+            - secretRef:
+                name: orders-rabbitmq
+            - configMapRef:
+                name: orders
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: "public.ecr.aws/aws-containers/retail-store-sample-orders:0.8.4"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 45
+            periodSeconds: 3
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui
+  labels:
+    helm.sh/chart: ui-0.8.4
+    app.kubernetes.io/name: ui
+    app.kubernetes.io/instance: ui
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm
+    whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+    densify-automation: "true" # Enable automation
+spec:
+  replicas: {{ .Values.deployments.ui.spec.replicas }}
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ui
+      app.kubernetes.io/instance: ui
+      app.kubernetes.io/component: service
+      app.kuberneres.io/owner: retail-store-sample
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /actuator/prometheus
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
+      labels:
+        app.kubernetes.io/name: ui
+        app.kubernetes.io/instance: ui
+        app.kubernetes.io/component: service
+        app.kuberneres.io/owner: retail-store-sample
+        whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+        densify-automation: "true" # Enable automation
+    spec:
+      serviceAccountName: ui
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: ui
+          env:
+            - name: JAVA_OPTS
+              value: -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/urandom
+          envFrom:
+            - configMapRef:
+                name: ui
+          securityContext:
+            capabilities:
+              add:
+              - NET_BIND_SERVICE
+              drop:
+              - ALL
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          image: "public.ecr.aws/aws-containers/retail-store-sample-ui:0.8.4"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 45
+            periodSeconds: 3
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-volume
+      volumes:
+        - name: tmp-volume
+          emptyDir:
+            medium: Memory

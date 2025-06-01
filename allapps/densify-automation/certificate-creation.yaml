@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: densify-automation-cert
+  namespace: densify-automation
+spec:
+  secretName: densify-automation-tls
+  duration: 28760h               # Replace with your prefered duration. Default validity: 1 year.
+  renewBefore: 240h             # Replace with your prefered renewal time before expiry. Default: Renews 10 days before expiry. 
+  commonName: webhook-service.densify-automation.svc
+  dnsNames:
+  - densify-webhook-service.densify-automation.svc
+  - densify-webhook-service.densify-automation.svc.cluster.local
+  issuerRef:
+    name: selfsigned-cluster-issuer
+    kind: ClusterIssuer

@@ -1,20 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 'app-of-apps'
+  name: 'app-of-apps'               # App name
   namespace: argocd
+  labels:
+    appversion: "<app version>"     # Version of the app
 spec:
   project: default
   source:
     repoURL: 'https://github.com/david-chase/argocd01'
-    path: tokyo
+    path: tokyo/apps/<app folder>   # Location where the subapps are
     directory:
-      recurse: true 
+      recurse: true                 # This enables app-of-apps
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: argocd
+    namespace: <namespace>          # Namespace to deploy to
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+    automated:                      # Auto-sync
+      prune: true                   # Prunes no longer used resources
+      selfHeal: true                # This enables self-heal

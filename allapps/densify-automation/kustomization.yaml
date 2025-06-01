@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:                 
+  - namespace.yaml
+  - densify-configmap.yaml
+  - densify-api-secret.yaml
+  - densify-automation-policy.yaml
+  - certificate-creation.yaml
+  - densify-recommendations-pvc.yaml
+  - densify-recommendations-job.yaml
+  - densify-recommendations-cronjob.yaml
+  - densify-mutating-webhook-config.yaml
+  - densify-webhook-deployment.yaml
+  - densify-webhook-service.yaml

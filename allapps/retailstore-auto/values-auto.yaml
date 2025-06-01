@@ -1,0 +1,40 @@
+# Values.yaml for retailstore app
+# This is Optimized, 1 replica
+metadata:
+  labels:
+    tag: auto
+deployments:
+  assets:
+    spec: 
+      replicas: 1
+  carts:
+    spec: 
+      replicas: 1
+  cartsdynamodb:
+    spec: 
+      replicas: 1    
+  catalog:
+    spec: 
+      replicas: 1
+  checkout:
+    spec: 
+      replicas: 1
+  checkoutredis:
+    spec: 
+      replicas: 1
+  orders:
+    spec: 
+      replicas: 1
+  ui:
+    spec: 
+      replicas: 1
+statefulsets:
+  catalogmysql:
+    spec: 
+      replicas: 1
+  orderspostgresql:
+    spec: 
+      replicas: 1
+  ordersrabbitmq:
+    spec: 
+      replicas: 1
