@@ -1,0 +1,26 @@
+expose:
+  type: loadBalancer
+  tls:
+    enabled: true
+    certSource: secret
+    secret:
+      secretName: harbor-tls
+  loadBalancer:
+    IP: 192.168.1.235
+harborAdminPassword: "yM73txhrUpRJ"
+externalURL: harbor.havana
+updateStrategy:
+  type: Recreate
+persistence:
+  persistentVolumeClaim:
+    registry:
+      size: 50Gi
+    jobservice:
+      jobLog:
+        size: 5Gi
+    database:
+      size: 5Gi
+    redis:
+      size: 5Gi
+    trivy:
+      size: 10Gi
