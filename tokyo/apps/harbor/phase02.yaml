@@ -14,7 +14,7 @@ spec:
     helm:
       releaseName: harbor
       valueFiles:
-        - values-edit.yaml                   # We're using a custom values.yaml
+        - values.yaml                        # We're using a custom values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: harbor                        # Namespace to deploy to
