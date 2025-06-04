@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor-phase01                      # Master app name + sync wave
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"       # 0, 1, 2 etc
+spec:
+  source:
+    repoURL: https://github.com/david-chase/argocd01
+    path: tokyo/apps/harbor/phase01         # Location of resources for this sync wave
+    targetRevision: HEAD
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: harbor                       # Namespace to deploy to
+  project: default
