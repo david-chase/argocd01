@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: <name of app>               # App name
+  name: nginx-rollout               # App name
   namespace: argocd
   labels:
-    appversion: "<app version>"     # Version of the app 
+    appversion: "1.21.6"            # Version of the app 
 spec:
   project: default
   source:
     repoURL: https://github.com/david-chase/argocd01.git
     targetRevision: HEAD
-    path: tokyo/apps/<app folder>   # Location where the manifests are stored
+    path: tokyo/apps/nginx-rollout  # Location where the manifests are stored
   destination:
     server: https://kubernetes.default.svc
-    namespace: <namespace>          # Namespace to deploy to
+    namespace: nginx-rollout        # Namespace to deploy to
   syncPolicy:
     automated:                      # Auto-sync
       prune: true                   # Prunes no longer used resources
