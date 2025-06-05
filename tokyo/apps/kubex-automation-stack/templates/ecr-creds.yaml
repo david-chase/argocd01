@@ -11,6 +11,8 @@ spec:
   target:
     name: ecr-creds       # ← the name of the resulting Kubernetes Secret
     creationPolicy: Owner
+    template:
+      type: kubernetes.io/dockerconfigjson
   data:
     - secretKey: .dockerconfigjson          # ← key in the K8s Secret
       remoteRef:
