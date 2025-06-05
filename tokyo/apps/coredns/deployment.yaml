@@ -48,13 +48,13 @@ spec:
               containerPort: 9153
               protocol: TCP
           # 2025.06.05;19:27 Modifying requests & limits
-          requests:
-            cpu: 100m
-            memory: 170Mi
-          limits:
-            cpu: 250m
-            memory: 250Mi
-#          resources:
+          resources:
+            requests:
+              cpu: 100m
+              memory: 170Mi
+            limits:
+              cpu: 250m
+              memory: 250Mi
 #            limits:
 #              cpu: 100m
 #              memory: 170Mi
