@@ -22,8 +22,8 @@ spec:
       # ================================
       # Add an image pull secret for ECR
       # ================================
-      imagePullSecrets:
-        - name: ecr-creds
+      # imagePullSecrets:
+      #   - name: ecr-creds
       {{- if .Values.nodeSelector }}
 {{ toYaml .Values.nodeSelector | indent 8 }}
       {{- end }}
