@@ -20,19 +20,25 @@ webhooks:
       - operations: ["CREATE", "UPDATE"]
         apiGroups: [""]
         apiVersions: ["v1"]
+        # Mutate all object types
         resources: ["pods","statefulsets","daemonsets","deployments","rollouts"]
         scope: "Namespaced"
     namespaceSelector:
+    # Mutate only objects in these namespaces
       matchExpressions:
         - key: kubernetes.io/metadata.name
+          operator: In
+          values:
+            - densify
+            # - densify-automation
+            # - kube-system
+    objectSelector:
+    # Mutate only objects that don't have a densify-automation: "false" label
+      matchExpressions:
+        - key: densify-automation
           operator: NotIn
           values:
-            # - densify
-            - densify-automation
-            - kube-system
-    objectSelector:
-      matchLabels:
-        densify-automation: "true"
+            - "false"
     admissionReviewVersions: ["v1"]
     sideEffects: "None"
     timeoutSeconds: 10
