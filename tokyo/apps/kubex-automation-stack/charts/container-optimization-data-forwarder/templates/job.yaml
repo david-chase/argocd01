@@ -19,11 +19,11 @@ spec:
       nodeSelector:
         kubernetes.io/os: linux
         kubernetes.io/arch: amd64
-      # ================================
-      # Add an image pull secret for ECR
-      # ================================
-      # imagePullSecrets:
-      #   - name: ecr-creds
+    # ================================
+    # Add an image pull secret for ECR
+    # ================================
+      imagePullSecrets:
+        - name: ecr-creds
       {{- if .Values.nodeSelector }}
 {{ toYaml .Values.nodeSelector | indent 8 }}
       {{- end }}
