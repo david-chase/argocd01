@@ -1,6 +1,8 @@
-# Files I've injected into the Helm chart templates folder:
-#  densify-api-secret.yaml
-#  ecr-creds.yaml
+# Files I've added:
+#  templates\densify-api-secret.yaml
+#  templates\ecr-creds.yaml
+# Files I've modified:
+#  charts\container-optimization-data-forwarder\values.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
