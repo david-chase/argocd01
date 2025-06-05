@@ -1,0 +1,9 @@
+config:
+  forwarder:
+    densify:
+      url:
+        host: densifytest.densify.com
+  prometheus:
+    url:
+      host: kubex-prometheus-server
+      port: 80
