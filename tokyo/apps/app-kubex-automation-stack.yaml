@@ -1,5 +1,6 @@
 # Files I've injected into the Helm chart templates folder:
 #  densify-api-secret.yaml
+#  ecr-creds.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
