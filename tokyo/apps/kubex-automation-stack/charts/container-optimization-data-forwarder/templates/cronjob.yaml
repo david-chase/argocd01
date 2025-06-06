@@ -21,6 +21,11 @@ spec:
           nodeSelector:
             kubernetes.io/os: linux
             kubernetes.io/arch: amd64
+          # 2025.06.06;12:38 Adding imagePullSecrets
+          imagePullSecrets:
+            - name: ecr-creds
+          # END
+          {{- end }}
           {{- if .Values.nodeSelector }}
 {{ toYaml .Values.nodeSelector | indent 12 }}
           {{- end }}
