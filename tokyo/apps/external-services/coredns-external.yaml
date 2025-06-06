@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: coredns-external           # Name for the service
+  name: kube-dns-external           # Name for the service
   namespace: kube-system
   annotations:
     description: "External service for MetalLB for coredns"
