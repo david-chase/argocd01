@@ -25,7 +25,6 @@ spec:
           imagePullSecrets:
             - name: ecr-creds
           # END
-          {{- end }}
           {{- if .Values.nodeSelector }}
 {{ toYaml .Values.nodeSelector | indent 12 }}
           {{- end }}
