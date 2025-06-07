@@ -1284,8 +1284,10 @@ grafana:
   ##
   defaultDashboardsInterval: 1m
 
-  adminUser: admin
-  adminPassword: prom-operator
+  # 2025.06.06;22:14 Set admin credentials for grafana
+  adminUser: dchase
+  adminPassword: yM73txhrUpRJ
+  # END
 
   rbac:
     ## If true, Grafana PSPs will be created
@@ -3552,7 +3554,9 @@ prometheus:
 
     ## Loadbalancer IP
     ## Only use if service.type is "LoadBalancer"
-    loadBalancerIP: ""
+    # 2025.06.06;22:17 Set LoadBalancer external IP for Prometheus
+    loadBalancerIP: "192.168.1.232"
+    # END
     loadBalancerSourceRanges: []
 
     ## Denotes if this Service desires to route external traffic to node-local or cluster-wide endpoints
@@ -3561,7 +3565,9 @@ prometheus:
 
     ## Service type
     ##
-    type: ClusterIP
+    # 2025.06.06;22:17 Set type to LoadBalancer
+    type: LoadBalancer
+    # END
 
     ## Additional ports to open for Prometheus service
     ##
