@@ -1,6 +1,5 @@
 # Files I've modified:
-#  values.yaml
-#  templates/service.yaml
+#  <list of files I've modified>
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:

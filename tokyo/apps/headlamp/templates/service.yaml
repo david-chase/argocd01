@@ -20,9 +20,7 @@ spec:
   {{- end }}
   ports:
     - port: {{ .Values.service.port }}
-      # 2025.06.07;10:20 Add support for a targetPort
-      targetPort: {{ .Values.service.targetPort }}
-      # END
+      targetPort: http
       protocol: TCP
       name: http
       {{- if and (or (eq .Values.service.type "NodePort") (eq .Values.service.type "LoadBalancer")) (not (empty .Values.service.nodePort)) }}
