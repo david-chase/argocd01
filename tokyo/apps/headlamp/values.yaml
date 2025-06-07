@@ -155,6 +155,7 @@ service:
   # -- Kubernetes Service loadBalancerIP
   # 2025.06.07;09:58 Enable LoadBalancer
   loadBalancerIP: "192.168.1.236"
+  targetPort: 4466
   # END
 
   # -- Kubernetes Service loadBalancerSourceRanges
