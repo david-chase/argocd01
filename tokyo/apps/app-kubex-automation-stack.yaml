@@ -2,6 +2,8 @@
 #  templates\densify-api-secret.yaml
 #  templates\ecr-creds.yaml
 # Files I've modified:
+#  values.yaml
+#  values-edit.yaml
 #  charts\container-optimization-data-forwarder\values.yaml
 #  charts\container-optimization-data-forwarder\templates\cronjob.yaml
 apiVersion: argoproj.io/v1alpha1

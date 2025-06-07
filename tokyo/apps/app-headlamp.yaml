@@ -1,29 +1,27 @@
-# Files I've added:
-#  <list of files added to chart>
 # Files I've modified:
-#  <list of files modified>
+#  values.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: <name of app>               # App name
+  name: headlamp               # App name
   namespace: argocd
   labels:
-    appversion: "<app version>"     # Version of the app 
+    appversion: "0.31.0"     # Version of the app 
 spec:
   project: default
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: tokyo/apps/<app folder>   # This folder should hold the Helm chart
+    path: tokyo/apps/headlamp   # This folder should hold the Helm chart
     helm:
 #      parameters:
 #      - name: crds.enabled
 #        value: "true"
-#      valueFiles:
-#        - values.yaml               # This must exist in the chart folder in the Git repo
+      valueFiles:
+        - values.yaml               # This must exist in the chart folder in the Git repo
   destination:
     server: https://kubernetes.default.svc
-    namespace: <namespace>          # Namespace to deploy to
+    namespace: headlamp          # Namespace to deploy to
   syncPolicy:
     automated:
       prune: true
