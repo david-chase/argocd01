@@ -7,7 +7,7 @@ nameOverride: densify-forwarder
   # ================================
   # This is my image in ECR
   # ================================
-image: densify/container-optimization-data-forwarder:4
+image: 284265326267.dkr.ecr.ca-central-1.amazonaws.com/tokyo:densify-421
 imageAzureToken: densify/azure-rest-api-token:latest
 pullPolicy: Always
 
