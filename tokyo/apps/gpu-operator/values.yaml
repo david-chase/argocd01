@@ -311,6 +311,13 @@ dcgm:
 
 dcgmExporter:
   enabled: true
+  # 2025.06.27 Force simple labels
+  arguments:
+    - "--format"
+    - "prometheus"
+    - "--namespace"
+    - "dcgm"
+  # END Force simple labels
   repository: nvcr.io/nvidia/k8s
   image: dcgm-exporter
   version: 4.1.1-4.0.4-ubuntu22.04
