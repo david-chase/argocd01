@@ -11,8 +11,6 @@ spec:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
     path: kubex-automation-stack/manifests    # This folder holds the kustomize.yaml
-    kustomize:
-      enableHelm: true
   destination:
     server: https://kubernetes.default.svc
     namespace: densify          # Namespace to deploy to
