@@ -313,6 +313,8 @@ dcgmExporter:
   enabled: true
   # 2025.06.27 Force simple labels
   arguments:
+    - "--collectors"
+    - "nvml,gpu_metrics"
     - "--format"
     - "prometheus"
     - "--namespace"
