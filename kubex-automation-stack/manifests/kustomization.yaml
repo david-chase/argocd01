@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
 #   - ../charts/kubex-automation-stack/  # Folder holding the chart
   - densify-api-secret.yaml           # External secret
-  - kubex-prometheus-server-external  # External endpoint for Prometheus
+  - kubex-prometheus-server-external.yaml  # External endpoint for Prometheus
 
 helmCharts:
   - name: kubex-automation-stack               # App name
