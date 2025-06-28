@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../charts/kubex-automation-stack  # Folder holding the chart
+  - densify-api-secret.yaml           # External secret
+
+helmCharts:
+  - name: kubex-automation-stack               # App name
+    path: ../charts/kubex-automation-stack       # Location of the chart
+    valuesFile: ../values-edit.yaml        # ONLY the values we want to override
+    version: 0.9.6                    # From Chart.yaml
+    releaseName: kubex-automation-stack

@@ -1,0 +1,30 @@
+# Files I've modified:
+#  values.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gpu-operator               # App name
+  namespace: argocd
+  labels:
+    appversion: "25.3.0"     # Version of the app 
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/david-chase/argocd01
+    targetRevision: HEAD
+    path: tokyo/apps/gpu-operator   # This folder should hold the Helm chart
+    helm:
+#      valueFiles:
+#        - values.yaml               # This must exist in the chart folder in the Git repo
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gpu-operator          # Namespace to deploy to
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true                # Auto-sync?
+    syncOptions:
+      - CreateNamespace=true
+  ignoreDifferences:
+    - group: cilium.io
+      kind: CiliumIdentity

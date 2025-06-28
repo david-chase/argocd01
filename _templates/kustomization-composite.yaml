@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../charts/<chartname>             # Folder holding the chart
+  # - patchfile.yaml                   # Any additional manifests to apply
+
+helmCharts:
+  - name: <name of app>               # App name
+    path: ../charts/<chartname>       # Location of the chart
+    valuesFile: ../values.yaml        # ONLY the values we want to override
+    version: 0.1.0                    # From Chart.yaml
+    releaseName: <name of app>

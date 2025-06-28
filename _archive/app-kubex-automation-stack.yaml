@@ -1,0 +1,30 @@
+# Files I've added:
+#  templates\densify-api-secret.yaml
+# Files I've modified:
+#  values.yaml
+#  values-edit.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubex-automation-stack
+  namespace: argocd
+  labels:
+    appversion: "4.2.0"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/david-chase/argocd01
+    targetRevision: HEAD
+    path: tokyo/apps/kubex-automation-stack
+    helm:
+      valueFiles:
+        - values-edit.yaml  # This must exist in the chart folder in the Git repo
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: densify
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
