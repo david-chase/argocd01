@@ -311,27 +311,17 @@ dcgm:
 
 dcgmExporter:
   enabled: true
-  # 2025.06.27 Force simple labels
-  arguments:
-    - "--collectors"
-    - "nvml,gpu_metrics"
-    - "--format"
-    - "prometheus"
-    - "--namespace"
-    - "dcgm"
-  # END Force simple labels
   repository: nvcr.io/nvidia/k8s
   image: dcgm-exporter
   version: 4.1.1-4.0.4-ubuntu22.04
   imagePullPolicy: IfNotPresent
-  # 2025.06.27 Disable CSV file
-  env: null  # 🚨 THIS IS CRITICAL – clears all defaults
-  extraEnv:   # ✅ clean env section
+  env:
     - name: DCGM_EXPORTER_LISTEN
       value: ":9400"
     - name: DCGM_EXPORTER_KUBERNETES
       value: "true"
-  # END Disable CSV file
+    - name: DCGM_EXPORTER_COLLECTORS
+      value: "/etc/dcgm-exporter/dcp-metrics-included.csv"
   resources: {}
   serviceMonitor:
     enabled: false
