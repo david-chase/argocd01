@@ -149,7 +149,9 @@ prometheus:
               target_label: namespace
             - source_labels: [__meta_kubernetes_endpoints_name]
               action: keep
-              regex: (kubex|densify)-(kube-state-metrics|prometheus-node-exporter)|.*dcgm.*
+              # 2025.06.27 Fix regex
+              regex: kubex-(automation-stack-(kube-state-metrics|prometheus-node-exporter)|prometheus-server(-external)?)$|.*dcgm.*
+              # END Fix regex
             - source_labels: [__meta_kubernetes_service_name]
               action: replace
               target_label: service
