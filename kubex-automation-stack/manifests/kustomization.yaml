@@ -8,7 +8,7 @@ resources:
 
 helmCharts:
   - name: kubex-automation-stack               # App name
-    path: ../charts/kubex-automation-stack       # Location of the chart
+    path: file://../charts/kubex-automation-stack       # Location of the chart
     valuesFile: ../values-edit.yaml        # ONLY the values we want to override
     version: 0.9.6                    # From Chart.yaml
     releaseName: kubex-automation-stack
