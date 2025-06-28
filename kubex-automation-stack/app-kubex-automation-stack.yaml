@@ -1,16 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kubex-automation-stack      # App name
+  name: kubex-automation-stack               # App name
   namespace: argocd
   labels:
-    appversion: "4.2.2"             # Version of the app 
+    appversion: "4.2.2"     # Version of the app 
 spec:
   project: default
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: kubex-automation-stack/manifests    # This folder holds the kustomize.yaml
+    path: kubex-automation-stack/deploy   # This folder should hold the Helm chart
+    helm:
+      valueFiles:
+        - values-overlay.yaml
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: densify          # Namespace to deploy to
