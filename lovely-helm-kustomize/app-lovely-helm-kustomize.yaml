@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: lovely-helm-kustomize               # App name
+  namespace: argocd
+  labels:
+    appversion: "1.2.2"     # Version of the app 
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/david-chase/argocd01.git
+    targetRevision: HEAD
+    path: lovely-helm-kustomize/manifests   # Location where the manifests are stored
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd          # Namespace to deploy to
+  syncPolicy:
+    automated:                      # Auto-sync
+      prune: true                   # Prunes no longer used resources
+      selfHeal: true                # This enables self-heal
