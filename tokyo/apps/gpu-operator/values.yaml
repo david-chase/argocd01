@@ -327,8 +327,10 @@ dcgmExporter:
       value: ":9400"
     - name: DCGM_EXPORTER_KUBERNETES
       value: "true"
-    - name: DCGM_EXPORTER_COLLECTORS
-      value: "/etc/dcgm-exporter/dcp-metrics-included.csv"
+    # 2025.06.27 Disable CSV file
+    # - name: DCGM_EXPORTER_COLLECTORS
+    #   value: "/etc/dcgm-exporter/dcp-metrics-included.csv"
+    # END Disable CSV file
   resources: {}
   serviceMonitor:
     enabled: false
