@@ -10,12 +10,9 @@ spec:
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: kubex-automation-stack/deploy   # This folder should hold the Helm chart
-    helm:
-      valueFiles:
-        - values-overlay.yaml
-    directory:
-      recurse: true
+    path: kubex-automation-stack/manifests    # This folder holds the kustomize.yaml
+    kustomize:
+      buildOptions: --enable-helm
   destination:
     server: https://kubernetes.default.svc
     namespace: densify          # Namespace to deploy to
