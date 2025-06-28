@@ -149,7 +149,9 @@ prometheus:
               target_label: namespace
             - source_labels: [__meta_kubernetes_endpoints_name]
               action: keep
+              # 2025.06.27 Fixing node exporter scrape config
               regex: '(kubex|densify)-(*kube-state-metrics|*-node-exporter)|.*dcgm.*'
+              # END
             - source_labels: [__meta_kubernetes_service_name]
               action: replace
               target_label: service
