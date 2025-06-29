@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: <app folder>/manifests    # This folder holds the kustomize.yaml
+    path: <name of app>/manifests   # This folder holds the kustomize.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: <namespace>          # Namespace to deploy to
