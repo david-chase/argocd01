@@ -8,5 +8,5 @@ resources:
 helmCharts:
   - name: <name of app>                # Chart name from the repo
     repo: <location of repo>           # URL of repo
-    valuesFile: ../values-overlay.yaml # ONLY the values we want to override
+    # valuesFile: values-overlay.yaml    # ONLY the values we want to override
     version: <version>                 # Chart version from the repo 

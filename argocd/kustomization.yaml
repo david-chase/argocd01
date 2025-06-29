@@ -9,6 +9,6 @@ resources:
 helmCharts:
   - name: argo-cd               # Chart name from the repo
     repo: https://argoproj.github.io/argo-helm          # URL of repo
-    valuesFile: ../values-overlay.yaml        # ONLY the values we want to override
+    valuesFile: values-overlay.yaml        # ONLY the values we want to override
     version: 8.1.2              # Chart version from the repo
     releaseName: argo-cd         
