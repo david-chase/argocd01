@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd               # App name
+  namespace: argocd
+  labels:
+    appversion: "v3.0.6"     # Version of the app 
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/david-chase/argocd01
+    targetRevision: HEAD
+    path: argocd/manifests   # This folder holds the kustomize.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd          # Namespace to deploy to
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true                # Auto-sync?
+    syncOptions:
+      - CreateNamespace=true
+  ignoreDifferences:
+    - group: cilium.io
+      kind: CiliumIdentity

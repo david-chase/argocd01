@@ -1,14 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: metallb-system
+namespace: <namespace>                 # Namespace to deploy to
 
 resources:
-  - address-pool.yaml                   # Any additional manifests to apply
-  - advertisement.yaml
+  # - address-pool.yaml                  # List of manifests to apply, if any
 
 helmCharts:
-  - name: metallb               # App name
-    repo: https://metallb.github.io/metallb
-    # valuesFile: ../values.yaml        # ONLY the values we want to override
-    version: 0.15.2                    # From Chart.yaml
-    releaseName: metallb
+  - name: <name of app>                # Chart name from the repo
+    repo: <location of repo>           # URL of repo
+    valuesFile: ../values-overlay.yaml # ONLY the values we want to override
+    version: <version>                 # Chart version from the repo 
