@@ -16,7 +16,7 @@ spec:
     namespace: argocd          # Namespace to deploy to
   syncPolicy:
     automated:
-      prune: true
+      prune: false
       selfHeal: true                # Auto-sync?
     syncOptions:
       - CreateNamespace=true
