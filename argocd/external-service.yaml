@@ -11,7 +11,15 @@ spec:
   type: LoadBalancer
   loadBalancerIP: 192.168.1.231   # Must be in MetalLB IP pool
   selector:
-    # Copy this section from internal service
+    app.kubernetes.io/instance: argocd
+    app.kubernetes.io/name: argocd-server
   ports:
-    # Copy this section from internal service
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 8080
   sessionAffinity: None
