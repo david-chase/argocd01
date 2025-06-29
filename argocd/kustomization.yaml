@@ -4,7 +4,6 @@ namespace: argocd               # Namespace to deploy to
 
 resources:
   - external-service.yaml       # List of manifests to apply, if any
-  - argocd-cm.yaml
 
 helmCharts:
   - name: argo-cd               # Chart name from the repo
