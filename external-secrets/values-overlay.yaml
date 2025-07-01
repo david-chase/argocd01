@@ -4,6 +4,7 @@ certController:
 webhook:
   certManager:
     enabled: true
+    create: true
     annotations:
       cert-manager.io/inject-ca-from: external-secrets/release-name-external-secrets-webhook
   cert:
