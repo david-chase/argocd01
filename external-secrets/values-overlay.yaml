@@ -2,6 +2,12 @@ namespace: external-secrets
 
 certController:
   enabled: true
+  service:
+    name: release-name-external-secrets-webhook
+    namespace: external-secrets
+  secret:
+    name: release-name-external-secrets-webhook
+    namespace: external-secrets
 
 webhook:
   create: true
@@ -10,5 +16,3 @@ webhook:
     cert:
       create: true
       duration: "8760h"
-    # annotations:
-    #   cert-manager.io/inject-ca-from: external-secrets/release-name-external-secrets-webhook
