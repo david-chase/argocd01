@@ -1,0 +1,6 @@
+certController:
+  enabled: true
+
+webhook:
+  cert:
+    generate: true
