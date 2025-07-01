@@ -1,4 +1,4 @@
-namespace: external-secrets
+fullnameOverride: release-name-external-secrets
 
 certController:
   enabled: true
