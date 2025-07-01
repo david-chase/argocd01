@@ -9,5 +9,5 @@ resources:
 helmCharts:
   - name: external-secrets             # Chart name from the repo
     repo:  https://charts.external-secrets.io           # URL of repo
-    valuesFile: values-overlay.yaml    # ONLY the values we want to override
+#    valuesFile: values-overlay.yaml    # ONLY the values we want to override
     version: 1.18.1                 # Chart version from the repo 
