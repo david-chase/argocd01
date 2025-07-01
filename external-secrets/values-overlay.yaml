@@ -4,8 +4,11 @@ certController:
   enabled: true
 
 webhook:
+  create: true
   certManager:
-    enabled: true
-    create: true
-    annotations:
-      cert-manager.io/inject-ca-from: external-secrets/release-name-external-secrets-webhook
+    enabled: false
+    cert:
+      create: true
+      duration: "8760h"
+    # annotations:
+    #   cert-manager.io/inject-ca-from: external-secrets/release-name-external-secrets-webhook
