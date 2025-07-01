@@ -1,0 +1,5 @@
+webhook:
+  enabled: true
+installCRDs: true
+startupapicheck:
+  enabled: true
