@@ -4,10 +4,8 @@ certController:
   enabled: true
   service:
     name: release-name-external-secrets-webhook
-    namespace: external-secrets
   secret:
     name: release-name-external-secrets-webhook
-    namespace: external-secrets
 
 webhook:
   create: true
