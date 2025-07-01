@@ -1,3 +1,3 @@
 installCRDs: true
 startupapicheck:
-  enabled: true
+  enabled: false
