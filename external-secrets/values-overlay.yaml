@@ -1,5 +1,8 @@
 namespace: external-secrets
 
+certController:
+  enabled: true
+
 webhook:
   certManager:
     enabled: true
