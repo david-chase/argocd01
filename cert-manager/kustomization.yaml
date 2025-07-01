@@ -1,12 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: <namespace>                 # Namespace to deploy to
+namespace: cert-manager                # Namespace to deploy to
 
 resources:
   # - address-pool.yaml                  # List of manifests to apply, if any
 
 helmCharts:
-  - name: <name of app>                # Chart name from the repo
-    repo: <location of repo>           # URL of repo
+  - name: cert-manager                # Chart name from the repo
+    repo: https://charts.jetstack.io           # URL of repo
     # valuesFile: values-overlay.yaml    # ONLY the values we want to override
-    version: <version>                 # Chart version from the repo 
+    version: 1.18.1                 # Chart version from the repo 
