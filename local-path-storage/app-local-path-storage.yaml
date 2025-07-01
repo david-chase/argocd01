@@ -4,7 +4,7 @@ metadata:
   name: local-path-storage
   namespace: argocd
   labels:
-    appversion: "0.0.31"
+    appversion: "v0.0.31"
 spec:
   project: default
 

@@ -4,7 +4,7 @@ metadata:
   name: metrics-server
   namespace: argocd
   labels:
-    appversion: "0.7.2"
+    appversion: "v0.7.2"
 spec:
   project: default
 
