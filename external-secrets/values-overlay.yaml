@@ -2,13 +2,19 @@ fullnameOverride: release-name-external-secrets
 
 certController:
   enabled: true
-  service:
-    name: release-name-external-secrets-webhook
-  secret:
-    name: release-name-external-secrets-webhook
-  extraArgs:
-    service-namespace: external-secrets
-    secret-namespace: external-secrets
+  args:
+    - certcontroller
+    - --crd-requeue-interval=5m
+    - --service-name=release-name-external-secrets-webhook
+    - --service-namespace=external-secrets
+    - --secret-name=release-name-external-secrets-webhook
+    - --secret-namespace=external-secrets
+    - --metrics-addr=:8080
+    - --healthz-addr=:8081
+    - --loglevel=info
+    - --zap-time-encoding=epoch
+    - --enable-partial-cache=true
+
 
 webhook:
   create: true
