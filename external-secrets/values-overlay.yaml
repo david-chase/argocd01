@@ -7,8 +7,8 @@ certController:
   secret:
     name: release-name-external-secrets-webhook
   extraArgs:
-    - --service-namespace=external-secrets
-    - --secret-namespace=external-secrets
+    service-namespace: external-secrets
+    secret-namespace: external-secrets
 
 webhook:
   create: true
