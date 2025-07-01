@@ -44,4 +44,10 @@ configs:
           #args: ["echo \"$HELM_VALUES\" | helm template . --name-template $ARGOCD_APP_NAME --namespace $ARGOCD_APP_NAMESPACE $HELM_ARGS -f - > all.yaml && kustomize build"]
           args: ["helm template . --name-template $ARGOCD_APP_NAME --namespace $ARGOCD_APP_NAMESPACE $HELM_ARGS  > all.yaml && kustomize build"]   
   secret:
+    
+    # 2025.07.01 Create secret
+    # Set createSecret to true to bootstrap Argo CD but set it to false for argocd to self-manage
+    createSecret: false
+    # END Create secret
+
     argocdServerAdminPassword: "$2a$12$d61E8ThJrrn0iao4OHyC6Or6SWA.T8JOmLVe9lGSsn1GFnrf9KIvu"
