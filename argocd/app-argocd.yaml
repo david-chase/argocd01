@@ -23,3 +23,10 @@ spec:
   ignoreDifferences:
     - group: cilium.io
       kind: CiliumIdentity
+    # Ignore the argocd-secret secret
+    - group: ""
+      kind: Secret
+      name: argocd-secret
+      namespace: argocd
+      jsonPointers:
+        - /data
