@@ -10,3 +10,13 @@ webhook:
     cert:
       create: true
       duration: "8760h"
+  certMountPath: /tmp/certs
+  certVolumeMounts:
+    items:
+      - key: tls.crt
+        path: tls.crt
+      - key: tls.key
+        path: tls.key
+      - key: ca.crt
+        path: ca.crt
+
