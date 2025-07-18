@@ -4,18 +4,16 @@ metadata:
   name: kubex-automation-stack               # App name
   namespace: argocd
   labels:
-    appversion: "4.2.2"     # Version of the app 
+    appversion: "v1.2.1"     # Version of the app 
 spec:
   project: default
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: kubex-automation-stack/manifests    # This folder holds the kustomize.yaml
-    kustomize:
-      buildOptions: --enable-helm
+    path: kubex-automation-stack             # This folder holds the kustomize.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: densify          # Namespace to deploy to
+    namespace: <namespace>          # Namespace to deploy to
   syncPolicy:
     automated:
       prune: true
