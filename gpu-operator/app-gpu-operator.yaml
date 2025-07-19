@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: <name of app>               # App name
+  name: gpu-operator              # App name
   namespace: argocd
   labels:
-    appversion: "<app version>"     # Version of the app 
+    appversion: "v25.3.1"     # Version of the app 
 spec:
   project: default
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: <name of app>             # This folder holds the kustomize.yaml
+    path: gpu-operator             # This folder holds the kustomize.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: <namespace>          # Namespace to deploy to
+    namespace: gpu-operator          # Namespace to deploy to
   syncPolicy:
     automated:
       prune: true
