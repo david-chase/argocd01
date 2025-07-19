@@ -19,7 +19,10 @@ spec:
       prune: true
       selfHeal: true                # Auto-sync?
     syncOptions:
+      - RespectIgnoreDifferences=true
+      - ApplyOutOfSyncOnly=true
       - CreateNamespace=true
+      - Replace=true  # <-- This helps with hook execution ordering
   ignoreDifferences:
     - group: cilium.io
       kind: CiliumIdentity
