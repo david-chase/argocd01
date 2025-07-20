@@ -13,7 +13,7 @@ spec:
     path: gpu-operator             # This folder holds the kustomize.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: gpu-operator          # Namespace to deploy to
+    namespace: nvidia          # Namespace to deploy to
   syncPolicy:
     automated:
       prune: true
