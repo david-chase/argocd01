@@ -4,7 +4,7 @@ metadata:
   name: cert-manager               # App name
   namespace: argocd
   labels:
-    appversion: "v1.18.1"     # Version of the app 
+    appversion: "v1.18.2"     # Version of the app 
 spec:
   project: default
   source:
