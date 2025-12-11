@@ -1,0 +1,283 @@
+# ==========================================================================
+# Services:
+#   assets
+#   catalog
+#   catalog-mysql
+#   carts
+#   carts-dynamodb
+#   orders
+#   orders-postgresql
+#   orders-rabbitmq
+#   checkout
+#   checkout-redis
+#   ui
+# (11)
+# ==========================================================================
+# Source: retail-store-sample-assets-chart/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: assets
+  labels:
+    helm.sh/chart: assets-0.8.4
+    app.kubernetes.io/name: assets
+    app.kubernetes.io/instance: assets
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: assets
+    app.kubernetes.io/instance: assets
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+---
+# Source: retail-store-sample-catalog-chart/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog
+  labels:
+    helm.sh/chart: catalog-0.8.4
+    app.kubernetes.io/name: catalog
+    app.kubernetes.io/instance: catalog
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: catalog
+    app.kubernetes.io/instance: catalog
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+---
+# Source: retail-store-sample-catalog-chart/templates/mysql-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalog-mysql
+  labels:
+    helm.sh/chart: catalog-0.8.4
+    app.kubernetes.io/name: catalog
+    app.kubernetes.io/instance: catalog
+    app.kubernetes.io/component: mysql
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+      targetPort: mysql
+      protocol: TCP
+      name: mysql
+  selector:
+    app.kubernetes.io/name: catalog
+    app.kubernetes.io/instance: catalog
+    app.kubernetes.io/component: mysql
+---
+# Source: retail-store-sample-cart-chart/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: carts
+  labels:
+    helm.sh/chart: carts-0.8.4
+    app.kubernetes.io/name: carts
+    app.kubernetes.io/instance: carts
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: carts
+    app.kubernetes.io/instance: carts
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+---
+# Source: retail-store-sample-cart-chart/templates/dynamodb-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: carts-dynamodb
+  labels:
+    helm.sh/chart: carts-0.8.4
+    app.kubernetes.io/name: carts
+    app.kubernetes.io/instance: carts
+    app.kubernetes.io/component: dynamodb
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8000
+      targetPort: dynamodb
+      protocol: TCP
+      name: dynamodb
+  selector:
+    app.kubernetes.io/name: carts
+    app.kubernetes.io/instance: carts
+    app.kubernetes.io/component: dynamodb
+---
+# Source: retail-store-sample-orders-chart/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders
+  labels:
+    helm.sh/chart: orders-0.8.4
+    app.kubernetes.io/name: orders
+    app.kubernetes.io/instance: orders
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: orders
+    app.kubernetes.io/instance: orders
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+---
+# Source: retail-store-sample-orders-chart/templates/postgresql-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-postgresql
+  labels:
+    helm.sh/chart: orders-0.8.4
+    app.kubernetes.io/name: orders
+    app.kubernetes.io/instance: orders
+    app.kubernetes.io/component: postgresql
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      targetPort: postgresql
+      protocol: TCP
+      name: postgresql
+  selector:
+    app.kubernetes.io/name: orders
+    app.kubernetes.io/instance: orders
+    app.kubernetes.io/component: postgresql
+---
+# Source: retail-store-sample-orders-chart/templates/rabbitmq-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-rabbitmq
+  labels:
+    helm.sh/chart: orders-0.8.4
+    app.kubernetes.io/name: orders
+    app.kubernetes.io/instance: orders
+    app.kubernetes.io/component: rabbitmq
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5672
+      targetPort: amqp
+      protocol: TCP
+      name: amqp
+    - port: 15672
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: orders
+    app.kubernetes.io/instance: orders
+    app.kubernetes.io/component: rabbitmq
+---
+# Source: retail-store-sample-checkout-chart/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkout
+  labels:
+    helm.sh/chart: checkout-0.8.4
+    app.kubernetes.io/name: checkout
+    app.kubernetes.io/instance: checkout
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: checkout
+    app.kubernetes.io/instance: checkout
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+---
+# Source: retail-store-sample-checkout-chart/templates/redis-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: checkout-redis
+  labels:
+    helm.sh/chart: checkout-0.8.4
+    app.kubernetes.io/name: checkout
+    app.kubernetes.io/instance: checkout
+    app.kubernetes.io/component: redis
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 6379
+      targetPort: redis
+      protocol: TCP
+      name: redis
+  selector:
+    app.kubernetes.io/name: checkout
+    app.kubernetes.io/instance: checkout
+    app.kubernetes.io/component: redis
+---
+# Source: retail-store-sample-ui-chart/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui
+  labels:
+    helm.sh/chart: ui-0.8.4
+    app.kubernetes.io/name: ui
+    app.kubernetes.io/instance: ui
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: ui
+    app.kubernetes.io/instance: ui
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
