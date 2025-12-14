@@ -10,4 +10,4 @@ helmCharts:
     releaseName: gpu-operator        # Name for resources
     repo: https://helm.ngc.nvidia.com/nvidia           # URL of repo
     # valuesFile: values-overlay.yaml    # ONLY the values we want to override
-    version: "v25.10.1"                 # Chart version from the repo 
+    version: v25.10.1                 # Chart version from the repo 
