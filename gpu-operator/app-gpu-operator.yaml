@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gpu-operator              # App name
+  name: gpu-operator               # App name
   namespace: argocd
   labels:
     appversion: "v25.10.1"     # Version of the app 
@@ -19,10 +19,7 @@ spec:
       prune: true
       selfHeal: true                # Auto-sync?
     syncOptions:
-      - RespectIgnoreDifferences=true
-      - ApplyOutOfSyncOnly=true
       - CreateNamespace=true
-      - Replace=true  # <-- This helps with hook execution ordering
   ignoreDifferences:
     - group: cilium.io
       kind: CiliumIdentity
