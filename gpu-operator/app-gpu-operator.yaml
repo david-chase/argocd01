@@ -4,7 +4,7 @@ metadata:
   name: gpu-operator              # App name
   namespace: argocd
   labels:
-    appversion: "v25.3.1"     # Version of the app 
+    appversion: "v25.10.1"     # Version of the app 
 spec:
   project: default
   source:
