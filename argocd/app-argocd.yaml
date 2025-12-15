@@ -1,32 +1,35 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd               # App name
+  name: argocd-config
   namespace: argocd
-  labels:
-    appversion: "v3.0.6"     # Version of the app 
 spec:
   project: default
+
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: argocd   # This folder holds the kustomize.yaml
+    path: argocd
+
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd          # Namespace to deploy to
+    namespace: argocd
+
   syncPolicy:
     automated:
-      prune: false
-      selfHeal: true                # Auto-sync?
+      prune: true
+      selfHeal: false
     syncOptions:
-      - CreateNamespace=true
+      - PruneLast=true
+
   ignoreDifferences:
-    - group: cilium.io
-      kind: CiliumIdentity
-    # Ignore the argocd-secret secret
-    - group: ""
-      kind: Secret
-      name: argocd-secret
-      namespace: argocd
-      jsonPointers:
-        - /data
+    # Protect Argo CD from self-destruction
+    - group: apps
+      kind: Deployment
+      name: argocd-server
+    - group: apps
+      kind: Deployment
+      name: argocd-repo-server
+    - group: apps
+      kind: Deployment
+      name: argocd-application-controller
