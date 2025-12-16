@@ -9,19 +9,19 @@ spec:
         elements:
           - env: hilim
             namespace: retailstore-hilim
-            valueFile: values-manual.yaml
+            valueFile: values-hilim.yaml
           - env: hireq
             namespace: retailstore-hireq
-            valueFile: values-manual.yaml
+            valueFile: values-hireq.yaml
           - env: loreq
             namespace: retailstore-loreq
-            valueFile: values-manual.yaml
+            valueFile: values-loreq.yaml
           - env: lolim
             namespace: retailstore-lolim
-            valueFile: values-manual.yaml
+            valueFile: values-lolim.yaml
           - env: unspecified
             namespace: retailstore-unspecified
-            valueFile: values-manual.yaml
+            valueFile: values-unspecified.yaml
   template:
     metadata:
       name: retailstore-{{ env }}
