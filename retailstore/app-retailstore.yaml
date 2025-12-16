@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: retailstore-manual
+  name: retailstore
   namespace: argocd
 spec:
   generators:
