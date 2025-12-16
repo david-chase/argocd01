@@ -1,0 +1,128 @@
+# Values.yaml for retailstore app
+# This is manual, 1 replica
+metadata:
+  labels:
+    tag: manual
+
+deployments:
+  assets:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 20m
+        memory: 26Mi
+      limits:
+        cpu: 400m
+        memory: 520Mi
+
+  carts:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 12m
+        memory: 72Mi
+      limits:
+        cpu: 240m
+        memory: 1440Mi
+
+  cartsdynamodb:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 12m
+        memory: 42Mi
+      limits:
+        cpu: 240m
+        memory: 840Mi
+
+  catalog:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 12m
+        memory: 12Mi
+      limits:
+        cpu: 240m
+        memory: 240Mi
+
+  checkout:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 12m
+        memory: 22Mi
+      limits:
+        cpu: 240m
+        memory: 440Mi
+
+  checkoutredis:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 12m
+        memory: 2Mi
+      limits:
+        cpu: 240m
+        memory: 40Mi
+
+  orders:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 12m
+        memory: 62Mi
+      limits:
+        cpu: 240m
+        memory: 1240Mi
+
+  ui:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 40m
+        memory: 100Mi
+      limits:
+        cpu: 800m
+        memory: 2000Mi
+
+statefulsets:
+  catalogmysql:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 12m
+        memory: 92Mi
+      limits:
+        cpu: 240m
+        memory: 1840Mi
+
+  orderspostgresql:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 12m
+        memory: 22Mi
+      limits:
+        cpu: 240m
+        memory: 440Mi
+
+  ordersrabbitmq:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 12m
+        memory: 42Mi
+      limits:
+        cpu: 240m
+        memory: 840Mi

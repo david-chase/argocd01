@@ -1,0 +1,128 @@
+# Values.yaml for retailstore app
+# This is manual, 1 replica
+metadata:
+  labels:
+    tag: manual
+
+deployments:
+  assets:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 300m
+        memory: 384Mi
+      limits:
+        cpu: 330m
+        memory: 423Mi
+
+  carts:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 180m
+        memory: 1080Mi
+      limits:
+        cpu: 198m
+        memory: 1188Mi
+
+  cartsdynamodb:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 180m
+        memory: 630Mi
+      limits:
+        cpu: 198m
+        memory: 693Mi
+
+  catalog:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 180m
+        memory: 180Mi
+      limits:
+        cpu: 198m
+        memory: 198Mi
+
+  checkout:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 180m
+        memory: 330Mi
+      limits:
+        cpu: 198m
+        memory: 363Mi
+
+  checkoutredis:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 180m
+        memory: 30Mi
+      limits:
+        cpu: 198m
+        memory: 33Mi
+
+  orders:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 180m
+        memory: 930Mi
+      limits:
+        cpu: 198m
+        memory: 1023Mi
+
+  ui:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 600m
+        memory: 1500Mi
+      limits:
+        cpu: 660m
+        memory: 1650Mi
+
+statefulsets:
+  catalogmysql:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 180m
+        memory: 1380Mi
+      limits:
+        cpu: 198m
+        memory: 1518Mi
+
+  orderspostgresql:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 180m
+        memory: 330Mi
+      limits:
+        cpu: 198m
+        memory: 363Mi
+
+  ordersrabbitmq:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 180m
+        memory: 630Mi
+      limits:
+        cpu: 198m
+        memory: 693Mi

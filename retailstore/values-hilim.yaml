@@ -1,0 +1,128 @@
+# Values.yaml for retailstore app
+# This is manual, 1 replica
+metadata:
+  labels:
+    tag: manual
+
+deployments:
+  assets:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 500m
+        memory: 640Mi
+
+  carts:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 360Mi
+      limits:
+        cpu: 300m
+        memory: 1800Mi
+
+  cartsdynamodb:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 210Mi
+      limits:
+        cpu: 300m
+        memory: 1050Mi
+
+  catalog:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 60Mi
+      limits:
+        cpu: 300m
+        memory: 300Mi
+
+  checkout:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 110Mi
+      limits:
+        cpu: 300m
+        memory: 550Mi
+
+  checkoutredis:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 10Mi
+      limits:
+        cpu: 300m
+        memory: 50Mi
+
+  orders:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 310Mi
+      limits:
+        cpu: 300m
+        memory: 1550Mi
+
+  ui:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 200m
+        memory: 500Mi
+      limits:
+        cpu: 1000m
+        memory: 2500Mi
+
+statefulsets:
+  catalogmysql:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 460Mi
+      limits:
+        cpu: 300m
+        memory: 2300Mi
+
+  orderspostgresql:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 110Mi
+      limits:
+        cpu: 300m
+        memory: 550Mi
+
+  ordersrabbitmq:
+    spec:
+      replicas: 1
+    resources:
+      requests:
+        cpu: 60m
+        memory: 210Mi
+      limits:
+        cpu: 300m
+        memory: 1050Mi
