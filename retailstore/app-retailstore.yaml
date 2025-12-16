@@ -30,7 +30,7 @@ spec:
       source:
         repoURL: https://github.com/david-chase/argocd01
         targetRevision: HEAD
-        path: tokyo/apps/retailstore-manual
+        path: retailstore
         helm:
           valueFiles:
             - '{{ valueFile }}'
