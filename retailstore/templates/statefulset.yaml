@@ -3,8 +3,8 @@
 #   catalog-mysql
 #   orders-postgresql
 #   orders-rabbitmq
-# (3)
 # ==========================================================================
+
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: "public.ecr.aws/docker/library/mysql:8.0"
+          image: public.ecr.aws/docker/library/mysql:8.0
           imagePullPolicy: IfNotPresent
           env:
             - name: MYSQL_ROOT_PASSWORD
@@ -58,15 +58,13 @@ spec:
             - name: mysql
               containerPort: 3306
               protocol: TCP
+{{- with .Values.statefulsets.catalogmysql.resources }}
           resources:
-            requests:
-              cpu: {{ .Values.statefulsets.catalogmysql.resources.requests.cpu }}
-              memory: {{ .Values.statefulsets.catalogmysql.resources.requests.memory }}
-            limits:
-              memory: {{ .Values.statefulsets.catalogmysql.resources.limits.memory }}
+{{ toYaml . | indent 12 }}
+{{- end }}
       volumes:
-      - name: data
-        emptyDir: {}
+        - name: data
+          emptyDir: {}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -97,7 +95,7 @@ spec:
     spec:
       containers:
         - name: postgresql
-          image: "public.ecr.aws/docker/library/postgres:16.1"
+          image: public.ecr.aws/docker/library/postgres:16.1
           imagePullPolicy: IfNotPresent
           env:
             - name: POSTGRES_DB
@@ -121,15 +119,13 @@ spec:
             - name: postgresql
               containerPort: 5432
               protocol: TCP
+{{- with .Values.statefulsets.orderspostgresql.resources }}
           resources:
-            requests:
-              cpu: {{ .Values.statefulsets.orderspostgresql.resources.requests.cpu }}
-              memory: {{ .Values.statefulsets.orderspostgresql.resources.requests.memory }}
-            limits:
-              memory: {{ .Values.statefulsets.orderspostgresql.resources.limits.memory }}             
+{{ toYaml . | indent 12 }}
+{{- end }}
       volumes:
-      - name: data
-        emptyDir: {}
+        - name: data
+          emptyDir: {}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -160,24 +156,22 @@ spec:
     spec:
       containers:
         - name: rabbitmq
-          image: "public.ecr.aws/docker/library/rabbitmq:3-management"
+          image: public.ecr.aws/docker/library/rabbitmq:3-management
           imagePullPolicy: IfNotPresent
           ports:
-          - name: amqp
-            containerPort: 5672
-            protocol: TCP
-          - name: http
-            containerPort: 15672
-            protocol: TCP
+            - name: amqp
+              containerPort: 5672
+              protocol: TCP
+            - name: http
+              containerPort: 15672
+              protocol: TCP
           volumeMounts:
-          - name: data
-            mountPath: "/var/lib/rabbitmq/mnesia"
+            - name: data
+              mountPath: /var/lib/rabbitmq/mnesia
+{{- with .Values.statefulsets.ordersrabbitmq.resources }}
           resources:
-            requests:
-              cpu: {{ .Values.statefulsets.ordersrabbitmq.resources.requests.cpu }}
-              memory: {{ .Values.statefulsets.ordersrabbitmq.resources.requests.memory }}
-            limits:
-              memory: {{ .Values.statefulsets.ordersrabbitmq.resources.limits.memory }}            
+{{ toYaml . | indent 12 }}
+{{- end }}
       volumes:
-      - name: data
-        emptyDir: {}
+        - name: data
+          emptyDir: {}
