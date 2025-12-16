@@ -1,8 +1,8 @@
 # Values.yaml for retailstore app
 # This is manual, 1 replica
-metadata:
-  labels:
-    tag: manual
+# metadata:
+#   labels:
+#     tag: manual
 
 deployments:
   assets:
