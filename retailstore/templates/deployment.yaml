@@ -163,9 +163,16 @@ spec:
         app.kubernetes.io/name: catalog
         app.kubernetes.io/instance: catalog
     spec:
+      serviceAccountName: catalog
       containers:
         - name: catalog
           image: public.ecr.aws/aws-containers/retail-store-sample-catalog:0.8.4
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: catalog
+            - secretRef:
+                name: catalog-db
 {{- with .Values.deployments.catalog.resources }}
           resources:
 {{ toYaml . | indent 12 }}
