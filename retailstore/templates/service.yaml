@@ -2,7 +2,7 @@
 # Services:
 #   assets
 #   catalog
-#   catalog-mysql
+#   catalog-db
 #   carts
 #   carts-dynamodb
 #   orders
@@ -13,6 +13,7 @@
 #   ui
 # (11)
 # ==========================================================================
+
 # Source: retail-store-sample-assets-chart/templates/service.yaml
 apiVersion: v1
 kind: Service
@@ -67,7 +68,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: catalog-mysql
+  name: catalog-db
   labels:
     helm.sh/chart: catalog-0.8.4
     app.kubernetes.io/name: catalog
