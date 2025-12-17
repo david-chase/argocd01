@@ -21,7 +21,9 @@ metadata:
     app.kubernetes.io/component: service
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
-    whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+{{- with .Values.metadata.labels }}
+{{ toYaml . | indent 4 }}
+{{- end }}
 spec:
   replicas: {{ .Values.deployments.assets.spec.replicas }}
   strategy:
@@ -33,15 +35,15 @@ spec:
       app.kubernetes.io/name: assets
       app.kubernetes.io/instance: assets
       app.kubernetes.io/component: service
-      app.kuberneres.io/owner: retail-store-sample
   template:
     metadata:
       labels:
         app.kubernetes.io/name: assets
         app.kubernetes.io/instance: assets
         app.kubernetes.io/component: service
-        app.kuberneres.io/owner: retail-store-sample
-        whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+{{- with .Values.metadata.labels }}
+{{ toYaml . | indent 8 }}
+{{- end }}
     spec:
       serviceAccountName: assets
       containers:
@@ -84,7 +86,9 @@ metadata:
     app.kubernetes.io/component: service
     app.kuberneres.io/owner: retail-store-sample
     app.kubernetes.io/managed-by: Helm
-    whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+{{- with .Values.metadata.labels }}
+{{ toYaml . | indent 4 }}
+{{- end }}
 spec:
   replicas: {{ .Values.deployments.carts.spec.replicas }}
   selector:
@@ -98,7 +102,9 @@ spec:
         app.kubernetes.io/name: carts
         app.kubernetes.io/instance: carts
         app.kubernetes.io/component: service
-        whengeeksattack.org/tag: {{ .Values.metadata.labels.tag }}
+{{- with .Values.metadata.labels }}
+{{ toYaml . | indent 8 }}
+{{- end }}
     spec:
       containers:
         - name: carts
@@ -115,9 +121,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: cartsdynamodb
+  labels:
+    app.kubernetes.io/name: cartsdynamodb
+    app.kubernetes.io/instance: cartsdynamodb
 spec:
   replicas: {{ .Values.deployments.cartsdynamodb.spec.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cartsdynamodb
+      app.kubernetes.io/instance: cartsdynamodb
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cartsdynamodb
+        app.kubernetes.io/instance: cartsdynamodb
     spec:
       containers:
         - name: dynamodb
@@ -131,9 +148,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: catalog
+  labels:
+    app.kubernetes.io/name: catalog
+    app.kubernetes.io/instance: catalog
 spec:
   replicas: {{ .Values.deployments.catalog.spec.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: catalog
+      app.kubernetes.io/instance: catalog
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: catalog
+        app.kubernetes.io/instance: catalog
     spec:
       containers:
         - name: catalog
@@ -147,9 +175,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: checkout
+  labels:
+    app.kubernetes.io/name: checkout
+    app.kubernetes.io/instance: checkout
 spec:
   replicas: {{ .Values.deployments.checkout.spec.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: checkout
+      app.kubernetes.io/instance: checkout
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: checkout
+        app.kubernetes.io/instance: checkout
     spec:
       containers:
         - name: checkout
@@ -163,9 +202,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: checkout-redis
+  labels:
+    app.kubernetes.io/name: checkout-redis
+    app.kubernetes.io/instance: checkout-redis
 spec:
   replicas: {{ .Values.deployments.checkoutredis.spec.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: checkout-redis
+      app.kubernetes.io/instance: checkout-redis
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: checkout-redis
+        app.kubernetes.io/instance: checkout-redis
     spec:
       containers:
         - name: redis
@@ -179,9 +229,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: orders
+  labels:
+    app.kubernetes.io/name: orders
+    app.kubernetes.io/instance: orders
 spec:
   replicas: {{ .Values.deployments.orders.spec.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: orders
+      app.kubernetes.io/instance: orders
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: orders
+        app.kubernetes.io/instance: orders
     spec:
       containers:
         - name: orders
@@ -195,9 +256,20 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ui
+  labels:
+    app.kubernetes.io/name: ui
+    app.kubernetes.io/instance: ui
 spec:
   replicas: {{ .Values.deployments.ui.spec.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ui
+      app.kubernetes.io/instance: ui
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ui
+        app.kubernetes.io/instance: ui
     spec:
       containers:
         - name: ui
