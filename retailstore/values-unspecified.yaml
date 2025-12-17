@@ -19,7 +19,7 @@ deployments:
 
   catalog:
     spec:
-      replicas: 1
+      replicas: 0
 
   checkout:
     spec:

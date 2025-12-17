@@ -40,7 +40,7 @@ deployments:
 
   catalog:
     spec:
-      replicas: 1
+      replicas: 0
     resources:
       requests:
         cpu: 12m
