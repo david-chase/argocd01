@@ -15,46 +15,51 @@ spec:
 
       initContainers:
       - name: load-heavy-onnx-model
-        image: pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
+        image: python:3.11
         command:
-          - python
+          - sh
           - -c
           - |
+            set -e
+
+            pip install --no-cache-dir onnx
+
+            python <<'EOF'
             import onnx
             from onnx import helper, TensorProto
             import os
 
             input_tensor = helper.make_tensor_value_info(
-              'input', TensorProto.FLOAT, [1, 2048, 2048]
+              "input", TensorProto.FLOAT, [1, 1024, 1024]
             )
             output_tensor = helper.make_tensor_value_info(
-              'output', TensorProto.FLOAT, [1, 2048, 2048]
+              "output", TensorProto.FLOAT, [1, 1024, 1024]
             )
 
             nodes = []
             initializers = []
-            last = 'input'
+            last = "input"
 
-            for i in range(4):
-              weight_name = f'w{i}'
-              weight = helper.make_tensor(
-                name=weight_name,
+            for i in range(8):
+              w_name = f"w{i}"
+              w = helper.make_tensor(
+                name=w_name,
                 data_type=TensorProto.FLOAT,
-                dims=[2048, 2048],
-                vals=[0.001] * (2048 * 2048),
+                dims=[1024, 1024],
+                vals=[0.001] * (1024 * 1024),
               )
               node = helper.make_node(
-                'MatMul',
-                inputs=[last, weight_name],
-                outputs=[f'x{i}'],
+                "MatMul",
+                inputs=[last, w_name],
+                outputs=[f"x{i}"],
               )
               nodes.append(node)
-              initializers.append(weight)
-              last = f'x{i}'
+              initializers.append(w)
+              last = f"x{i}"
 
             graph = helper.make_graph(
               nodes,
-              'heavy-matmul',
+              "heavy-matmul",
               [input_tensor],
               [output_tensor],
               initializer=initializers,
@@ -63,17 +68,18 @@ spec:
             model = helper.make_model(graph)
             onnx.checker.check_model(model)
 
-            os.makedirs('/models/heavy/1', exist_ok=True)
-            onnx.save(model, '/models/heavy/1/model.onnx')
+            os.makedirs("/models/heavy/1", exist_ok=True)
+            onnx.save(model, "/models/heavy/1/model.onnx")
 
-            with open('/models/heavy/config.pbtxt', 'w') as f:
+            with open("/models/heavy/config.pbtxt", "w") as f:
               f.write(
                 'name: "heavy"\n'
                 'platform: "onnxruntime_onnx"\n'
                 'max_batch_size: 1\n'
-                'input [ { name: "input" data_type: TYPE_FP32 dims: [2048, 2048] } ]\n'
-                'output [ { name: "output" data_type: TYPE_FP32 dims: [2048, 2048] } ]\n'
+                'input [ { name: "input" data_type: TYPE_FP32 dims: [1024, 1024] } ]\n'
+                'output [ { name: "output" data_type: TYPE_FP32 dims: [1024, 1024] } ]\n'
               )
+            EOF
         volumeMounts:
         - name: model-repo
           mountPath: /models
@@ -89,7 +95,12 @@ spec:
         - containerPort: 8001
         - containerPort: 8002
         resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+            nvidia.com/gpu: 1
           limits:
+            memory: "4Gi"
             nvidia.com/gpu: 1
         volumeMounts:
         - name: model-repo
