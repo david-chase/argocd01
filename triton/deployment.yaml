@@ -22,40 +22,48 @@ spec:
           - |
             set -e
 
-            pip install --no-cache-dir onnx
+            echo "[init] Installing onnx"
+            pip install --no-cache-dir --prefer-binary onnx
 
+            echo "[init] Generating ONNX model"
             python <<'EOF'
             import onnx
             from onnx import helper, TensorProto
             import os
 
+            input_name = "input"
             input_tensor = helper.make_tensor_value_info(
-              "input", TensorProto.FLOAT, [1, 1024, 1024]
-            )
-            output_tensor = helper.make_tensor_value_info(
-              "output", TensorProto.FLOAT, [1, 1024, 1024]
+              input_name, TensorProto.FLOAT, [1, 1024, 1024]
             )
 
             nodes = []
             initializers = []
-            last = "input"
+            last = input_name
 
             for i in range(8):
               w_name = f"w{i}"
+              out_name = f"x{i}"
+
               w = helper.make_tensor(
                 name=w_name,
                 data_type=TensorProto.FLOAT,
                 dims=[1024, 1024],
                 vals=[0.001] * (1024 * 1024),
               )
+
               node = helper.make_node(
                 "MatMul",
                 inputs=[last, w_name],
-                outputs=[f"x{i}"],
+                outputs=[out_name],
               )
+
               nodes.append(node)
               initializers.append(w)
-              last = f"x{i}"
+              last = out_name
+
+            output_tensor = helper.make_tensor_value_info(
+              last, TensorProto.FLOAT, [1, 1024, 1024]
+            )
 
             graph = helper.make_graph(
               nodes,
@@ -76,9 +84,11 @@ spec:
                 'name: "heavy"\n'
                 'platform: "onnxruntime_onnx"\n'
                 'max_batch_size: 1\n'
-                'input [ { name: "input" data_type: TYPE_FP32 dims: [1024, 1024] } ]\n'
-                'output [ { name: "output" data_type: TYPE_FP32 dims: [1024, 1024] } ]\n'
+                f'input [ {{ name: "{input_name}" data_type: TYPE_FP32 dims: [1024, 1024] }} ]\n'
+                f'output [ {{ name: "{last}" data_type: TYPE_FP32 dims: [1024, 1024] }} ]\n'
               )
+
+            print("[init] Model generation complete")
             EOF
         volumeMounts:
         - name: model-repo
