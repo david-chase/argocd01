@@ -1,27 +1,45 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
-  name: kubex-automation-controller
+  name: kubex-automation-controller-appset
   namespace: argocd
-  labels:
-    appversion: "v1.0.2"
 spec:
-  project: default
-  source:
-    repoURL: https://github.com/david-chase/argocd01
-    targetRevision: HEAD
-    path: kubex-automation-controller
-    kustomize:
-      enableHelm: true
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: kubex
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-  ignoreDifferences:
-    - group: cilium.io
-      kind: CiliumIdentity
+  generators:
+    - list:
+        elements:
+          - appName: cert-manager
+            namespace: kubex
+            repoURL: https://charts.jetstack.io
+            chart: cert-manager
+            version: v1.19.2
+            valuesFile: cert-manager-values.yaml
+
+          - appName: kubex-automation-controller
+            namespace: kubex
+            repoURL: https://densify-dev.github.io/helm-charts
+            chart: kubex-automation-controller
+            version: 1.0.8
+            valuesFile: kubex-automation-values.yaml
+
+  template:
+    metadata:
+      name: '{{appName}}'
+      namespace: argocd
+    spec:
+      project: default
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+      source:
+        repoURL: '{{repoURL}}'
+        chart: '{{chart}}'
+        targetRevision: '{{version}}'
+        helm:
+          valueFiles:
+            - '{{valuesFile}}'
