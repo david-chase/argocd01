@@ -20,16 +20,16 @@ spec:
               - sh
               - -c
               - |
-                echo "Sending lightweight Triton inference request"
-                curl -s -X POST http://triton:8000/v2/models/simple/infer \
+                echo "Sending heavy Triton inference request"
+                curl -s -X POST http://triton:8000/v2/models/heavy/infer \
                   -H "Content-Type: application/json" \
                   -d '{
                     "inputs": [
                       {
-                        "name": "INPUT0",
-                        "shape": [1],
+                        "name": "input",
+                        "shape": [1, 2048, 2048],
                         "datatype": "FP32",
-                        "data": [1.0]
+                        "data": [0.01]
                       }
                     ]
                   }'

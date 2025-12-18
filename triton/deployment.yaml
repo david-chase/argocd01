@@ -12,6 +12,72 @@ spec:
       labels:
         app: triton
     spec:
+
+      initContainers:
+      - name: load-heavy-onnx-model
+        image: python:3.11-slim
+        command:
+          - python
+          - -c
+          - |
+            import onnx
+            from onnx import helper, TensorProto
+            import os
+
+            input_tensor = helper.make_tensor_value_info(
+              'input', TensorProto.FLOAT, [1, 2048, 2048]
+            )
+            output_tensor = helper.make_tensor_value_info(
+              'output', TensorProto.FLOAT, [1, 2048, 2048]
+            )
+
+            nodes = []
+            initializers = []
+            last = 'input'
+
+            for i in range(4):
+              weight_name = f'w{i}'
+              weight = helper.make_tensor(
+                name=weight_name,
+                data_type=TensorProto.FLOAT,
+                dims=[2048, 2048],
+                vals=[0.001] * (2048 * 2048),
+              )
+              node = helper.make_node(
+                'MatMul',
+                inputs=[last, weight_name],
+                outputs=[f'x{i}'],
+              )
+              nodes.append(node)
+              initializers.append(weight)
+              last = f'x{i}'
+
+            graph = helper.make_graph(
+              nodes,
+              'heavy-matmul',
+              [input_tensor],
+              [output_tensor],
+              initializer=initializers,
+            )
+
+            model = helper.make_model(graph)
+            onnx.checker.check_model(model)
+
+            os.makedirs('/models/heavy/1', exist_ok=True)
+            onnx.save(model, '/models/heavy/1/model.onnx')
+
+            with open('/models/heavy/config.pbtxt', 'w') as f:
+              f.write(
+                'name: "heavy"\n'
+                'platform: "onnxruntime_onnx"\n'
+                'max_batch_size: 1\n'
+                'input [ { name: "input" data_type: TYPE_FP32 dims: [2048, 2048] } ]\n'
+                'output [ { name: "output" data_type: TYPE_FP32 dims: [2048, 2048] } ]\n'
+              )
+        volumeMounts:
+        - name: model-repo
+          mountPath: /models
+
       containers:
       - name: triton
         image: nvcr.io/nvidia/tritonserver:25.11-py3
@@ -28,6 +94,7 @@ spec:
         volumeMounts:
         - name: model-repo
           mountPath: /models
+
       volumes:
       - name: model-repo
         emptyDir: {}
