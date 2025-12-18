@@ -1,21 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kubex-automation-controller               # App name
+  name: kubex-automation-controller
   namespace: argocd
   labels:
-    appversion: "v1.0.2"     # Version of the app 
+    appversion: "v1.0.2"
 spec:
   project: default
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: kubex-automation-controller             # This folder holds the kustomization.yaml
+    path: kubex-automation-controller
     kustomize:
-      buildOptions: --enable-helm
+      enableHelm: true
   destination:
     server: https://kubernetes.default.svc
-    namespace: kubex          # Namespace to deploy to
+    namespace: kubex
   syncPolicy:
     automated:
       prune: true
