@@ -11,13 +11,15 @@ spec:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
     path: kubex-automation-controller             # This folder holds the kustomization.yaml
+    kustomize:
+      buildOptions: --enable-helm
   destination:
     server: https://kubernetes.default.svc
     namespace: kubex          # Namespace to deploy to
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true                # Auto-sync?
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
   ignoreDifferences:
