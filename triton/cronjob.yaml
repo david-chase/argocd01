@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: triton-hourly-load
+spec:
+  schedule: "0 * * * *"   # hourly, on the hour
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: loadgen
+            image: curlimages/curl:8.5.0
+            command:
+              - sh
+              - -c
+              - |
+                echo "Sending lightweight Triton inference request"
+                curl -s -X POST http://triton:8000/v2/models/simple/infer \
+                  -H "Content-Type: application/json" \
+                  -d '{
+                    "inputs": [
+                      {
+                        "name": "INPUT0",
+                        "shape": [1],
+                        "datatype": "FP32",
+                        "data": [1.0]
+                      }
+                    ]
+                  }'

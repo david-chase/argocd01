@@ -1,32 +1,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd               # App name
+  name: triton               # App name
   namespace: argocd
   labels:
-    appversion: "v3.0.6"     # Version of the app 
+    appversion: "v25.11"     # Version of the app 
 spec:
   project: default
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: argocd   # This folder holds the kustomize.yaml
+    path: triton             # This folder holds the kustomize.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd          # Namespace to deploy to
+    namespace: triton          # Namespace to deploy to
   syncPolicy:
     automated:
-      prune: false
+      prune: true
       selfHeal: true                # Auto-sync?
     syncOptions:
       - CreateNamespace=true
   ignoreDifferences:
     - group: cilium.io
       kind: CiliumIdentity
-    # Ignore the argocd-secret secret
-    - group: ""
-      kind: Secret
-      name: argocd-secret
-      namespace: argocd
-      jsonPointers:
-        - /data
