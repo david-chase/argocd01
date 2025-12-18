@@ -46,9 +46,9 @@ spec:
                 - name: base-optimization-scope
                   policy: base-optimization
                   namespaces:
-                    operator: NotIn
+                    operator: In
                     values:
-                      - kubex
+                      - retailstore-unspecified
                   podLabels:
                     - key: app
                       operator: NotIn
@@ -91,9 +91,9 @@ spec:
 
               deployment:
                 controllerEnv:
-                  podScanInitialInterval: "30s"
+                  podScanInitialInterval: "1m"
                   podScanInterval: "2m"
-                  podScanTimeout: "30s"
+                  podScanTimeout: "1m"
                   recommendationsFetchInitialDelay: "30s"
 
   template:
