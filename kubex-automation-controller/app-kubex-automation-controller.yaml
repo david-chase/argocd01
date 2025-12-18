@@ -12,12 +12,89 @@ spec:
             repoURL: https://charts.jetstack.io
             chart: cert-manager
             version: v1.19.2
+            helmValues: |
+              crds:
+                enabled: true
 
           - appName: kubex-automation-controller
             namespace: kubex
             repoURL: https://densify-dev.github.io/helm-charts
             chart: kubex-automation-controller
             version: 1.0.8
+            helmValues: |
+              createSecrets: true
+
+              densify:
+                url:
+                  host: densifytest.densify.com
+
+              densifyCredentials:
+                username: 'forwarder'
+                epassword: 'v117e99fe4f74c299f9275106fcb890cb9ab0af38336a46c7e0372081525a76640d2a9d71b245c0b140155cfd4ffeba57c7a3a1f01d44f1ce84c8a54241efc2be9'
+
+              valkey:
+                credentials:
+                  password: yM73txhrUpRJ
+
+              cluster:
+                name: dchase-testing
+
+              certmanager:
+                enabled: true
+
+              scope:
+                - name: base-optimization-scope
+                  policy: base-optimization
+                  namespaces:
+                    operator: NotIn
+                    values:
+                      - kubex
+                  podLabels:
+                    - key: app
+                      operator: NotIn
+                      values:
+                        - somevalue
+
+              policy:
+                automationEnabled: true
+                defaultPolicy: base-optimization
+                remoteEnablement: false
+                policies:
+                  base-optimization:
+                    allowedPodOwners: "Deployment,StatefulSet,CronJob,Rollout,Job,ReplicaSet,AnalysisRun"
+                    enablement:
+                      cpu:
+                        request:
+                          downsize: true
+                          upsize: true
+                          setFromUnspecified: true
+                        limit:
+                          downsize: true
+                          upsize: true
+                          setFromUnspecified: true
+                          unsetFromSpecified: false
+                      memory:
+                        request:
+                          downsize: true
+                          upsize: true
+                          setFromUnspecified: true
+                        limit:
+                          downsize: true
+                          upsize: true
+                          setFromUnspecified: true
+                    inPlaceResize:
+                      enabled: true
+                    podEviction:
+                      enabled: true
+                    safetyChecks:
+                      maxAnalysisAgeDays: 5
+
+              deployment:
+                controllerEnv:
+                  podScanInitialInterval: "30s"
+                  podScanInterval: "2m"
+                  podScanTimeout: "30s"
+                  recommendationsFetchInitialDelay: "30s"
 
   template:
     metadata:
@@ -40,112 +117,4 @@ spec:
         targetRevision: '{{version}}'
         helm:
           values: |
-            {{- if eq .appName "cert-manager" }}
-            crds:
-              enabled: true
-            {{- end }}
-
-            {{- if eq .appName "kubex-automation-controller" }}
-            # ================================================================
-            # SECTION: SECRET MANAGEMENT CONFIGURATION
-            # ================================================================
-
-            createSecrets: true
-
-            # ================================================================
-            # SECTION: CONNECTION PARAMETERS
-            # ================================================================
-
-            densify:
-              url:
-                host: densifytest.densify.com
-
-            densifyCredentials:
-              username: 'forwarder'
-              epassword: 'v117e99fe4f74c299f9275106fcb890cb9ab0af38336a46c7e0372081525a76640d2a9d71b245c0b140155cfd4ffeba57c7a3a1f01d44f1ce84c8a54241efc2be9'
-
-            # ================================================================
-            # SECTION: VALKEY CONFIGURATION
-            # ================================================================
-
-            valkey:
-              credentials:
-                password: yM73txhrUpRJ
-
-            # ================================================================
-            # SECTION: CLUSTER CONFIGURATION
-            # ================================================================
-
-            cluster:
-              name: dchase-testing
-
-            certmanager:
-              enabled: true
-
-            # ================================================================
-            # SCOPE CONFIGURATION
-            # ================================================================
-
-            scope:
-              - name: base-optimization-scope
-                policy: base-optimization
-                namespaces:
-                  operator: NotIn
-                  values:
-                    - kubex
-                podLabels:
-                  - key: app
-                    operator: NotIn
-                    values:
-                      - somevalue
-
-            # ================================================================
-            # AUTOMATION POLICY
-            # ================================================================
-
-            policy:
-              automationEnabled: true
-              defaultPolicy: base-optimization
-              remoteEnablement: false
-
-              policies:
-                base-optimization:
-                  allowedPodOwners: "Deployment,StatefulSet,CronJob,Rollout,Job,ReplicaSet,AnalysisRun"
-                  enablement:
-                    cpu:
-                      request:
-                        downsize: true
-                        upsize: true
-                        setFromUnspecified: true
-                      limit:
-                        downsize: true
-                        upsize: true
-                        setFromUnspecified: true
-                        unsetFromSpecified: false
-                    memory:
-                      request:
-                        downsize: true
-                        upsize: true
-                        setFromUnspecified: true
-                      limit:
-                        downsize: true
-                        upsize: true
-                        setFromUnspecified: true
-                  inPlaceResize:
-                    enabled: true
-                  podEviction:
-                    enabled: true
-                  safetyChecks:
-                    maxAnalysisAgeDays: 5
-
-            # ================================================================
-            # DEPLOYMENT CONFIGURATION
-            # ================================================================
-
-            deployment:
-              controllerEnv:
-                podScanInitialInterval: "30s"
-                podScanInterval: "2m"
-                podScanTimeout: "30s"
-                recommendationsFetchInitialDelay: "30s"
-            {{- end }}
+            {{helmValues}}
