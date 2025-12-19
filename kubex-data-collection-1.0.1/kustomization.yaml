@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kubex                 # Namespace to deploy to
+
+resources:
+   # - densify-api-secret.yaml                  # List of manifests to apply, if any
+
+helmCharts:
+  - name: kubex-automation-stack                # Chart name from the repo
+    releaseName: kubex                          # Name for resources
+    repo: https://densify-dev.github.io/helm-charts           # URL of repo
+    valuesFile: values-overlay.yaml    # ONLY the values we want to override
+    version: 1.0.1                # Chart version from the repo 

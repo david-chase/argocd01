@@ -20,12 +20,12 @@ certmanager:
   enabled: false
 
 scope:
-  - name: base-optimization-scope # Unique scope name
-    policy: base-optimization     # Policy name (optional - uses defaultPolicy if omitted)
-    namespaces:           # Mandatory - defines which namespaces to include/exclude
-      operator: NotIn     # Options: In | NotIn
+  - name: base-optimization-scope 
+    policy: base-optimization 
+    namespaces:           
+      operator: NotIn     
       values:
-        - kube-system          # Kubex namespace (exclude automation components)
+        - kube-system          
     # podLabels:            # Optional - defines which pods to include/exclude based on labels
     #   - key: app        # Replace with actual label key (e.g., "app", "env", "tier")
     #     operator: NotIn              # Options: In | NotIn  
@@ -40,7 +40,8 @@ policy:
 
   policies: 
     base-optimization:
-      allowedPodOwners: "Deployment,StatefulSet,CronJob,Rollout,Job,ReplicaSet,AnalysisRun"
+      allowedPodOwners: "Deployment,CronJob,Rollout,Job,ReplicaSet,AnalysisRun"
+      # Removed StatefulSet, DaemonSet
       enablement:
         cpu:
           request:

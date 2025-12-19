@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubex-automation-stack               # App name
+  namespace: argocd
+  labels:
+    appversion: "v1.0.1"     # Version of the app 
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/david-chase/argocd01
+    targetRevision: HEAD
+    path: kubex-data-collection-1.0.1             # This folder holds the kustomize.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kubex          # Namespace to deploy to
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true                # Auto-sync?
+    syncOptions:
+      - CreateNamespace=true
+  ignoreDifferences:
+    - group: cilium.io
+      kind: CiliumIdentity

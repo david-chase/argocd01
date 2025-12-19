@@ -1,0 +1,24 @@
+stack:
+  densify:
+    createSecret: false
+    username: 'forwarder'
+    encrypted_password: 'v117e99fe4f74c299f9275106fcb890cb9ab0af38336a46c7e0372081525a76640d2a9d71b245c0b140155cfd4ffeba57c7a3a1f01d44f1ce84c8a54241efc2be9'
+  
+container-optimization-data-forwarder:
+  config:
+    forwarder:
+      densify:
+        url:
+          host: 'densifytest.densify.com' # mandatory: <instance>.densify.com
+    clusters:
+      - name: 'demo01' # mandatory
+prometheus:
+  alertmanager:
+    enabled: true 
+  prometheus-pushgateway:
+    enabled: true
+  server:
+    persistentVolume:
+      size: 10Gi
+    retention: "7d"
+    retentionSize: "8GiB"
