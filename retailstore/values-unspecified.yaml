@@ -10,56 +10,56 @@ deployments:
       replicas: 1
     resources:
       requests:
-        cpu: 1000m
+        cpu: 10m
 
   carts:
     spec:
       replicas: 1
     resources:
       requests:
-        cpu: 1000m
+        cpu: 10m
 
   cartsdynamodb:
     spec:
       replicas: 1
     resources:
       requests:
-        cpu: 1000m
+        cpu: 10m
 
   catalog:
     spec:
       replicas: 0
     resources:
       requests:
-        cpu: 1000m
+        cpu: 10m
 
   checkout:
     spec:
       replicas: 1
     resources:
       requests:
-        cpu: 1000m
+        cpu: 10m
 
   checkoutredis:
     spec:
       replicas: 1
     resources:
       requests:
-        cpu: 1000m
+        cpu: 10m
 
   orders:
     spec:
       replicas: 1
     resources:
       requests:
-        cpu: 1000m
+        cpu: 10m
 
   ui:
     spec:
       replicas: 1
     resources:
       requests:
-        cpu: 1000m
+        cpu: 10m
 
 statefulsets:
   catalogmysql:
@@ -67,18 +67,18 @@ statefulsets:
       replicas: 1
     resources:
       requests:
-        cpu: 1000m
+        cpu: 10m
 
   orderspostgresql:
     spec:
       replicas: 1
     resources:
       requests:
-        cpu: 1000m
+        cpu: 10m
 
   ordersrabbitmq:
     spec:
       replicas: 1
     resources:
       requests:
-        cpu: 1000m
+        cpu: 10m
