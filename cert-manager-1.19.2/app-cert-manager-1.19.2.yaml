@@ -1,16 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager               # App name
+  name: cert-manager-1.19.2               # App name
   namespace: argocd
   labels:
-    appversion: "v1.18.2"     # Version of the app 
+    appversion: "v1.19.2"     # Version of the app 
 spec:
   project: default
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: cert-manager             # This folder holds the kustomize.yaml
+    path: cert-manager-1.19.2             # This folder holds the kustomize.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager          # Namespace to deploy to
