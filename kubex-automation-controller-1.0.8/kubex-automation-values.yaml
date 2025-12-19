@@ -23,9 +23,9 @@ scope:
   - name: base-optimization-scope # Unique scope name
     policy: base-optimization     # Policy name (optional - uses defaultPolicy if omitted)
     namespaces:           # Mandatory - defines which namespaces to include/exclude
-      operator: In     # Options: In | NotIn
+      operator: NotIn     # Options: In | NotIn
       values:
-        - retailstore-unspecified          # Kubex namespace (exclude automation components)
+        - kube-system          # Kubex namespace (exclude automation components)
     # podLabels:            # Optional - defines which pods to include/exclude based on labels
     #   - key: app        # Replace with actual label key (e.g., "app", "env", "tier")
     #     operator: NotIn              # Options: In | NotIn  
