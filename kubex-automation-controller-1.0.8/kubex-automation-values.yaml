@@ -1,0 +1,86 @@
+createSecrets: true # Set to false if you provide your own secrets, created outside of this helm chart
+
+densify:
+  url:
+    host: densifytest.densify.com # mandatory: <instance>.densify.com
+
+densifyCredentials:
+  username: 'forwarder' 
+  epassword: 'v117e99fe4f74c299f9275106fcb890cb9ab0af38336a46c7e0372081525a76640d2a9d71b245c0b140155cfd4ffeba57c7a3a1f01d44f1ce84c8a54241efc2be9' # Encrypted password to access Densify, mandatory if createSecrets is true
+  # userSecretName: # Densify API secret name, mandatory if createSecrets is false
+
+valkey:
+  credentials:
+    password: yM73txhrUpRJ 
+
+cluster:
+  name: demo01
+
+certmanager:
+  enabled: false
+
+scope:
+  - name: base-optimization-scope # Unique scope name
+    policy: base-optimization     # Policy name (optional - uses defaultPolicy if omitted)
+    namespaces:           # Mandatory - defines which namespaces to include/exclude
+      operator: In     # Options: In | NotIn
+      values:
+        - retailstore-unspecified          # Kubex namespace (exclude automation components)
+    # podLabels:            # Optional - defines which pods to include/exclude based on labels
+    #   - key: app        # Replace with actual label key (e.g., "app", "env", "tier")
+    #     operator: NotIn              # Options: In | NotIn  
+    #    values:
+    #      - somevalue     # This automates everything
+
+policy:
+  automationEnabled: true 
+  defaultPolicy: base-optimization
+  
+  remoteEnablement: false
+
+  policies: 
+    base-optimization:
+      allowedPodOwners: "Deployment,StatefulSet,CronJob,Rollout,Job,ReplicaSet,AnalysisRun"
+      enablement:
+        cpu:
+          request:
+            downsize: true
+            upsize: true
+            setFromUnspecified: true
+          limit:
+            downsize: true
+            upsize: true
+            setFromUnspecified: true
+            unsetFromSpecified: false     # (Future release)
+        memory:
+          request:
+            downsize: true
+            upsize: true
+            setFromUnspecified: true
+          limit:
+            downsize: true
+            upsize: true
+            setFromUnspecified: true
+      inPlaceResize:                      
+        enabled: true
+      podEviction:
+        enabled: true
+      safetyChecks:
+        maxAnalysisAgeDays: 5             # Number of days before optimization is considered stale
+
+deployment:
+  controllerEnv:  # Override controller environment variables (defaults in values.yaml)
+    podScanInitialInterval: "2m"
+#    debug: true                                  # Uncomment to enable debug mode for troubleshooting
+    podScanInterval: "2m"                     # How often to scan cluster for pods to check 
+    podScanTimeout: "30s"                      # Max time allowed for each pod scanning cycle  
+#    podEvictionCooldownPeriod: "1m"              # Wait time between pod evictions (recommended default) 
+    podScanInitialInterval: "30s"                 # Initial delay before first pod scan after startup  
+    recommendationsFetchInitialDelay: "30s"       # Startup delay before first recommendation fetch 
+#    recommendationsFetchInterval: "1h"           # How often to refresh recommendations from API 
+#    recommendationsResyncTimeout: "45m"          # Max time for recommendation sync operations 
+#    recommendationDataFormat: "json"             # Storage format in Valkey: "json" (readable) or "protobuf" (compact)
+#    nodeCpuHeadroom: "10%"                       # CPU headroom to reserve on each node (Can be in absolute value i.e. "100m" or in Percentage format i.e. "10%")
+#    nodeMemoryHeadroom: "200Mi"                  # Memory headroom to reserve on each node (Can be in absolute value i.e. "200Mi" or in Percentage format i.e. "10%")
+#    evictionThrottlingWindow: "6h"               # Time window for throttling pod evictions 
+#    evictionThrottlingMax: "1000"                # Max number of pod evictions allowed within the time window 
