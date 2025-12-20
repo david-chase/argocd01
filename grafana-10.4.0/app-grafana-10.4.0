@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-grafana-10.4.0               # App name
+  namespace: argocd
+  labels:
+    appversion: "v10.4.0"     # Version of the app 
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/david-chase/argocd01
+    targetRevision: HEAD
+    path: grafana-10.4.0             # This folder holds the kustomization.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: grafana          # Namespace to deploy to
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true                # Auto-sync?
+    syncOptions:
+      - CreateNamespace=true
+  ignoreDifferences:
+    - group: cilium.io
+      kind: CiliumIdentity

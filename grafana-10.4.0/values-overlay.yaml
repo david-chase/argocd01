@@ -1,0 +1,7 @@
+service:
+  type: ClusterIP
+
+admin:
+  existingSecret: grafana-admin
+  userKey: admin-user
+  passwordKey: admin-password
