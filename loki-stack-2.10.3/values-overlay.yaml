@@ -1,0 +1,4 @@
+loki:
+  isDefault: true
+promtail:
+  enabled: true
