@@ -3,8 +3,8 @@ kind: Kustomization
 namespace: grafana                 # Namespace to deploy to
 
 resources:
-  # - address-pool.yaml                  # List of manifests to apply, if any
-
+   - grafana-secret.yaml        # Secret for admin user/password
+   
 helmCharts:
   - name: grafana                # Chart name from the repo
     releaseName: grafana        # Name for resources
