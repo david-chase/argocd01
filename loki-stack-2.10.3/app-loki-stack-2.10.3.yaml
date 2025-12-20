@@ -4,7 +4,7 @@ metadata:
   name: loki-stack-2.10.3               # App name
   namespace: argocd
   labels:
-    appversion: "v2.10.3     # Version of the app 
+    appversion: "v2.10.3"     # Version of the app 
 spec:
   project: default
   source:

@@ -1,0 +1,17 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-promtail-to-loki
+  namespace: loki
+spec:
+  endpointSelector:
+    matchLabels:
+      app: loki
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: promtail
+      toPorts:
+        - ports:
+            - port: "3100"
+              protocol: TCP
