@@ -3,8 +3,9 @@ kind: Kustomization
 namespace: loki                 # Namespace to deploy to
 
 resources:
-  # This creates a Cilium policy for promtail to communicate to Loki
-  - allow-promtail-to-loki.yaml              
+  # This creates a Cilium policy for promtail and grafana to communicate to Loki
+  - allow-promtail-to-loki.yaml
+  - allow-grafana-to-loki.yaml              
 
 helmCharts:
   - name: loki-stack                # Chart name from the repo
