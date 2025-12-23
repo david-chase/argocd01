@@ -28,3 +28,6 @@ schema_config:
 storage_config:
   filesystem:
     directory: /tmp/loki/chunks
+
+promtail:
+  enabled: false
