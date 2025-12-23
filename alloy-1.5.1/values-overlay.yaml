@@ -1,0 +1,30 @@
+alloy:
+  configMap:
+    content: |-
+    discovery.kubernetes "pods" {
+      role = "pod"
+    }
+
+    loki.source.kubernetes "pods" {
+      targets    = discovery.kubernetes.pods.targets
+      forward_to = [loki.process.pods.receiver]
+    }
+
+    loki.process "pods" {
+      stage.labels {
+        values = {
+          namespace = "__meta_kubernetes_namespace",
+          pod       = "__meta_kubernetes_pod_name",
+          container = "__meta_kubernetes_pod_container_name",
+          node      = "__meta_kubernetes_node_name",
+        }
+      }
+
+      forward_to = [loki.write.default.receiver]
+    }
+
+    loki.write "default" {
+      endpoint {
+        url = "http://loki.loki.svc.cluster.local:3100/loki/api/v1/push"
+      }
+    }

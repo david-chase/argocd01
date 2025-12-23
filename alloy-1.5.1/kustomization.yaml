@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: alloy                 # Namespace to deploy to
+
+resources:
+  # This creates a Cilium policy for promtail and grafana to communicate to Loki
+  # - allow-promtail-to-loki.yaml        
+
+helmCharts:
+  - name: alloy                # Chart name from the repo
+    releaseName: alloy        # Name for resources
+    repo: https://grafana.github.io/helm-charts           # URL of repo
+    valuesFile: values-overlay.yaml    # ONLY the values we want to override
+    version: 1.5.1                 # Chart version from the repo 
