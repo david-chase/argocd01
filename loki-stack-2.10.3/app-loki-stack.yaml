@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki-stack               # App name
+  namespace: argocd
+  labels:
+    appversion: "v2.10.3"     # Version of the app 
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/david-chase/argocd01
+    targetRevision: HEAD
+    path: loki-stack-2.10.3             # This folder holds the kustomization.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: loki          # Namespace to deploy to
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true                # Auto-sync?
+    syncOptions:
+      - CreateNamespace=true
+  ignoreDifferences:
+    - group: cilium.io
+      kind: CiliumIdentity
