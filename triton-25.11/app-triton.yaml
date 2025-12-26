@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: triton             # This folder holds the kustomize.yaml
+    path: triton-25.11             # This folder holds the kustomize.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: triton          # Namespace to deploy to

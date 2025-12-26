@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/david-chase/argocd01.git
     targetRevision: HEAD
-    path: tensorflow   # Location where the manifests are stored
+    path: tensorflow-2.12.0   # Location where the manifests are stored
   destination:
     server: https://kubernetes.default.svc
     namespace: tensorflow          # Namespace to deploy to
