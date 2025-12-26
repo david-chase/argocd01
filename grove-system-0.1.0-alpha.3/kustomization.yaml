@@ -14,7 +14,7 @@ helmCharts:
     releaseName: grove
     repo: oci://ghcr.io/ai-dynamo/grove
     version: v0.1.0-alpha.3
-    # valuesFile: values.yaml
+    valuesFile: values-overlay.yaml
 
 #   - name: grove
 #     releaseName: grove

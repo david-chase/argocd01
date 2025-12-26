@@ -1,0 +1,3 @@
+operatorConfig:
+  certRotation:
+    restartOnSecretRefresh: false
