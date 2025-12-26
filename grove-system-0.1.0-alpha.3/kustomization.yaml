@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: grove-system
+
+resources:
+  # Add extra Kubernetes manifests here later
+  # - extra-rbac.yaml
+  # - networkpolicy.yaml
+  # - configmap.yaml
+
+helmCharts:
+  - name: grove
+    releaseName: grove
+    repo: oci://ghcr.io/ai-dynamo/grove
+    chart: grove-charts
+    version: v0.1.0-alpha.3
