@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: gpu-operator             # This folder holds the kustomize.yaml
+    path: gpu-operator-25.10.1             # This folder holds the kustomize.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: nvidia          # Namespace to deploy to
