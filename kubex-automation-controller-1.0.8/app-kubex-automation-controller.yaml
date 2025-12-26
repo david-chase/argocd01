@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kubex-automation-controller-1.0.8               # App name
+  name: kubex-automation-controller               # App name
   namespace: argocd
   labels:
     appversion: "v1.0.8"     # Version of the app 
