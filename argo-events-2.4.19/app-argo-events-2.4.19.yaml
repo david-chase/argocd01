@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-rollouts               # App name
+  name: argo-events               # App name
   namespace: argocd
   labels:
-    appversion: "2.40.5"     # Version of the app 
+    appversion: "2.4.19"     # Version of the app 
 spec:
   project: default
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: argo-rollouts-2.40.5            # This folder holds the kustomization.yaml
+    path: argo-events-2.4.19            # This folder holds the kustomization.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: argo-rollouts          # Namespace to deploy to
+    namespace: argo-events          # Namespace to deploy to
   syncPolicy:
     automated:
       prune: true
