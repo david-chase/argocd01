@@ -10,8 +10,14 @@ resources:
   # - configmap.yaml
 
 helmCharts:
-  - name: grove
+  - name: grove-charts
     releaseName: grove
     repo: oci://ghcr.io/ai-dynamo/grove
-    chart: grove-charts
     version: v0.1.0-alpha.3
+    # valuesFile: values.yaml
+
+#   - name: grove
+#     releaseName: grove
+#     repo: oci://ghcr.io/ai-dynamo/grove
+#     chart: grove-charts
+#     version: v0.1.0-alpha.3
