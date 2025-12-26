@@ -79,7 +79,7 @@ deployment:
     recommendationsFetchInitialDelay: "1m"       # Startup delay before first recommendation fetch 
     recommendationsFetchInterval: "1h"           # How often to refresh recommendations from API 
     recommendationsResyncTimeout: "45m"          # Max time for recommendation sync operations 
-#    recommendationDataFormat: "json"             # Storage format in Valkey: "json" (readable) or "protobuf" (compact)
+    recommendationDataFormat: "protobuf"         # Storage format in Valkey: "json" (readable) or "protobuf" (compact)
 #    nodeCpuHeadroom: "10%"                       # CPU headroom to reserve on each node (Can be in absolute value i.e. "100m" or in Percentage format i.e. "10%")
 #    nodeMemoryHeadroom: "200Mi"                  # Memory headroom to reserve on each node (Can be in absolute value i.e. "200Mi" or in Percentage format i.e. "10%")
 #    evictionThrottlingWindow: "6h"               # Time window for throttling pod evictions 
