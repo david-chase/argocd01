@@ -5,6 +5,7 @@ namespace: argo-events                 # Namespace to deploy to
 resources:
   - install.yaml                  # List of manifests to apply, if any
   - install-validating-webhook.yaml
+  - native.yaml
 
 # helmCharts:
 #   - name: <name of app>                # Chart name from the repo
