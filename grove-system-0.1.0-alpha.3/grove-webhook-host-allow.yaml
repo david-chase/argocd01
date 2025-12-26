@@ -1,0 +1,15 @@
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: allow-host-to-grove-webhook
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: grove-operator
+  ingress:
+    - fromEntities:
+        - host
+      toPorts:
+        - ports:
+            - port: "9443"
+              protocol: TCP
