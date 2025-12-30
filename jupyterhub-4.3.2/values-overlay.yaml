@@ -1,0 +1,8 @@
+singleuser:
+  storage:
+    dynamic:
+      storageClass: local-path
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
