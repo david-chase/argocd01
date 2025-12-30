@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: csi-driver-nfs                 # Namespace to deploy to
 
 resources:
-  # - address-pool.yaml                  # List of manifests to apply, if any
+  - storageclass.yaml                  # List of manifests to apply, if any
 
 helmCharts:
   - name: csi-driver-nfs                # Chart name from the repo
