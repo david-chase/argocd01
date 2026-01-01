@@ -29,3 +29,15 @@ spec:
         - .spec
         - .status
         - .metadata.annotations
+    # CRDs are reconciled by controllers
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      jsonPointers:
+        - /status
+        - /spec
+    # EventBus is continuously updated by argo-events
+    - group: argoproj.io
+      kind: EventBus
+      jsonPointers:
+        - /status
+
