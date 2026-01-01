@@ -11,7 +11,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: argocd.havana
+    - host: argocd.tokyo
       http:
         paths:
           - path: /
@@ -23,7 +23,7 @@ spec:
                   number: 443
 
     # NEW: additional hostname alias
-    - host: argocd.havana.home.arpa
+    - host: argocd.tokyo.home.arpa
       http:
         paths:
           - path: /
