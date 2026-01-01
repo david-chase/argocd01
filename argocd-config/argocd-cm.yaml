@@ -52,11 +52,11 @@ data:
       - /ports
 
   resource.exclusions: |
-    - apiGroups: ["", "discovery.k8s.io"]
-      kinds: ["Endpoints", "EndpointSlice"]
+    # - apiGroups: ["", "discovery.k8s.io"]
+    #   kinds: ["Endpoints", "EndpointSlice"]
 
-    - apiGroups: ["coordination.k8s.io"]
-      kinds: ["Lease"]
+    # - apiGroups: ["coordination.k8s.io"]
+    #   kinds: ["Lease"]
 
     - apiGroups: ["authentication.k8s.io", "authorization.k8s.io"]
       kinds:
