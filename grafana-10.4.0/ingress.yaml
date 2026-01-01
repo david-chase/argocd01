@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: grafana.havana
+    - host: grafana.tokyo
       http:
         paths:
           - path: /
@@ -21,7 +21,7 @@ spec:
                 port:
                   number: 80
     # NEW: additional hostname alias
-    - host: grafana.havana.home.arpa
+    - host: grafana.tokyo.home.arpa
       http:
         paths:
           - path: /
