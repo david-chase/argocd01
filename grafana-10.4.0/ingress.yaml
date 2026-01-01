@@ -20,7 +20,6 @@ spec:
                 name: grafana
                 port:
                   number: 80
-
     # NEW: additional hostname alias
     - host: grafana.havana.home.arpa
       http:

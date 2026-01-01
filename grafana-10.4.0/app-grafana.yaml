@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: grafana-10.4.0               # App name
+  name: grafana               # App name
   namespace: argocd
   labels:
     appversion: "v10.4.0"     # Version of the app 
