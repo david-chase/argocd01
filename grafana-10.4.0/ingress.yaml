@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: <service>-ingress
-  namespace: <namespace>
+  name: grafana-ingress
+  namespace: grafana
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
@@ -10,25 +10,25 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: <service>.havana
+    - host: grafana.havana
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: <service>
+                name: grafana
                 port:
-                  number: <port>
+                  number: 80
 
     # NEW: additional hostname alias
-    - host: <service>.home.arpa
+    - host: grafana.havana.home.arpa
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: <service>
+                name: grafana
                 port:
-                  number: <port>
+                  number: 80

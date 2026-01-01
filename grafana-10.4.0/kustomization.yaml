@@ -4,6 +4,7 @@ namespace: grafana                 # Namespace to deploy to
 
 resources:
    - grafana-secret.yaml        # Secret for admin user/password
+   - ingress.yaml               # Ingress resource for Grafana
    
 helmCharts:
   - name: grafana                # Chart name from the repo
