@@ -7,6 +7,8 @@ metadata:
     app.kubernetes.io/name: argocd-cm
     app.kubernetes.io/part-of: argocd
 data:
+  exec.enabled: "true" #<- This line enables the use of exec plugin for fetching manifests
+  
   resource.customizations.ignoreResourceUpdates.ConfigMap: |
     jqPathExpressions:
       - '.metadata.annotations."cluster-autoscaler.kubernetes.io/last-updated"'

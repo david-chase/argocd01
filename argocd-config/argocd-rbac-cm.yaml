@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+  labels:
+    app.kubernetes.io/name: argocd-rbac-cm
+    app.kubernetes.io/part-of: argocd
+  annotations:
+    meta.helm.sh/release-name: argocd
+    meta.helm.sh/release-namespace: argocd
+data:
+  # Default role for users not explicitly mapped
+  policy.default: role:readonly
+
+  # RBAC policy rules
+  policy.csv: |
+    # Allow Argo CD admin to exec into pods via UI / API
+    p, role:admin, exec, create, */*, allow
