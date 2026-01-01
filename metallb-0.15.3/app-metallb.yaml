@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/david-chase/argocd01
     targetRevision: HEAD
-    path: metallb-0.15.3/manifests    # This folder holds the kustomize.yaml
+    path: metallb-0.15.3    # This folder holds the kustomize.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: metallb-system          # Namespace to deploy to
