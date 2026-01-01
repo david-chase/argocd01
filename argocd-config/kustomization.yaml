@@ -7,4 +7,4 @@ resources:
   - argocd-cm.yaml
   # - argocd-rbac-cm.yaml
   # - argocd-notifications-cm.yaml
-  - external-service.yaml
+  - ingress.yaml
