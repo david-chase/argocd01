@@ -7,11 +7,23 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/websocket-services: argocd-server #<- This line enables websocket support
+    nginx.ingress.kubernetes.io/websocket-services: argocd-server # enables websocket support
 spec:
   ingressClassName: nginx
   rules:
     - host: argocd.havana
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 443
+
+    # NEW: additional hostname alias
+    - host: argocd.havana.home.arpa
       http:
         paths:
           - path: /
