@@ -9,6 +9,7 @@ resources:
 helmCharts:
   - name: loki-stack                # Chart name from the repo
     releaseName: loki-stack        # Name for resources
+    namespace: loki
     repo: https://grafana.github.io/helm-charts           # URL of repo
     valuesFile: values-overlay.yaml    # ONLY the values we want to override
     version: 2.10.3                 # Chart version from the repo 

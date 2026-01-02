@@ -9,6 +9,7 @@ resources:
 helmCharts:
   - name: grafana                # Chart name from the repo
     releaseName: grafana        # Name for resources
+    namespace: grafana
     repo: https://grafana.github.io/helm-charts          # URL of repo
     # valuesFile: values-overlay.yaml    # ONLY the values we want to override
     version: 10.4.0                 # Chart version from the repo 

@@ -7,6 +7,7 @@ resources:
 
 helmCharts:
   - name: csi-driver-nfs                # Chart name from the repo
+    namespace: csi-driver-nfs
     releaseName: csi-driver-nfs        # Name for resources
     repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts           # URL of repo
     # valuesFile: values-overlay.yaml    # ONLY the values we want to override

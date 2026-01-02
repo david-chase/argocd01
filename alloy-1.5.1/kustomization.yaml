@@ -8,6 +8,7 @@ resources:
 
 helmCharts:
   - name: alloy                # Chart name from the repo
+    namespace: alloy
     releaseName: alloy        # Name for resources
     repo: https://grafana.github.io/helm-charts           # URL of repo
     valuesFile: values-overlay.yaml    # ONLY the values we want to override

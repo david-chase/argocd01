@@ -10,6 +10,7 @@ resources:
 # helmCharts:
 #   - name: <name of app>                # Chart name from the repo
 #     releaseName: <release name>        # Name for resources
+#     namespace: triton
 #     repo: <location of repo>           # URL of repo
 #     # valuesFile: values-overlay.yaml    # ONLY the values we want to override
 #     version: <version>                 # Chart version from the repo 

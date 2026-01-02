@@ -8,6 +8,7 @@ resources:
 
 helmCharts:
   - name: metallb               # App name
+    namespace: metallb-system
     repo: https://metallb.github.io/metallb
     # valuesFile: ../values.yaml        # ONLY the values we want to override
     version: 0.15.2                    # From Chart.yaml

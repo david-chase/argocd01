@@ -7,6 +7,7 @@ resources:
 
 helmCharts:
   - name: cert-manager                # Chart name from the repo
+    namespace: cert-manager
     repo: https://charts.jetstack.io           # URL of repo
     valuesFile: values-overlay.yaml    # ONLY the values we want to override
     version: 1.19.2                 # Chart version from the repo 

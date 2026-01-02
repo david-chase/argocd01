@@ -8,6 +8,7 @@ resources:
 helmCharts:
   - name: jupyterhub                # Chart name from the repo
     releaseName: jupyterhub        # Name for resources
+    namespace: jupyterhub
     repo: https://hub.jupyter.org/helm-chart/           # URL of repo
     # valuesFile: values-overlay.yaml    # ONLY the values we want to override
     version: 4.3.2                 # Chart version from the repo 
