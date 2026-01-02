@@ -26,11 +26,11 @@ scope:
       operator: NotIn     
       values:
         - kube-system          
-    # podLabels:            # Optional - defines which pods to include/exclude based on labels
-    #   - key: app        # Replace with actual label key (e.g., "app", "env", "tier")
-    #     operator: NotIn              # Options: In | NotIn  
-    #    values:
-    #      - somevalue     # This automates everything
+    podLabels:            # Optional - defines which pods to include/exclude based on labels
+      - key: app        # Replace with actual label key (e.g., "app", "env", "tier")
+        operator: NotIn              # Options: In | NotIn  
+        values:
+         - somevalue     # This automates everything
 
 policy:
   automationEnabled: true 
