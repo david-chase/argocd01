@@ -10,4 +10,4 @@ helmCharts:
     releaseName: kubex-automation-controller        # Name for resources
     repo: https://densify-dev.github.io/helm-charts           # URL of repo
     valuesFile: kubex-automation-values.yaml    # ONLY the values we want to override
-    version: 1.0.5                 # Chart version from the repo 
+    version: 1.0.9                 # Chart version from the repo 
