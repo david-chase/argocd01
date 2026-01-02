@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cert-output
+spec:
+  containers:
+  - image: densify/cert-output
+    imagePullPolicy: Always
+    name: cert-output
+    env:
+# TESTHOST is mandatory
+    - name: TESTHOST
+      value: "kubex-webhook-service"
+# TESTPORT is optional, default is 443
+#    - name: TESTPORT
+#      value: ""
+  restartPolicy: Never
