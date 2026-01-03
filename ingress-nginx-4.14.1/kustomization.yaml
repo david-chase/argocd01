@@ -10,5 +10,5 @@ helmCharts:
     releaseName: ingress-nginx        # Name for resources
     namespace: ingress-nginx
     repo: https://kubernetes.github.io/ingress-nginx           # URL of repo
-    # valuesFile: values-overlay.yaml    # ONLY the values we want to override
+    valuesFile: values-overlay.yaml    # ONLY the values we want to override
     version: 4.14.1                 # Chart version from the repo 

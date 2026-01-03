@@ -7,4 +7,13 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 192.168.1.230-192.168.1.250
+    - 192.168.1.231-192.168.1.250
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: ingress-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 192.168.1.230/32
