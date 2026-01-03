@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: nginx-rollout                 # Namespace to deploy to
 
 resources:
-  # - address-pool.yaml                  # List of manifests to apply, if any
+  - nginx-rollout.yaml                  # List of manifests to apply, if any
 
 # helmCharts:
 #   - name: <name of app>                # Chart name from the repo
