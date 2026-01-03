@@ -1,7 +1,0 @@
----
-serviceMonitor:
-  enabled: true
-  namespace: null
-  interval: 15s
-  additionalLabels:
-    release: prometheus

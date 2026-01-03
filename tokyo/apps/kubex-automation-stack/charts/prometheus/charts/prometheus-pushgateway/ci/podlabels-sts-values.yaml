@@ -1,5 +1,0 @@
----
-runAsStatefulSet: true
-podLabels:
-  foo: bar
-  baz: qux

@@ -1,9 +1,0 @@
----
-containerSecurityContext:
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-      - ALL
-  readOnlyRootFilesystem: true
-  seccompProfile:
-    type: RuntimeDefault
