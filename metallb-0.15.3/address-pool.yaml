@@ -1,4 +1,4 @@
-# Exposes a single IP tothe outside worls
+# Exposes IPs to the outside world
 
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
@@ -16,4 +16,4 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 192.168.1.230
+    - 192.168.1.230/32
