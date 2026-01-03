@@ -13,16 +13,12 @@ spec:
       restartPolicy: Never
       containers:
       - name: load-generator
-        image: busybox:latest
+        image: williamyeh/hey:latest
         command:
         - /bin/sh
         - -c
         - |
-          echo "Starting load generation for 60 seconds..."
-          END_TIME=$(($(date +%s) + 60))
-          while [ $(date +%s) -lt $END_TIME ]; do
-            wget -q -O- http://nginx-rollout.default.svc.cluster.local:80/ > /dev/null 2>&1
-            echo "Request sent at $(date)"
-          done
+          echo "Starting aggressive load generation for 60 seconds..."
+          hey -z 60s -c 50 -q 10 http://nginx-rollout.nginx-rollout.svc.cluster.local:80/
           echo "Load generation complete"
   backoffLimit: 0
