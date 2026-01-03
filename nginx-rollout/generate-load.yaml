@@ -1,0 +1,27 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nginx-load-generator
+spec:
+  template:
+    metadata:
+      labels:
+        app: load-generator
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: load-generator
+        image: busybox:latest
+        command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Starting load generation for 60 seconds..."
+          END_TIME=$(($(date +%s) + 60))
+          while [ $(date +%s) -lt $END_TIME ]; do
+            wget -q -O- http://nginx-rollout.default.svc.cluster.local:80/ > /dev/null 2>&1
+            echo "Request sent at $(date)"
+          done
+          echo "Load generation complete"
+  backoffLimit: 0
