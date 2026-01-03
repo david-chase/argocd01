@@ -1,3 +1,228 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-custom-content
+  namespace: nginx-rollout
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NGINX Load Testing Demo</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: #333;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                background: white;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            }
+            h1 {
+                color: #667eea;
+                text-align: center;
+                font-size: 3em;
+                margin-bottom: 10px;
+            }
+            h2 {
+                color: #764ba2;
+                border-bottom: 3px solid #667eea;
+                padding-bottom: 10px;
+                margin-top: 30px;
+            }
+            .image-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                margin: 30px 0;
+            }
+            .image-placeholder {
+                height: 200px;
+                background: linear-gradient(45deg, #667eea, #764ba2);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 1.2em;
+                font-weight: bold;
+            }
+            .stats {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+                margin: 20px 0;
+            }
+            .stat-box {
+                background: #f8f9fa;
+                padding: 20px;
+                border-radius: 8px;
+                text-align: center;
+                border-left: 4px solid #667eea;
+            }
+            .stat-number {
+                font-size: 2em;
+                font-weight: bold;
+                color: #667eea;
+            }
+            p {
+                line-height: 1.8;
+                font-size: 1.1em;
+                text-align: justify;
+            }
+            .highlight {
+                background: #fffbcc;
+                padding: 2px 6px;
+                border-radius: 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>🚀 NGINX HPA Load Testing Demo</h1>
+            <p style="text-align: center; color: #666; font-size: 1.2em;">
+                Kubernetes Horizontal Pod Autoscaling in Action
+            </p>
+            
+            <h2>📊 Performance Metrics</h2>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number">1000+</div>
+                    <div>Requests/Second</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">3-20</div>
+                    <div>Pod Scaling Range</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">80%</div>
+                    <div>CPU Target</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">24/7</div>
+                    <div>Availability</div>
+                </div>
+            </div>
+
+            <h2>🎯 About This Demo</h2>
+            <p>
+                Welcome to our <span class="highlight">NGINX Horizontal Pod Autoscaler demonstration</span>! 
+                This page is served by a dynamically scaling NGINX deployment running on Kubernetes. 
+                The deployment automatically adjusts the number of pod replicas based on CPU utilization, 
+                ensuring optimal performance during high traffic periods while conserving resources during 
+                quieter times. This sophisticated autoscaling mechanism allows our infrastructure to handle 
+                varying load patterns efficiently and cost-effectively.
+            </p>
+            <p>
+                The Horizontal Pod Autoscaler (HPA) continuously monitors the average CPU utilization across 
+                all pod replicas. When the average utilization exceeds our configured threshold of 80%, 
+                the HPA controller automatically increases the number of replicas. Conversely, when CPU 
+                usage drops below the threshold, it scales down the deployment, maintaining a minimum of 
+                3 replicas for high availability and a maximum of 20 replicas to prevent resource exhaustion.
+            </p>
+
+            <h2>🖼️ Sample Images</h2>
+            <div class="image-grid">
+                <div class="image-placeholder">Image 1: Architecture</div>
+                <div class="image-placeholder">Image 2: Metrics</div>
+                <div class="image-placeholder">Image 3: Dashboard</div>
+                <div class="image-placeholder">Image 4: Scaling Graph</div>
+                <div class="image-placeholder">Image 5: Traffic Flow</div>
+                <div class="image-placeholder">Image 6: Performance</div>
+            </div>
+
+            <h2>⚙️ Technical Architecture</h2>
+            <p>
+                Our deployment leverages several key Kubernetes components to achieve reliable, scalable 
+                web serving capabilities. The core components include a <span class="highlight">Deployment</span> 
+                resource that manages the NGINX pod replicas, a <span class="highlight">Service</span> that 
+                provides stable networking and load balancing across the pods, and a 
+                <span class="highlight">HorizontalPodAutoscaler</span> that monitors and adjusts the replica count 
+                based on observed metrics. Additionally, we've implemented a custom ConfigMap to serve this 
+                rich HTML content, demonstrating how Kubernetes can manage both application binaries and 
+                configuration data seamlessly.
+            </p>
+            <p>
+                The load testing infrastructure utilizes a Kubernetes Job that generates synthetic HTTP 
+                traffic using parallel curl requests. This job spawns 100 concurrent requests every 100 
+                milliseconds, creating approximately 1,000 requests per second. This sustained load is 
+                sufficient to drive CPU utilization above our 80% threshold, triggering the autoscaling 
+                mechanism. The Job automatically terminates after 120 seconds and cleans itself up using 
+                the ttlSecondsAfterFinished setting, maintaining a clean cluster state.
+            </p>
+
+            <h2>🔬 Load Testing Results</h2>
+            <p>
+                During our load testing scenarios, we observe fascinating autoscaling behavior. Initially, 
+                the deployment runs with the minimum 3 replicas, consuming minimal CPU resources. Once the 
+                load generator job starts, CPU utilization across the pods rapidly increases. The HPA 
+                controller, which evaluates metrics every 15 seconds by default, detects the elevated CPU 
+                usage and begins scaling up the deployment. Within 1-2 minutes, the deployment typically 
+                scales to 8-12 replicas, depending on the exact load characteristics and how efficiently 
+                the load is distributed across the pods.
+            </p>
+            <p>
+                As the load continues, the system reaches a steady state where the number of replicas 
+                stabilizes at a level that keeps average CPU utilization near the 80% target. This 
+                demonstrates the effectiveness of the HPA's proportional scaling algorithm. After the 
+                load generator completes and traffic subsides, the HPA gradually scales down the deployment, 
+                returning it to the minimum 3 replicas. This scale-down process is intentionally slower 
+                than scale-up to prevent thrashing and maintain stability during fluctuating load patterns.
+            </p>
+
+            <h2>💡 Best Practices</h2>
+            <p>
+                When implementing HPA in production environments, several best practices ensure optimal 
+                performance. First, always define appropriate resource requests and limits on your containers. 
+                The HPA calculates CPU utilization as a percentage of requested CPU, so without proper 
+                requests, autoscaling behavior becomes unpredictable. Second, choose appropriate minimum 
+                and maximum replica counts. The minimum should provide sufficient capacity for baseline 
+                traffic and high availability, while the maximum should prevent runaway scaling that could 
+                exhaust cluster resources or incur excessive costs.
+            </p>
+            <p>
+                Third, carefully select your target utilization percentage. While 80% seems high, it 
+                provides headroom for traffic spikes while the HPA scales up new pods. Setting the target 
+                too low results in over-provisioning, while setting it too high risks degraded performance 
+                during sudden load increases. Fourth, consider implementing Pod Disruption Budgets (PDBs) 
+                to ensure a minimum number of pods remain available during voluntary disruptions like 
+                cluster upgrades. Finally, monitor your HPA events and metrics closely using tools like 
+                Prometheus and Grafana to understand scaling patterns and optimize your configuration over time.
+            </p>
+
+            <h2>🌐 Additional Resources</h2>
+            <p>
+                To dive deeper into Kubernetes autoscaling concepts, explore the official Kubernetes 
+                documentation on Horizontal Pod Autoscaling, which covers advanced topics like custom 
+                metrics, multiple metrics, and scaling policies. The Kubernetes Metrics Server is essential 
+                for HPA functionality, as it collects resource metrics from Kubelets and exposes them 
+                through the Metrics API. For even more sophisticated autoscaling scenarios, consider 
+                exploring the Vertical Pod Autoscaler (VPA) which adjusts resource requests and limits, 
+                or the Cluster Autoscaler which provisions additional nodes when pod scheduling fails due 
+                to insufficient resources.
+            </p>
+            <p>
+                This demonstration showcases the power and flexibility of Kubernetes autoscaling mechanisms. 
+                By combining horizontal pod autoscaling with appropriate resource management and monitoring, 
+                you can build resilient, efficient applications that automatically adapt to changing demand 
+                patterns. Whether you're running a small development cluster or a large production 
+                environment, these autoscaling capabilities are fundamental to modern cloud-native 
+                application deployment and operations. Thank you for exploring this demonstration, and 
+                happy scaling!
+            </p>
+        </div>
+    </body>
+    </html>
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,6 +252,13 @@ spec:
           limits:
             cpu: 50m
             memory: 128Mi
+        volumeMounts:
+        - name: nginx-content
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: nginx-content
+        configMap:
+          name: nginx-custom-content
 ---
 apiVersion: v1
 kind: Service
