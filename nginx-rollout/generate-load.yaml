@@ -1,10 +1,16 @@
 ---
+# Load Generator Job for nginx-rollout
+# Purpose: Generates sustained HTTP traffic to test HPA autoscaling behavior
+# This job will run for 120 seconds and then terminate automatically
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: nginx-load-generator
   namespace: nginx-rollout
 spec:
+  # Automatically delete this job 100 seconds after completion
+  # This keeps only the most recent execution visible in the cluster
+  ttlSecondsAfterFinished: 100
   template:
     metadata:
       labels:
@@ -13,6 +19,7 @@ spec:
       restartPolicy: Never
       containers:
       - name: load-generator
+        # Using Alpine for its small size and curl availability
         image: alpine:latest
         command:
         - /bin/sh
@@ -21,12 +28,16 @@ spec:
           apk add --no-cache curl
           echo "Starting aggressive load generation for 120 seconds..."
           END_TIME=$(($(date +%s) + 120))
+          # Generate load by spawning 100 parallel curl requests every 0.1 seconds
+          # This results in approximately 1,000 requests per second to trigger HPA scaling
           while [ $(date +%s) -lt $END_TIME ]; do
             for i in $(seq 1 100); do
               curl -s http://nginx-rollout.nginx-rollout.svc.cluster.local:80/ > /dev/null &
             done
+            # Short sleep to prevent overwhelming the pod network
             sleep 0.1
           done
           wait
           echo "Load generation complete"
+  # Don't retry on failure - if it fails, let it fail
   backoffLimit: 0
