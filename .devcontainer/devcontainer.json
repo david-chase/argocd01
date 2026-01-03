@@ -1,0 +1,33 @@
+{
+  "name": "argocd01 – GitOps Dev",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "pwsh",
+        "editor.formatOnSave": true,
+        "yaml.schemas": {
+          "https://raw.githubusercontent.com/argoproj/argo-cd/master/assets/crds/application-crd.yaml": [
+            "**/application*.yaml"
+          ]
+        }
+      },
+      "extensions": [
+        "ms-vscode.powershell",
+        "redhat.vscode-yaml",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "tim-koehler.helm-intellisense",
+        "yzhang.markdown-all-in-one",
+        "github.vscode-github-actions"
+      ]
+    }
+  },
+  "forwardPorts": [
+    8080
+  ],
+  "postCreateCommand": "pwsh -c 'Write-Host \"Codespace ready for Argo CD\" -ForegroundColor Cyan'",
+  "remoteUser": "vscode"
+}
