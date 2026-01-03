@@ -13,12 +13,20 @@ spec:
       restartPolicy: Never
       containers:
       - name: load-generator
-        image: williamyeh/hey:latest
+        image: alpine:latest
         command:
         - /bin/sh
         - -c
         - |
+          apk add --no-cache curl
           echo "Starting aggressive load generation for 60 seconds..."
-          hey -z 60s -c 50 -q 10 http://nginx-rollout.nginx-rollout.svc.cluster.local:80/
+          END_TIME=$(($(date +%s) + 60))
+          while [ $(date +%s) -lt $END_TIME ]; do
+            for i in $(seq 1 50); do
+              curl -s http://nginx-rollout.nginx-rollout.svc.cluster.local:80/ > /dev/null &
+            done
+            sleep 0.1
+          done
+          wait
           echo "Load generation complete"
   backoffLimit: 0
