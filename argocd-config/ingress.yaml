@@ -4,10 +4,9 @@ metadata:
   name: argocd-server
   namespace: argocd
   annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/websocket-services: argocd-server # enables websocket support
+    nginx.ingress.kubernetes.io/websocket-services: argocd-server
 spec:
   ingressClassName: nginx
   rules:
@@ -20,9 +19,7 @@ spec:
               service:
                 name: argocd-server
                 port:
-                  number: 443
-
-    # NEW: additional hostname alias
+                  number: 80
     - host: argocd.tokyo.home.arpa
       http:
         paths:
@@ -32,4 +29,4 @@ spec:
               service:
                 name: argocd-server
                 port:
-                  number: 443
+                  number: 80
