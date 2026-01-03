@@ -4,6 +4,7 @@ namespace: nginx-rollout                 # Namespace to deploy to
 
 resources:
   - nginx-rollout.yaml                  # List of manifests to apply, if any
+  - generale-load.yaml                 # Load generator CronJob
 
 # helmCharts:
 #   - name: <name of app>                # Chart name from the repo
