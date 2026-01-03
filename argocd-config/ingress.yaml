@@ -9,6 +9,13 @@ metadata:
     nginx.ingress.kubernetes.io/websocket-services: argocd-server
 spec:
   ingressClassName: nginx
+
+  tls:
+    - hosts:
+        - argocd.tokyo
+        - argocd.tokyo.home.arpa
+      secretName: argocd-tls
+
   rules:
     - host: argocd.tokyo
       http:
@@ -20,6 +27,7 @@ spec:
                 name: argocd-server
                 port:
                   number: 80
+
     - host: argocd.tokyo.home.arpa
       http:
         paths:
