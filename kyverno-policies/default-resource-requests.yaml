@@ -1,0 +1,35 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: generate-default-limits
+spec:
+  generateExisting: true
+  rules:
+    - name: generate-limits-for-namespaces
+      match:
+        any:
+          - resources:
+              kinds:
+                - Namespace
+      exclude:
+        any:
+          - resources:
+              names:
+                - kube-system
+      generate:
+        apiVersion: v1
+        kind: LimitRange
+        name: default-resource-requests
+        namespace: "{{ request.object.metadata.name }}"
+        synchronize: true
+        data:
+          apiVersion: v1
+          kind: LimitRange
+          metadata:
+            name: default-resource-requests
+          spec:
+            limits:
+              - type: Container
+                defaultRequest:
+                  cpu: "100m"
+                  memory: "128Mi"
