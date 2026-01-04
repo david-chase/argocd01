@@ -1,2 +1,4 @@
 reportsServer:
   enabled: true
+crds:
+  install: true
