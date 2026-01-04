@@ -40,8 +40,8 @@ policy:
 
   policies: 
     base-optimization:
-      allowedPodOwners: "Deployment,CronJob,Rollout,Job,ReplicaSet,AnalysisRun"
-      # Removed StatefulSet, DaemonSet
+      allowedPodOwners: "Deployment,CronJob,Rollout,Job,ReplicaSet,AnalysisRun,StatefulSet,DaemonSet"
+      # 2026.01.04 Re-added StatefulSet, DaemonSet
       enablement:
         cpu:
           request:
