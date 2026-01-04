@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kyverno                 # Namespace to deploy to
+
+resources:
+  # - address-pool.yaml                  # List of manifests to apply, if any
+
+helmCharts:
+  - name: kyverno                # Chart name from the repo
+    namespace: kyverno
+    releaseName: kyverno        # Name for resources
+    repo: https://kyverno.github.io/kyverno/           # URL of repo
+    valuesFile: values-overlay.yaml    # ONLY the values we want to override
+    version: 3.6.1                 # Chart version from the repo 
