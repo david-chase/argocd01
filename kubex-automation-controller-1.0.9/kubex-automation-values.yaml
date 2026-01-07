@@ -14,7 +14,7 @@ valkey:
     password: yM73txhrUpRJ 
 
 cluster:
-  name: demo01
+  name: demo01-optimized
 
 certmanager:
   enabled: false
