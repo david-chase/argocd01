@@ -1,6 +1,0 @@
-apiVersion: v2
-name: retailstore
-description: A full stack simulated retail environment for testing
-type: application
-version: 0.1.0
-appVersion: "1.0.0"

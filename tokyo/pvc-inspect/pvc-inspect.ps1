@@ -1,1 +1,0 @@
-kubectl exec -it pvc-inspect -n densify-automation -- sh

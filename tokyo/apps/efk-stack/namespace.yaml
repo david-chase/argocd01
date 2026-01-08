@@ -1,5 +1,0 @@
-# Create a namespace
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: efk-stack     # Enter namespace
