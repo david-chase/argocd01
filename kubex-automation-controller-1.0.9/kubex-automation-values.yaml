@@ -11,7 +11,7 @@ densifyCredentials:
 
 valkey:
   credentials:
-    password: yM73txhrUpRJ 
+    password: passwoid
 
 cluster:
   name: demo01-optimized
