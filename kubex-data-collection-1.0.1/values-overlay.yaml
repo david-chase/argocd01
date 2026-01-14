@@ -11,7 +11,7 @@ container-optimization-data-forwarder:
         url:
           host: 'densifytest.densify.com' # mandatory: <instance>.densify.com
     clusters:
-      - name: 'demo01-optimized' # mandatory
+      - name: 'demo01-before' # mandatory
 prometheus:
   alertmanager:
     enabled: true 
