@@ -14,7 +14,7 @@ valkey:
     password: passwoid
 
 cluster:
-  name: demo01-optimized
+  name: demo01-before
 
 certmanager:
   enabled: false
@@ -23,9 +23,9 @@ scope:
   - name: base-optimization-scope 
     policy: base-optimization 
     namespaces:           
-      operator: NotIn     
+      operator: In     
       values:
-        - kube-system          
+        - retailstore-unspecified          
     # podLabels:            # Optional - defines which pods to include/exclude based on labels
     #   - key: app        # Replace with actual label key (e.g., "app", "env", "tier")
     #     operator: NotIn              # Options: In | NotIn  
