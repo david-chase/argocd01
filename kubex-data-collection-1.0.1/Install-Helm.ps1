@@ -1,0 +1,1 @@
+helm install --create-namespace -n kubex -f values-overlay.yaml kubex densify/kubex-automation-stack
