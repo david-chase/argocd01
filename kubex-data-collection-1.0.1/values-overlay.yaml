@@ -3,7 +3,7 @@ stack:
     createSecret: true
     username: 'forwarder'
     encrypted_password: 'v117e99fe4f74c299f9275106fcb890cb9ab0af38336a46c7e0372081525a76640d2a9d71b245c0b140155cfd4ffeba57c7a3a1f01d44f1ce84c8a54241efc2be9'
-  
+    
 container-optimization-data-forwarder:
   config:
     forwarder:
@@ -12,6 +12,9 @@ container-optimization-data-forwarder:
           host: 'densifytest.densify.com' # mandatory: <instance>.densify.com
     clusters:
       - name: 'demo01' # mandatory
+  cronjob:
+    successfulJobsHistoryLimit: 1
+    failedJobsHistoryLimit: 3
 prometheus:
   alertmanager:
     enabled: true 
