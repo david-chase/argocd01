@@ -75,6 +75,8 @@ kind: Deployment
 metadata:
   name: local-path-provisioner
   namespace: local-path-storage
+  labels: 
+    app.kubernetes.io/instance: local-path-storage
 spec:
   replicas: 1
   selector:
