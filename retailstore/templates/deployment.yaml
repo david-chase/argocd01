@@ -266,6 +266,8 @@ metadata:
   labels:
     app.kubernetes.io/name: ui
     app.kubernetes.io/instance: ui
+    app.kubernetes.io/component: service
+    app.kubernetes.io/owner: retail-store-sample
 spec:
   replicas: {{ .Values.deployments.ui.spec.replicas }}
   selector:
