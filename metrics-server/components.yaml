@@ -116,6 +116,7 @@ kind: Deployment
 metadata:
   labels:
     k8s-app: metrics-server
+    app.kubernetes.io/instance: metrics-server
   name: metrics-server
   namespace: kube-system
 spec:
