@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kube-system                 # Namespace to deploy to
+
+resources:
+  - standard-install.yaml                  # List of manifests to apply, if any
+
+# helmCharts:
+#   - name: csi-driver-nfs                # Chart name from the repo
+#     namespace: csi-driver-nfs
+#     releaseName: csi-driver-nfs        # Name for resources
+#     repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts           # URL of repo
+#     # valuesFile: values-overlay.yaml    # ONLY the values we want to override
+#     version: 4.12.1                 # Chart version from the repo 
