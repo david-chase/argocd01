@@ -230,6 +230,7 @@ metadata:
   namespace: nginx-rollout
   labels:
     app: nginx-rollout
+    app.kubernetes.io/instance: nginx-rollout
 spec:
   selector:
     matchLabels:
