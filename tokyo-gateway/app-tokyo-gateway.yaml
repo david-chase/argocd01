@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: tokyo-gateway               # App name
-  namespace: gateway
+  namespace: argocd
   labels:
     appversion: "v0.9"     # Version of the app 
 spec:
