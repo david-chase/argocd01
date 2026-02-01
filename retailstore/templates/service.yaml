@@ -37,7 +37,7 @@ spec:
     app.kubernetes.io/name: assets
     app.kubernetes.io/instance: assets
     app.kubernetes.io/component: service
-    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/owner: retail-store-sample
 ---
 # Source: retail-store-sample-catalog-chart/templates/service.yaml
 apiVersion: v1
