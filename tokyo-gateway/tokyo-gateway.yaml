@@ -3,6 +3,8 @@ kind: Gateway
 metadata:
   name: tokyo-gateway
   namespace: gateway
+  annotations:
+      metallb.universe.tf/loadBalancerIPs: 192.168.1.230
 spec:
   gatewayClassName: cilium
   listeners:
