@@ -3,9 +3,6 @@ kind: Gateway
 metadata:
   name: tokyo-gateway
   namespace: gateway
-  annotations:
-    # Tell MetalLB exactly which IP to use
-    metallb.universe.tf/loadBalancerIPs: 192.168.1.230
 spec:
   gatewayClassName: cilium
   listeners:
@@ -15,3 +12,6 @@ spec:
     allowedRoutes:
       namespaces:
         from: All
+  addresses:
+  - value: 192.168.1.230
+    type: IPAddress
