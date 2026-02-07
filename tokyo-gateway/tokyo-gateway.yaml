@@ -3,14 +3,22 @@ kind: Gateway
 metadata:
   name: tokyo-gateway
   namespace: gateway
-  annotations:
-      metallb.universe.tf/loadBalancerIPs: 192.168.1.230
 spec:
   gatewayClassName: cilium
   listeners:
   - name: http
     port: 80
     protocol: HTTP
+    allowedRoutes:
+      namespaces:
+        from: All
+  - name: https
+    port: 443
+    protocol: HTTPS
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: argocd-tls-certs
     allowedRoutes:
       namespaces:
         from: All

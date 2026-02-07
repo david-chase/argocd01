@@ -20,10 +20,12 @@ metadata:
 spec:
   parentRefs:
   - name: tokyo-gateway
-    namespace: gateway # Points to your specific gateway namespace
+    namespace: gateway
+    group: gateway.networking.k8s.io
+    kind: Gateway
   hostnames:
   - "argocd.tokyo.home.arpa"
-  - "argocd.tokyo.home"
+  - "argocd.tokyo"
   rules:
   - matches:
     - path:
