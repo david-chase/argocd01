@@ -2,14 +2,14 @@ apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
   # Name the ReferenceGrant
-  name: allow-argocd-route
+  name: allow-prometheus-route
   namespace: gateway
 spec:
   from:
   - group: gateway.networking.k8s.io
     kind: HTTPRoute
-    # The namespace of the HTTPRoute must be the same as the namespace of the Service you want to route to.  In this case, both are in the "argocd" namespace.
-    namespace: argocd
+    # The namespace of the HTTPRoute must be the same as the namespace of the Service you want to route to.  In this case, both are in the "kubex" namespace.
+    namespace: kubex
   to:
   - group: gateway.networking.k8s.io
     kind: Gateway
@@ -18,9 +18,9 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   # Give the route a name
-  name: argocd-http-route
+  name: prometheus-http-route
   # The namespace the route is deployed in.  This should be the same as the namespace of the Service you want to route to.
-  namespace: argocd
+  namespace: kubex
 spec:
   parentRefs:
   - name: tokyo-gateway
@@ -29,8 +29,8 @@ spec:
     kind: Gateway
   hostnames:
   # List of hostnames.  Must be DNS resolvable.
-  - "argocd.tokyo.home.arpa"
-  - "argocd.tokyo"
+  - "prometheus.tokyo.home.arpa"
+  - "prometheus.tokyo"
   rules:
   - matches:
     - path:
@@ -38,6 +38,6 @@ spec:
         value: /
     backendRefs:
       # This is the name of the Service to route to
-    - name: argocd-server
+    - name: kubex-prometheus-server
       # And the port the service is listening on
-      port: 80
+      port: 9090 
